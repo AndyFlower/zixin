@@ -1,0 +1,397 @@
+## 一、数组实现队列和栈
+
+### （一）用数组结构实现大小固定的队列和栈
+
+- 要求：只能使用长度为 X 的固定长度数组实现同样长度的队列和栈，超过则报错；
+- 队列的结构为先进先出，栈是先进后出；
+
+```java
+package com.zixin.learn.easy.day03;
+
+/**
+ * 
+ * @ClassName: ArrayToStackAndQueue
+ * @Description:使用数组实现栈和队列结构
+ * @author Administrator
+ * @date 2020-03-02 00:07:31
+ */
+public class ArrayToStackAndQueue {
+
+    /**
+     * 数组结构实现大小固定的队列
+     */
+    public static class ArrayToStack {
+        private Integer[] arr;
+        // index 当前指向栈的位置： 0 ~ size -1
+        private Integer index;
+
+        // 初始化数组
+        public ArrayToStack(int initSize) {
+            if (initSize < 0) {
+                throw new IllegalArgumentException("The init size is less than 0");
+            }
+            arr = new Integer[initSize];
+            index = 0;
+        }
+
+        /**
+         * 实现在栈中压入一个数
+         *
+         * @param obj：要压入的数 index：指向的是栈中下一个有空位置的数组下标
+         */
+        public void push(int obj) {
+            if (index == arr.length) {
+                throw new ArrayIndexOutOfBoundsException("The queue is full");
+            }
+            // index 位置填上，然后 index++
+            arr[index++] = obj;
+        }
+
+        // 弹出一个栈顶的元素
+        public Integer pop() {
+            if (index == 0) {
+                throw new ArrayIndexOutOfBoundsException("The queue is empty");
+            }
+            return arr[--index];
+        }
+
+        // 只将值返回给我，但是原来栈中该值仍然保存
+        public Integer peek() {
+            if (index == 0) {
+                return null;
+            }
+            return arr[index - 1];
+        }
+    }
+
+
+    /**
+     * 
+     * @ClassName: ArrayToQueue
+     * @Description: 数组结构实现大小固定的队列
+     * @author Administrator
+     * @date 2020-03-02 00:10:05
+     */
+    public static class ArrayToQueue {
+        private Integer[] arr;
+        private Integer size;//加入和弹出数据由size来进行约束
+        private Integer start;//指向弹出数据的问题
+        private Integer end;//指向放入数据的位置
+
+        // 初始化队列
+        public ArrayToQueue(int initSize) {
+            if (initSize < 0) {
+                throw new IllegalArgumentException("The init size is less than 0");
+            }
+            arr = new Integer[initSize];
+            size = 0;
+            start = 0;
+            end = 0;
+        }
+
+        /**
+         * 向队列中放入一个数
+         *
+         * @param obj：需要放进去的数
+         */
+        public void push(int obj) {
+            if (size == arr.length) {
+                throw new ArrayIndexOutOfBoundsException("The queue is full");
+            }
+            size++;
+            // 该数放在 end 的位置上，因为 end 位置是上下移动的；
+            arr[end] = obj;
+            // end 如果到底即 Length-1，就等于 0，从头开始写入数据，可以覆盖之前的元素；如果没有到底就 end + 1;
+            end = (end == arr.length - 1) ? 0 : end + 1;
+        }
+
+        // 弹出队列头部元素
+        public Integer poll() {
+            if (size == 0) {
+                throw new ArrayIndexOutOfBoundsException("The queue is empty");
+            }
+            size--;
+            // 因为 start 位置要改变，所有使用临时变量 tmp 记录一下 start 位置，最终弹出的是原始 start位置元素；
+            int tmp = start;
+            start = (start == arr.length - 1) ? 0 : start + 1;
+            return arr[tmp];
+        }
+
+        // 取出队列头部的元素，但是队列不动
+        public Integer peek() {
+            if (size == 0) {
+                return null;
+            }
+            return arr[start];
+        }
+    }
+
+    public static void main(String[] args) {
+
+    }
+}
+
+```
+
+### （二）特殊栈的实现：返回栈中最小元素
+
+**目标**：实现一个特殊的栈，在实现栈的基础功能上，再实现返回栈中最小元素的操作； 
+
+**要求**：pop、push、getMin 的操作的时间复杂度都是 O（1），同时设计的栈类型可以使用现成的栈结构；
+
+**解答思路**： 因为时间复杂度要求：O(1)，因此不能使用遍历，因为遍历的结果就是 O（N），这里使用两个栈；一个栈为 Data 栈，用于存放数据，另一个栈为 min 栈，用于存放最小值，两个栈一起增长；
+**步骤**：放入第一个数据，放入 Data 栈中，同时因为 Min 栈中当前为空，因此放入第一个元素之后最小值也是第一个元素，因此将第一个元素也放入 min 栈中；在 Data 栈中放入第二个数据时候，将当前元素与 min 栈顶比较，如果当前数大于等于 min 栈顶，方法一是不动，方法二是将原来 Min 栈的栈顶元素再次压入一遍；反之如果当前数小于 min 栈顶，就将原来 min 栈顶的元素再次在 min 栈中压入一遍。**push 和 pop 方法都有修改**
+
+```java
+package com.zixin.learn.easy.day03;
+
+import java.util.Stack;
+
+public class GetMinStack {
+    /**
+     * 
+     * @ClassName: MyStack1
+     * @Description: 该方法中当新加入的元素大于原来 Min 栈的栈顶元素时候，不动；  维护两个栈 一个数据栈 一个最小值栈
+     * @author Administrator
+     * @date 2020-03-02 00:20:07
+     */
+    public static class MyStack1 {
+        // 分别为数据栈和最小值栈
+        private Stack<Integer> stackData;
+        private Stack<Integer> stackMin;
+
+        // 因为每次都是创建新的栈，因此使用构造函数
+        public MyStack1() {
+            this.stackData = new Stack<Integer>();
+            this.stackMin = new Stack<Integer>();
+        }
+
+        // 生成最小元素栈
+        public void push(int newNum) {
+            // 如果最小元素栈中没有元素，就将新加入的元素同时压入最小栈，否则需要比较当前数和最小栈中的地栈顶比较，返回最小
+            if (this.stackMin.isEmpty()) {
+                this.stackMin.push(newNum);
+            } else if (newNum <= this.getmin()) {
+                this.stackMin.push(newNum);
+            }
+            // Data 栈肯定压入最新的数
+            this.stackData.push(newNum);
+        }
+
+        public int pop() {
+            if (this.stackData.isEmpty()) {
+                throw new RuntimeException("Your stack is empty.");
+            }
+            int value = this.stackData.pop();
+            if (value == this.getmin()) {
+                this.stackMin.pop();
+            }
+            return value;
+        }
+
+        // peek() 返回 min 栈栈顶，但是不弹出；
+        public int getmin() {
+            if (this.stackMin.isEmpty()) {
+                throw new RuntimeException("Your stack is empty.");
+            }
+            return this.stackMin.peek();
+        }
+    }
+
+
+    /**
+     * 下面方法和上面的唯一区别就是当新压入的数据大于原来 Min栈中栈顶的时候，将 Min 栈顶的元素再次压入；
+     */
+    public static class MyStack2 {
+        private Stack<Integer> stackData;
+        private Stack<Integer> stackMin;
+
+        public MyStack2() {
+            this.stackData = new Stack<Integer>();
+            this.stackMin = new Stack<Integer>();
+        }
+
+        public void push(int newNum) {
+            if (this.stackMin.isEmpty()) {
+                this.stackMin.push(newNum);
+            } else if (newNum < this.getmin()) {
+                this.stackMin.push(newNum);
+            } else {
+                int newMin = this.stackMin.peek();
+                this.stackMin.push(newMin);
+            }
+            this.stackData.push(newNum);
+        }
+
+        public int pop() {
+            if (this.stackData.isEmpty()) {
+                throw new RuntimeException("Your stack is empty.");
+            }
+            this.stackMin.pop();
+            return this.stackData.pop();
+        }
+
+        public int getmin() {
+            if (this.stackMin.isEmpty()) {
+                throw new RuntimeException("Your stack is empty.");
+            }
+            return this.stackMin.peek();
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("=====方法一获得的实时最小值和 pop 方法测试========");
+        MyStack1 stack1 = new MyStack1();
+        stack1.push(3);
+        System.out.println("加入 3 之后栈中最小值：" + stack1.getmin());
+        stack1.push(4);
+        System.out.println("加入 4 之后栈中最小值：" + stack1.getmin());
+        stack1.push(1);
+        System.out.println("加入 1 之后栈中最小值：" + stack1.getmin());
+        System.out.println(stack1.pop());
+        System.out.println("弹出栈头之后最小值：" + stack1.getmin());
+
+        System.out.println("=====方法二获得的实时最小值和 pop 方法测试========");
+        MyStack2 stack2 = new MyStack2();
+        stack2.push(3);
+        System.out.println(stack2.getmin());
+        stack2.push(4);
+        System.out.println(stack2.getmin());
+        stack2.push(1);
+        System.out.println(stack2.getmin());
+        System.out.println(stack2.pop());
+        System.out.println(stack2.getmin());
+    }
+}
+
+```
+
+### （三）仅用队列结构实现栈结构
+
+**注意：** 因为操作系统的内存操作时从低到高，而应用程序的内存操作时从高到低（防止内存冲突），一般栈顶的内存地址小于栈底的内存地址； 
+
+**示例**：放入队列顺序是 1,2,3,4,5；保证出来的顺序为：5,4,3,2,1；
+
+- 首先准备两个队列：data 队列和 help 队列；
+- 然后将数据放入 data 队列中，即以数组描述为：5 4 3 2 1，然后将后面四个 1,2 3,4 压入 help 队列中，然后返回 data 队列中元素 5；
+- 然后将 data 和 help 指向的队列互换；
+- 然后将新的 data 队列（即原来的 help 队列）中的 1,2,3 放入 新的 help 队列中（即原来的 data 队列中），然后返回 data 中的数据；
+- 然后互换引用，以此循环；
+
+```java
+/**
+    * 
+    * @ClassName: QueueConvertToStack
+    * @Description:使用两个队列实现栈结构
+    * @author Administrator
+    * @date 2020-03-02 00:27:50
+    */
+    public static class QueueConvertToStack {
+        private Queue<Integer> data;
+        private Queue<Integer> help;
+
+        public QueueConvertToStack() {
+            // 用双向链表实现，也可以使用动态数组
+            data = new LinkedList<Integer>();
+            help = new LinkedList<Integer>();
+        }
+
+        // 压数的时候直接在 data 中将该数压入
+        public void push(int pushInt) {
+            data.add(pushInt);
+        }
+
+        // 实现弹出一个数
+        public int pop() {
+            if (data.isEmpty()) {
+                throw new RuntimeException("Stack is empty!");
+            }
+            // 当 data 队列中不止一个数，将 data中所有数放进 help 中，当 data 中只剩一个数时候停止，然后将该数弹出并返回
+            while (data.size() > 1) {
+                help.add(data.poll());
+            }
+            int res = data.poll();
+            // 改变两个引用，就是 Help 栈变 data 栈， data 栈变  help 栈；
+            swap();
+            return res;
+        }
+
+        public int peek() {
+            if (data.isEmpty()) {
+                throw new RuntimeException("Stack is empty!");
+            }
+            while (data.size() != 1) {
+                help.add(data.poll());
+            }
+            int res = data.poll();
+            help.add(res);
+            swap();
+            return res;
+		}
+
+        private void swap() {
+            Queue<Integer> tmp = help;
+            help = data;
+            data = tmp;
+        }
+    }
+```
+
+### （四）仅用栈结构实现队列结构
+
+示例：放入栈的顺序为：1,2,3,4,5 保证拿出顺序为：1,2,3,4,5； 首先将数据放入 push 栈中，形成：5,4,3,2,1，然后将其全部拿出 push 到 pop 栈中，变成了 1,2,3,4，5；然后在 pop 栈中依次从栈顶取出所有元素即可；
+
+ **要求**：如果 push 栈中决定往 pop 栈中倒数据，则一次必须倒完； 如果 pop 栈中仍有数据，则 push 栈不能往 pop 栈中倒数据；
+
+```java
+/**
+     * 
+     * @ClassName: StackConvertToQueue
+     * @Description: 使用两个栈实现队列
+     * @author Administrator
+     * @date 2020-03-02 00:27:39
+     */
+    public static class StackConvertToQueue {
+        // 分别表示 Data 栈和 help 栈
+        private Stack<Integer> stackPush;
+        private Stack<Integer> stackPop;
+
+        public StackConvertToQueue() {
+            stackPush = new Stack<Integer>();
+            stackPop = new Stack<Integer>();
+        }
+
+        // 向 push 栈中加入数据
+        public void push(int pushInt) {
+            stackPush.push(pushInt);
+        }
+
+        // 将 push 栈中数据全部倒入 pop 栈中，然后返回 Pop 栈顶元素
+        public int poll() {
+            if (stackPop.empty() && stackPush.empty()) {
+                throw new RuntimeException("Queue is empty!");
+            } else if (stackPop.empty()) {
+                // 将 push 栈中所有元素一次性全部倒入 pop 栈中
+                while (!stackPush.empty()) {
+                    stackPop.push(stackPush.pop());
+                }
+            }
+            // 最后弹出 pop 栈顶元素即可
+            return stackPop.pop();
+        }
+
+        // 将 push 栈中数据全部倒入 Pop 栈，然后仅仅复制返回 pop 栈顶元素
+        public int peek() {
+            if (stackPop.empty() && stackPush.empty()) {
+                throw new RuntimeException("Queue is empty!");
+            } else if (stackPop.empty()) {
+                while (!stackPush.empty()) {
+                    stackPop.push(stackPush.pop());
+                }
+            }
+            return stackPop.peek();
+        }
+    }
+
+```
+
