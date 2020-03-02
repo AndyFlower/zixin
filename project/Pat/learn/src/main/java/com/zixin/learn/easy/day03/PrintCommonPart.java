@@ -1,8 +1,11 @@
 package com.zixin.learn.easy.day03;
 
 /**
- * @author GJXAIOU
- * 打印两个有序列表公共部分
+ * 
+ * @ClassName: PrintCommonPart
+ * @Description:打印两个有序列表公共部分
+ * @author Administrator
+ * @date 2020-03-02 22:35:01
  */
 public class PrintCommonPart {
 

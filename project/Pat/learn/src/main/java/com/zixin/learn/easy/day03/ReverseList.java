@@ -1,8 +1,11 @@
 package com.zixin.learn.easy.day03;
 
 /**
- * @author GJXAIOU
- * 翻转单向链表和双向链表
+ * 
+ * @ClassName: ReverseList
+ * @Description:翻转单向链表和双向链表
+ * @author Administrator
+ * @date 2020-03-02 22:16:00
  */
 public class ReverseList {
 

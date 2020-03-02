@@ -3,8 +3,11 @@ package com.zixin.learn.easy.day03;
 import java.util.Stack;
 
 /**
- * @author GJXAIOU
- * 判断链表是否是一个回文串
+ * 
+ * @ClassName: IsPalindromeList
+ * @Description: 判断链表是否是一个回文串
+ * @author Administrator
+ * @date 2020-03-02 22:39:44
  */
 public class IsPalindromeList {
 
@@ -70,9 +73,9 @@ public class IsPalindromeList {
         Node slowPointer = head;
         Node fastPointer = head;
         // 寻找中间节点
-        while (fastPointer.next != null && fastPointer.next.next != null) {
-            slowPointer = slowPointer.next;
-            fastPointer = fastPointer.next.next;
+        while (fastPointer.next != null && fastPointer.next.next != null) {//寻找中间结点
+            slowPointer = slowPointer.next;//慢指针到中间
+            fastPointer = fastPointer.next.next;//快指针到最后
         }
         // 快指针指向右半部分第一个节点
         fastPointer = slowPointer.next;

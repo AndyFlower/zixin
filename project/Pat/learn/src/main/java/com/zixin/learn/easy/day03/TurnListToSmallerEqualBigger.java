@@ -1,8 +1,11 @@
 package com.zixin.learn.easy.day03;
 
 /**
- * @author GJXAIOU
- * 将链表分为小于、等于、大于三个部分
+ * 
+ * @ClassName: TurnListToSmallerEqualBigger
+ * @Description: 将链表分为小于、等于、大于三个部分
+ * @author Administrator
+ * @date 2020-03-02 23:10:46
  */
 public class TurnListToSmallerEqualBigger {
 

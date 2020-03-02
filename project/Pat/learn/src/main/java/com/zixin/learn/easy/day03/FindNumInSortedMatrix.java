@@ -1,8 +1,11 @@
 package com.zixin.learn.easy.day03;
 
 /**
- * @author GJXAIOU
- * 在行列都排序好的矩阵中查找值
+ * 
+ * @ClassName: FindNumInSortedMatrix
+ * @Description:在行列都排序好的矩阵中查找值
+ * @author Administrator
+ * @date 2020-03-02 22:29:36
  */
 public class FindNumInSortedMatrix {
 

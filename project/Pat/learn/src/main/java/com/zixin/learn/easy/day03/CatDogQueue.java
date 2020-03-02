@@ -4,8 +4,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * 猫狗队列问题
- * @author GJXAIOU
+ * 
+ * @ClassName: CatDogQueue
+ * @Description: 猫狗队列问题
+ * @author Administrator
+ * @date 2020-03-02 19:28:08
  */
 public class CatDogQueue {
 

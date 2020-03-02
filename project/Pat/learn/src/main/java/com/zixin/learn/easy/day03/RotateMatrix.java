@@ -1,8 +1,11 @@
 package com.zixin.learn.easy.day03;
 
 /**
- * @author GJXAIOU
- * 正方形矩阵顺时针翻转 90 度
+ * 
+ * @ClassName: RotateMatrix
+ * @Description: 正方形矩阵顺时针翻转 90 度
+ * @author Administrator
+ * @date 2020-03-02 22:06:56
  */
 public class RotateMatrix {
 
@@ -30,8 +33,8 @@ public class RotateMatrix {
         // i 相当于圈数，从0 ~ times -1;（times 为右下角和左上角列数差），因为只需要交换 times 次就可以完成全部交换
         // 这里的圈数是指每一层矩阵中每次矩阵元素交换次数，
         // 具体的交换为一次换四个（对应一边一个）
-        for (int i = 0; i != times; i++) {
-            tmp = matrix[leftTopRow][leftTopColumn + i];
+        for (int i = 0; i != times; i++) {//一行有4个数 是需要找3个 
+            tmp = matrix[leftTopRow][leftTopColumn + i];//原始出发点
             matrix[leftTopRow][leftTopColumn + i] = matrix[rightBottomRow - i][leftTopColumn];
             matrix[rightBottomRow - i][leftTopColumn] = matrix[rightBottomRow][rightBottomColumn - i];
             matrix[rightBottomRow][rightBottomColumn - i] = matrix[leftTopRow + i][rightBottomColumn];

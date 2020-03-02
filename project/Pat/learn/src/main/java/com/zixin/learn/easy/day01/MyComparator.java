@@ -4,7 +4,13 @@ package com.zixin.learn.easy.day01;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-
+/**
+ * 
+ * @ClassName: MyComparator
+ * @Description: 比较器
+ * @author Administrator
+ * @date 2020-03-01 23:37:59
+ */
 public class MyComparator {
 
 	// 使用了内部类

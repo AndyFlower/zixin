@@ -1,11 +1,12 @@
 package com.zixin.learn.easy.day03;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * @author GJXAIOU
- * 判断两个单链表是否相交，如果相交返回第一个相交节点，反之返回 Null
+ * 
+ * @ClassName: FindFirstIntersectNode
+ * @Description: 判断两个单链表是否相交，如果相交返回第一个相交节点，反之返回 Null
+ * @author Administrator
+ * @date 2020-03-02 23:41:36
  */
 public class FindFirstIntersectNode {
 

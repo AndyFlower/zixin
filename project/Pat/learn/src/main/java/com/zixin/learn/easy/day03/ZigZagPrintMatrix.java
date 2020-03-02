@@ -1,8 +1,11 @@
 package com.zixin.learn.easy.day03;
 
 /**
- * @author GJXAIOU
- * 之字形打印矩阵中所有元素
+ * 
+ * @ClassName: ZigZagPrintMatrix
+ * @Description: 之字形打印矩阵中所有元素
+ * @author Administrator
+ * @date 2020-03-02 22:22:17
  */
 public class ZigZagPrintMatrix {
 

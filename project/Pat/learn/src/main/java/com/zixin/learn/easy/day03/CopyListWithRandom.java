@@ -2,6 +2,13 @@ package com.zixin.learn.easy.day03;
 
 import java.util.HashMap;
 
+/**
+ * 
+ * @ClassName: CopyListWithRandom
+ * @Description: 拷贝带随机结点的链表
+ * @author Administrator
+ * @date 2020-03-02 23:24:35
+ */
 public class CopyListWithRandom {
 
 	public static class Node {

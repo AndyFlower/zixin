@@ -1,8 +1,11 @@
 package com.zixin.learn.easy.day03;
 
 /**
- * @author GJXAIOU
- * 转圈打印矩阵
+ * 
+ * @ClassName: PrintMatrixSpiralOrder
+ * @Description: 转圈打印矩阵
+ * @author Administrator
+ * @date 2020-03-02 21:56:00
  */
 public class PrintMatrixSpiralOrder {
 
@@ -27,25 +30,25 @@ public class PrintMatrixSpiralOrder {
      * @param rightBottomColumn：右下角的列
      */
     public static void printEdge(int[][] matrix, int leftTopRow, int leftTopColumn, int rightBottomRow, int rightBottomColumn) {
-        // 如果 Matrix 只有一行
+        // 如果 Matrix 只有一行  左上和右下在同一行  说明只有一行
         if (leftTopRow == rightBottomRow) {
             for (int i = leftTopColumn; i <= rightBottomColumn; i++) {
                 System.out.print(matrix[leftTopRow][i] + " ");
             }
-            // 如果 Matrix 只有一列
+            // 如果 Matrix 只有一列 左上和右下在同一列  说明只有一列
         } else if (leftTopColumn == rightBottomColumn) {
             for (int i = leftTopRow; i <= rightBottomRow; i++) {
                 System.out.print(matrix[i][leftTopColumn] + " ");
             }
         } else {
-            // 打印四条边
+            // 打印四条边  依次打印 上 右  下 左
             int curR = leftTopRow;
             int curC = leftTopColumn;
-            while (curC != rightBottomColumn) {
+            while (curC != rightBottomColumn) {//从左上角列开始打印到右下角的列的一行
                 System.out.print(matrix[leftTopRow][curC] + " ");
                 curC++;
             }
-            while (curR != rightBottomRow) {
+            while (curR != rightBottomRow) {//左上角的行开始打印右边的列 
                 System.out.print(matrix[curR][rightBottomColumn] + " ");
                 curR++;
             }
