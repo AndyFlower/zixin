@@ -4,14 +4,21 @@ import java.util.Stack;
 
 public class Problem_01_GetMinStack {
 	public static class MyStack1 {
+		//数据栈
 		private Stack<Integer> stackData;
+		//最小值栈
 		private Stack<Integer> stackMin;
 
+		//构造函数，初始化两个栈
 		public MyStack1() {
 			this.stackData = new Stack<Integer>();
 			this.stackMin = new Stack<Integer>();
 		}
 
+		/**
+		 * push:数据栈直接放入  最小值栈如果为空则放入，否则比较新值和最小值栈顶，只有新值更小的时候才放入
+		 * @param newNum
+		 */
 		public void push(int newNum) {
 			if (this.stackMin.isEmpty()) {
 				this.stackMin.push(newNum);
@@ -21,6 +28,10 @@ public class Problem_01_GetMinStack {
 			this.stackData.push(newNum);
 		}
 
+		/**
+		 * pop:数据栈取一个元素，还要和最小值栈比较，如果当前取出的数和最小值栈相等，则最小值栈pop，并且把数据返回
+		 * @return
+		 */
 		public int pop() {
 			if (this.stackData.isEmpty()) {
 				throw new RuntimeException("Your stack is empty.");
@@ -32,6 +43,10 @@ public class Problem_01_GetMinStack {
 			return value;
 		}
 
+		/**
+		 * 获取最小元素 ：取最小值栈的栈顶
+		 * @return
+		 */
 		public int getmin() {
 			if (this.stackMin.isEmpty()) {
 				throw new RuntimeException("Your stack is empty.");
