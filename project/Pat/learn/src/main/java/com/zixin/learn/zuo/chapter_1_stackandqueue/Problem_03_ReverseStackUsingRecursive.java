@@ -4,6 +4,10 @@ import java.util.Stack;
 
 public class Problem_03_ReverseStackUsingRecursive {
 
+	/**
+	 * @Desc 逆序一个栈
+	 * @param stack
+	 */
 	public static void reverse(Stack<Integer> stack) {
 		if (stack.isEmpty()) {
 			return;
@@ -13,6 +17,11 @@ public class Problem_03_ReverseStackUsingRecursive {
 		stack.push(i);
 	}
 
+	/**
+	 * @Desc 获取栈底元素返回并移除
+	 * @param stack
+	 * @return
+	 */
 	public static int getAndRemoveLastElement(Stack<Integer> stack) {
 		int result = stack.pop();
 		if (stack.isEmpty()) {

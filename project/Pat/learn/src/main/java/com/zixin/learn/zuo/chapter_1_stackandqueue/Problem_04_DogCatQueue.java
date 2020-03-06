@@ -29,6 +29,11 @@ public class Problem_04_DogCatQueue {
 		}
 	}
 
+	/**
+	 * @Desc 新增一个类  为每个对象加上一个时间戳计数
+	 * @author sangliping
+	 *
+	 */
 	public static class PetEnterQueue {
 		private Pet pet;
 		private long count;
@@ -52,16 +57,24 @@ public class Problem_04_DogCatQueue {
 	}
 
 	public static class DogCatQueue {
+		//dog队列
 		private Queue<PetEnterQueue> dogQ;
+		//cat队列
 		private Queue<PetEnterQueue> catQ;
+		//计数器
 		private long count;
 
+		//构造函数，初始化一个catQ和dogQ 并设置计数器为0
 		public DogCatQueue() {
 			this.dogQ = new LinkedList<PetEnterQueue>();
 			this.catQ = new LinkedList<PetEnterQueue>();
 			this.count = 0;
 		}
 
+		/**
+		 * 队列中添加元素，根据类型来判断进入那个队列
+		 * @param pet
+		 */
 		public void add(Pet pet) {
 			if (pet.getPetType().equals("dog")) {
 				this.dogQ.add(new PetEnterQueue(pet, this.count++));
@@ -72,15 +85,24 @@ public class Problem_04_DogCatQueue {
 			}
 		}
 
+		/**
+		   * 按进队的顺序弹出一个元素 两个队列都不为空的时候，比较队头哪个小弹出哪个
+		 * @return
+		 */
 		public Pet pollAll() {
 			if (!this.dogQ.isEmpty() && !this.catQ.isEmpty()) {
+				//peek()获取元素  不弹出
 				if (this.dogQ.peek().getCount() < this.catQ.peek().getCount()) {
+					//dog的计数小弹dog
 					return this.dogQ.poll().getPet();
 				} else {
+					//cat的计数小弹cat
 					return this.catQ.poll().getPet();
 				}
+				//dog不为空，弹出dog
 			} else if (!this.dogQ.isEmpty()) {
 				return this.dogQ.poll().getPet();
+				//cat不为空，弹出cat
 			} else if (!this.catQ.isEmpty()) {
 				return this.catQ.poll().getPet();
 			} else {
@@ -88,6 +110,10 @@ public class Problem_04_DogCatQueue {
 			}
 		}
 
+		/**
+		 * @Desc dog不为空，则弹出dog
+		 * @return
+		 */
 		public Dog pollDog() {
 			if (!this.isDogQueueEmpty()) {
 				return (Dog) this.dogQ.poll().getPet();
@@ -95,7 +121,10 @@ public class Problem_04_DogCatQueue {
 				throw new RuntimeException("Dog queue is empty!");
 			}
 		}
-
+		/**
+		 * @Desc cat不为空，则弹出cat
+		 * @return
+		 */
 		public Cat pollCat() {
 			if (!this.isCatQueueEmpty()) {
 				return (Cat) this.catQ.poll().getPet();

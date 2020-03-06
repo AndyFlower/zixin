@@ -56,14 +56,22 @@ public class Problem_01_GetMinStack {
 	}
 
 	public static class MyStack2 {
+		//数据栈
 		private Stack<Integer> stackData;
+		//最小值栈
 		private Stack<Integer> stackMin;
 
+		//构造函数，初始化数据栈和最小值栈
 		public MyStack2() {
 			this.stackData = new Stack<Integer>();
 			this.stackMin = new Stack<Integer>();
 		}
 
+		/**
+		 * 栈内添加元素：
+		 *     数据栈直接添加，最小值栈如果为空直接添加，如果新数据小于等于最小值栈的栈顶将新数据入栈，否则将最小值栈的栈顶重复压入栈中
+		 * @param newNum
+		 */
 		public void push(int newNum) {
 			if (this.stackMin.isEmpty()) {
 				this.stackMin.push(newNum);
@@ -76,6 +84,10 @@ public class Problem_01_GetMinStack {
 			this.stackData.push(newNum);
 		}
 
+		/**
+		 * pop:不空的话数据栈和最小值栈同时pop
+		 * @return
+		 */
 		public int pop() {
 			if (this.stackData.isEmpty()) {
 				throw new RuntimeException("Your stack is empty.");
@@ -84,6 +96,10 @@ public class Problem_01_GetMinStack {
 			return this.stackData.pop();
 		}
 
+		/**
+		 * 获取最小值：最小值栈的栈顶就是当前的最小值
+		 * @return
+		 */
 		public int getmin() {
 			if (this.stackMin.isEmpty()) {
 				throw new RuntimeException("Your stack is empty.");
