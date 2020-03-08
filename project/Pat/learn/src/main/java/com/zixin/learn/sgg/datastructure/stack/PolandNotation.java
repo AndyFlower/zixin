@@ -141,7 +141,7 @@ public class PolandNotation {
 	 */
 	
 	public static int calculate(List<String> ls) {
-		// 创建给栈, 只需要一个栈即可
+		// 创建一个栈, 只需要一个栈即可
 		Stack<String> stack = new Stack<String>();
 		// 遍历 ls
 		for (String item : ls) {

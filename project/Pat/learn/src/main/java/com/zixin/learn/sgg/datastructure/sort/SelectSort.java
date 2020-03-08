@@ -3,7 +3,13 @@ package com.zixin.learn.sgg.datastructure.sort;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
-//选择排序
+/**
+ * 
+ * @ClassName: SelectSort
+ * @Description: 选择排序
+ * @author Administrator
+ * @date 2020-03-08 16:46:31
+ */
 public class SelectSort {
 
 	public static void main(String[] args) {

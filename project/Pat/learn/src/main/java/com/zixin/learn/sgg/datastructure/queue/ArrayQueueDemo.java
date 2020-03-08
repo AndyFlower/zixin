@@ -2,7 +2,13 @@ package com.zixin.learn.sgg.datastructure.queue;
 
 
 import java.util.Scanner;
-
+/**
+ * 
+ * @ClassName: ArrayQueueDemo
+ * @Description: 使用数组实现队列
+ * @author Administrator
+ * @date 2020-03-03 22:35:10
+ */
 public class ArrayQueueDemo {
 
 	public static void main(String[] args) {
@@ -34,7 +40,6 @@ public class ArrayQueueDemo {
 					int res = queue.getQueue();
 					System.out.printf("取出的数据是%d\n", res);
 				} catch (Exception e) {
-					// TODO: handle exception
 					System.out.println(e.getMessage());
 				}
 				break;
@@ -43,7 +48,6 @@ public class ArrayQueueDemo {
 					int res = queue.headQueue();
 					System.out.printf("队列头的数据是%d\n", res);
 				} catch (Exception e) {
-					// TODO: handle exception
 					System.out.println(e.getMessage());
 				}
 				break;

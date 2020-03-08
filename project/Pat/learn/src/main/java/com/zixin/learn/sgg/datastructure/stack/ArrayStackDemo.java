@@ -78,8 +78,8 @@ class ArrayStack {
 			System.out.println("栈满");
 			return;
 		}
-		top++;
-		stack[top] = value;
+		top++;//入栈的时候栈顶先++
+		stack[top] = value;//再赋值
 	}
 	//出栈-pop, 将栈顶的数据返回
 	public int pop() {
@@ -88,8 +88,8 @@ class ArrayStack {
 			//抛出异常
 			throw new RuntimeException("栈空，没有数据~");
 		}
-		int value = stack[top];
-		top--;
+		int value = stack[top];//出栈的时候，先获取值
+		top--;//再减减
 		return value;
 	}
 	//显示栈的情况[遍历栈]， 遍历时，需要从栈顶开始显示数据
