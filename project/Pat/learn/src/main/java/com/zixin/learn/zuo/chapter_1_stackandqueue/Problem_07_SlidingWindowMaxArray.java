@@ -18,7 +18,7 @@ public class Problem_07_SlidingWindowMaxArray {
 				//将队列尾的数据删掉
 				qmax.pollLast();
 			}
-			//如果队列尾空，或者队列队尾的下标所对应的值大于当前的值，则将当前的值放入队尾
+			//如果队列为空，或者队列队尾的下标所对应的值大于当前的值，则将当前的值放入队尾
 			qmax.addLast(i);
 			//如果队列的第一个值等于i-w说明队列中存放的队头元素已过期，将队头元素移除
 			if (qmax.peekFirst() == i - w) {
