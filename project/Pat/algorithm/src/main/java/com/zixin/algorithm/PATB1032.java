@@ -25,7 +25,7 @@ StreamTokenizer的nextToken方法读取下一个标记
 调用nextToken()方法以后，如果标记是字符串，可用 String s=st.sval,如果是整数用 int n=(int) st.nval得到。 
 这个输入是一整行就可以 分析是先1个 然后2个2个
 	 */
-public static void main(String[] args) throws IOException {
+public static void main1(String[] args) throws IOException {
 	StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
    //java.io.StreamTokenizer.nextToken() 方法分析从标记生成器的输入流中的下一个标记
 	in.nextToken();
@@ -49,7 +49,7 @@ public static void main(String[] args) throws IOException {
 
 }
 
-public static void main1(String[] args) {
+public static void main(String[] args) {
 	Scanner input = new Scanner(System.in);
 	int n = input.nextInt();
 	int index = 0;
