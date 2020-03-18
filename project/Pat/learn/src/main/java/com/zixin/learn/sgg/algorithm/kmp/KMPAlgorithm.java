@@ -7,7 +7,6 @@ import java.util.Arrays;
 public class KMPAlgorithm {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		String str1 = "BBC ABCDAB ABCDABCDABDE";
 		String str2 = "ABCDABD";
 		//String str2 = "BBC";
@@ -60,7 +59,7 @@ public class KMPAlgorithm {
 			//直到我们发现 有  dest.charAt(i) == dest.charAt(j)成立才退出
 			//这时kmp算法的核心点
 			while(j > 0 && dest.charAt(i) != dest.charAt(j)) {
-				j = next[j-1];
+				j = next[j-1];//相当于回溯
 			}
 			
 			//当dest.charAt(i) == dest.charAt(j) 满足时，部分匹配值就是+1
