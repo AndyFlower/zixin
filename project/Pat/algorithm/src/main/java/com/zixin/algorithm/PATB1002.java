@@ -19,6 +19,7 @@ public class PATB1002 {
 				System.out.print(" ");
 			}
 		}
+		s.close();
 
 	}
 
@@ -31,6 +32,7 @@ public class PATB1002 {
 		for (int i = 0; i < chars.length; i++) {
 			sum = sum + (chars[i] - '0');
 		}
+		sc.close();
 		char[] c = (sum + "").toCharArray();
 		boolean flag = false;
 		for (int j = 0; j < c.length; j++) {

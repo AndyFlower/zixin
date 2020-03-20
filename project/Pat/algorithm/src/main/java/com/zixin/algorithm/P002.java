@@ -19,5 +19,6 @@ public class P002 {
 		
 		Scanner s = new Scanner(System.in);
 		System.out.println(s.nextLine());
+		s.close();
 	}
 }

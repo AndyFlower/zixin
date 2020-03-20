@@ -91,6 +91,7 @@ public class PATB1003 {
             else
                 System.out.println("NO");
         }
+        sc.close();
 
     }
 }

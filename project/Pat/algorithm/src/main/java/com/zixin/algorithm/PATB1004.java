@@ -13,6 +13,7 @@ public class PATB1004 {
 				arrs[i][j]=sc.next();
 			}
 		}
+		sc.close();
 		String maxName =arrs[0][0];
 		String maxNo = arrs[0][1];
 		String minName = arrs[0][0];
