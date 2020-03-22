@@ -1,10 +1,11 @@
 package com.zixin.learn.easy.day04;
 
 /**
- * 折纸问题
- *
- * @author GJXAIOU
- * 将一棵头结点为 down，然后左孩子为 down，右孩子为 up 的二叉树按照 右、中、左顺序打印即可。
+ * 
+ * @ClassName: PaperFolding
+ * @Description: 将一棵头结点为 down，然后左孩子为 down，右孩子为 up 的二叉树按照 右、中、左顺序打印即可。
+ * @author Administrator
+ * @date 2020-03-22 11:16:27
  */
 public class PaperFolding {
 

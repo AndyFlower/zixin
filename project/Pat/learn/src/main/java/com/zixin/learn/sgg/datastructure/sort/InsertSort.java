@@ -4,6 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
+/**
+ * 
+ * @ClassName: InsertSort
+ * @Description:插入排序
+ * @author Administrator
+ * @date 2020-03-08 17:07:44
+ */
 public class InsertSort {
 
 	public static void main(String[] args) {

@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 查找两个节点是否在同一个集合中
- * @author GJXAIOU
+ * 
+ * @ClassName: UnionFind
+ * @Description: 查找两个节点是否在同一个集合中
+ * @author Administrator
+ * @date 2020-03-22 22:18:15
  */
 public class UnionFind {
 

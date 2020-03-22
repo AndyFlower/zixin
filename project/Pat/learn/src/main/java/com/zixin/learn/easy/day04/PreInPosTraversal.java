@@ -3,12 +3,21 @@ package com.zixin.learn.easy.day04;
 import java.util.Stack;
 
 /**
- * 递归版和非递归版本的先序、中序、后序遍历
- *
- * @author GJXAIOU
+ * 
+ * @ClassName: PreInPosTraversal
+ * @Description: 递归版和非递归版本的先序、中序、后序遍历
+ * @author Administrator
+ * @date 2020-03-21 17:35:38
  */
 public class PreInPosTraversal {
 
+	/**
+	 * 
+	 * @ClassName: Node
+	 * @Description: 定义一个树的结点
+	 * @author Administrator
+	 * @date 2020-03-21 17:36:18
+	 */
     public static class Node {
         public int value;
         public Node left;
@@ -21,6 +30,7 @@ public class PreInPosTraversal {
 
     /**
      * 递归版本实现先序、中序、后序遍历，唯一变化就是 print() 函数位置不同。
+     * 
      */
     // 先序遍历：中、左、右
     public static void preOrderRecur(Node head) {
@@ -68,10 +78,10 @@ public class PreInPosTraversal {
             while (!stack.isEmpty()) {
                 head = stack.pop();
                 System.out.print(head.value + " ");
-                if (head.right != null) {
+                if (head.right != null) {//有右先压右
                     stack.push(head.right);
                 }
-                if (head.left != null) {
+                if (head.left != null) {//再压左
                     stack.push(head.left);
                 }
             }
@@ -79,27 +89,48 @@ public class PreInPosTraversal {
         System.out.println();
     }
 
+    /**
+     * 
+     * @Title: inOrderUnRecur
+     * @Description: head不空或者栈不空  头结点压进去 然后一直往左走  
+     * 如果当前结点为空 从栈哪一个  打印，当前结点向右 ，如果当前结点不空 则压入栈  向左
+     * @author Administrator
+     * @date 2020-03-21 17:49:04
+     * @param @param head 参数
+     * @return void 返回类型
+     * @throws
+     */
     public static void inOrderUnRecur(Node head) {
         System.out.print("in-order: ");
         if (head != null) {
             Stack<Node> stack = new Stack<Node>();
-            while (!stack.isEmpty() || head != null) {
+            while (!stack.isEmpty() || head != null) {//注意这里  是栈不为空或者头结点不为空
                 // 首先压入头结点然后一直压入所有的左孩子
                 if (head != null) {
                     stack.push(head);
                     head = head.left;
                     // 弹出栈顶然后一直弹出右孩子
                 } else {
-                    head = stack.pop();
+                    head = stack.pop();//拿出元素
                     System.out.print(head.value + " ");
-                    head = head.right;
+                    head = head.right;//然后向右
                 }
             }
         }
         System.out.println();
     }
 
-    // 后序遍历：先使用中左右的顺序将元素压入栈中，然后遍历栈弹出即可
+     /**
+      * 
+      * @Title: posOrderUnRecur1
+      * @Description: 后序遍历：先使用中左右的顺序将元素压入栈中，然后遍历栈弹出即可
+      * 使用一个辅助栈    左右中   根据前面的先序可以实现 中右左   然后不打印  放入辅助栈   最后再打印辅助栈  就是逆序   左右中
+      * @author Administrator
+      * @date 2020-03-21 17:59:53
+      * @param @param head 参数
+      * @return void 返回类型
+      * @throws
+      */
     public static void posOrderUnRecur1(Node head) {
         System.out.print("pos-order: ");
         if (head != null) {
@@ -126,7 +157,17 @@ public class PreInPosTraversal {
         System.out.println();
     }
 
-    // 另一种实现后续：使用一个栈
+    /**
+     * 
+     * @Title: posOrderUnRecur2
+     * @Description: 另一种实现后续：使用一个栈 
+     * 上一个方法使用了2个栈  这个只使用一个栈
+     * @author Administrator
+     * @date 2020-03-21 18:03:17
+     * @param @param h 参数
+     * @return void 返回类型
+     * @throws
+     */
     public static void posOrderUnRecur2(Node h) {
         System.out.print("pos-order: ");
         if (h != null) {

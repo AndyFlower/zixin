@@ -4,9 +4,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * 判断是否为搜索二叉树、完全二叉树
- *
- * @author GJXAIOU
+ * 
+ * @ClassName: IsBSTAndCBT
+ * @Description: 判断是否为搜索二叉树、完全二叉树
+ * @author Administrator
+ * @date 2020-03-22 11:38:14
  */
 public class IsBSTAndCBT {
 
@@ -77,7 +79,8 @@ public class IsBSTAndCBT {
             head = queue.poll();
             l = head.left;
             r = head.right;
-            if ((leaf && (l != null || r != null)) || (l == null && r != null)) {
+            if ((leaf && (l != null || r != null)) //有一个不空  后面都必须为叶节点
+            		|| (l == null && r != null)) {//左空 右不空
                 return false;
             }
             if (l != null) {

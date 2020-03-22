@@ -3,9 +3,11 @@ package com.zixin.learn.easy.day05;
 import java.util.HashMap;
 
 /**
- * 完整的 RandomPool 结构
- *
- * @author GJXAIOU
+ * 
+ * @ClassName: RandomPool
+ * @Description: 完整的 RandomPool 结构
+ * @author Administrator
+ * @date 2020-03-22 18:21:14
  */
 public class RandomPool {
 
@@ -26,7 +28,16 @@ public class RandomPool {
                 indexKeyMap.put(size++, key);
             }
         }
-
+        /**
+         * 
+         * @Title: delete
+         * @Description: 删除的时候如果是中间的 不要删除以免出现空缺  将最后一个移动到删除的地方覆盖  然后修改长度就可以
+         * @author Administrator
+         * @date 2020-03-22 18:22:50
+         * @param @param key 参数
+         * @return void 返回类型
+         * @throws
+         */
         public void delete(K key) {
             if (keyIndexMap.containsKey(key)) {
                 int deleteIndex = keyIndexMap.get(key);

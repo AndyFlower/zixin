@@ -1,11 +1,12 @@
 package com.zixin.learn.easy.day05;
 
 /**
- * 使用基本数据结构实现布隆过滤器，如果想减少数组空间，可以使用 Long 类型或者使用矩阵
- * @author GJXIAOU
- * @create 2020/1/14 0014 下午 1:43
+ * 
+ * @ClassName: BloomFilter
+ * @Description: 使用基本数据结构实现布隆过滤器，如果想减少数组空间，可以使用 Long 类型或者使用矩阵
+ * @author Administrator
+ * @date 2020-03-22 18:55:06
  */
-
 public class BloomFilter {
     public static void main(String[] args) {
         // 使用 int 类型，因为一个 int 占 4 位即 32 bit，因此 1000 个 int 数据可以表示 32000bit；

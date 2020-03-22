@@ -1,5 +1,12 @@
 package com.zixin.learn.sgg.datastructure.tree;
 
+/**
+ * 
+ * @ClassName: ArrBinaryTreeDemo
+ * @Description: 顺序存储二叉树遍历
+ * @author Administrator
+ * @date 2020-03-10 23:22:38
+ */
 public class ArrBinaryTreeDemo {
 
 	public static void main(String[] args) {

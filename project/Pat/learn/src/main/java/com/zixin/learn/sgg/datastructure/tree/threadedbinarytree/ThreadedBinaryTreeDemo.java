@@ -1,6 +1,5 @@
 package com.zixin.learn.sgg.datastructure.tree.threadedbinarytree;
 
-import java.util.concurrent.SynchronousQueue;
 
 public class ThreadedBinaryTreeDemo {
 
@@ -31,7 +30,7 @@ public class ThreadedBinaryTreeDemo {
 		System.out.println("10号结点的前驱结点是 ="  + leftNode); //3
 		System.out.println("10号结点的后继结点是="  + rightNode); //1
 		
-		//当线索化二叉树后，能在使用原来的遍历方法
+		//当线索化二叉树后，不能在使用原来的遍历方法
 		//threadedBinaryTree.infixOrder();
 		System.out.println("使用线索化的方式遍历 线索化二叉树");
 		threadedBinaryTree.threadedList(); // 8, 3, 10, 1, 14, 6
@@ -112,7 +111,7 @@ class ThreadedBinaryTree {
 			node.setLeftType(1);
 		}
 		
-		//处理后继结点
+		//处理后继结点   其实是下次处理的时候用移动后的pre结点来处理的
 		if (pre != null && pre.getRight() == null) {
 			//让前驱结点的右指针指向当前结点
 			pre.setRight(node);

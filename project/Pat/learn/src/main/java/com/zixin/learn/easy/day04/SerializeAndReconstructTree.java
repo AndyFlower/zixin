@@ -4,9 +4,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * 序列号和反序列化二叉树
- *
- * @author GJXAIOU
+ * 
+ * @ClassName: SerializeAndReconstructTree
+ * @Description: 序列号和反序列化二叉树
+ * @author Administrator
+ * @date 2020-03-22 11:08:30
  */
 public class SerializeAndReconstructTree {
 
@@ -65,16 +67,16 @@ public class SerializeAndReconstructTree {
         }
         String res = head.value + "!";
         Queue<Node> queue = new LinkedList<Node>();
-        queue.offer(head);
+        queue.offer(head);//头结点放进去
         while (!queue.isEmpty()) {
             head = queue.poll();
-            if (head.left != null) {
+            if (head.left != null) {//左不为空放左
                 res += head.left.value + "!";
                 queue.offer(head.left);
             } else {
                 res += "#!";
             }
-            if (head.right != null) {
+            if (head.right != null) {//右不为空 放右
                 res += head.right.value + "!";
                 queue.offer(head.right);
             } else {

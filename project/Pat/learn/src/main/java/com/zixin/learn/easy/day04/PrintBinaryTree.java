@@ -1,9 +1,11 @@
 package com.zixin.learn.easy.day04;
 
 /**
- * 最直观的打印二叉树
- *
- * @author GJXAIOU
+ * 
+ * @ClassName: PrintBinaryTree
+ * @Description: 最直观的打印二叉树
+ * @author Administrator
+ * @date 2020-03-21 18:18:11
  */
 public class PrintBinaryTree {
 

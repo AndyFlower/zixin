@@ -1,9 +1,11 @@
 package com.zixin.learn.easy.day04;
 
 /**
- * 计算完全二叉树的结点个数
- *
- * @author GJXAIOU
+ * 
+ * @ClassName: CompleteTreeNodeNumber
+ * @Description: 计算完全二叉树的结点个数
+ * @author Administrator
+ * @date 2020-03-22 11:55:02
  */
 public class CompleteTreeNodeNumber {
 
@@ -17,6 +19,17 @@ public class CompleteTreeNodeNumber {
         }
     }
 
+    /**
+     * 
+     * @Title: nodeNum
+     * @Description: 思路： 求右子树的左边界的高度  如果达到了树的高 说明左子树满 递归求右子树即可；    如果小1  说明右子树满  再递归求左子树即可
+     * @author Administrator
+     * @date 2020-03-22 12:06:57
+     * @param @param head
+     * @param @return 参数
+     * @return int 返回类型
+     * @throws
+     */
     public static int nodeNum(Node head) {
         if (head == null) {
             return 0;
@@ -45,6 +58,18 @@ public class CompleteTreeNodeNumber {
         }
     }
 
+    /**
+     * 
+     * @Title: mostLeftLevel
+     * @Description: 左边界到了哪一层
+     * @author Administrator
+     * @date 2020-03-22 12:05:14
+     * @param @param node
+     * @param @param level
+     * @param @return 参数
+     * @return int 返回类型
+     * @throws
+     */
     public static int mostLeftLevel(Node node, int level) {
         while (node != null) {
             level++;

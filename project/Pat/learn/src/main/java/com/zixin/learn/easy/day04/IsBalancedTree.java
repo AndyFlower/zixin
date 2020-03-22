@@ -1,9 +1,11 @@
 package com.zixin.learn.easy.day04;
 
 /**
- * 判断是否为平衡树
- *
- * @author GJXAIOU
+ * 
+ * @ClassName: IsBalancedTree
+ * @Description: 判断是否为平衡树
+ * @author Administrator
+ * @date 2020-03-22 11:17:59
  */
 public class IsBalancedTree {
 
