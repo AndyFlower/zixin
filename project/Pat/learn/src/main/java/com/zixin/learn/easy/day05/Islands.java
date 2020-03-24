@@ -1,9 +1,11 @@
 package com.zixin.learn.easy.day05;
 
 /**
- * 岛问题
- *
- * @author GJXAIOU
+ * 
+ * @ClassName: Islands
+ * @Description: 岛问题
+ * @author Administrator
+ * @date 2020-03-22 22:30:28
  */
 public class Islands {
 
