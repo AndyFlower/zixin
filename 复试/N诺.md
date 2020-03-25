@@ -119,7 +119,22 @@ public class DJ1155 {
 ### 排版类问题
 
 1. 输出字符菱形  1473
+
 2. 旋转矩阵
+
+   ```
+   http://noobdream.com/DreamJudge/Issue/page/1216/
+   ```
+
+   DJXuanzhuanjuzhen.java
+
+3. 矩阵翻转 1134
+
+4. 旋转数字
+
+5. 2048游戏     1472
+
+### 日期类问题
 
 
 

@@ -13,7 +13,7 @@ public class TenToN {
 	 * @throws
 	 */
 	public static void main(String[] args) {
-		int n=100,x=2;
+		int n=100,x=2;//x代表是转几进制
 		int [] s=new int[105];
 		int cnt=0;
 		while(n>0) {
