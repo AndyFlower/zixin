@@ -3,6 +3,9 @@ package com.zixin.algorithm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class PATB1058 {
 
@@ -26,8 +29,13 @@ public class PATB1058 {
 			}
 			tim.setCorrectAnswer(temp);
 		}//录入完正确答案
+		HashMap<Integer ,String> ha = new HashMap<Integer,String>();
 		for(int i=0;i<stuNum;i++) {
 			String s = br.readLine();//学生作答的一行
+			int k=1;
+			for(int j=0;j<s.length();j++) {
+				
+			}
 		}
 		
 		
