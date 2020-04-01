@@ -4,6 +4,11 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author sangliping
+ * @Desc 沙漏可以看做是一个倒三角和一个正三角  三角的
+ */
 public class PATB1027 {
 
 	public static void main(String[] args) {
