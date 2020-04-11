@@ -1,3 +1,0 @@
-SwitchStatementArrow.java:41:20: compiler.err.preview.feature.disabled.plural: (compiler.misc.feature.switch.rules)
-SwitchStatementArrow.java:42:21: compiler.err.preview.feature.disabled.plural: (compiler.misc.feature.multiple.case.labels)
-2 errors
