@@ -47,7 +47,6 @@ public class CircleArrayQueueDemo {
 					int res = queue.headQueue();
 					System.out.printf("队列头的数据是%d\n", res);
 				} catch (Exception e) {
-					// TODO: handle exception
 					System.out.println(e.getMessage());
 				}
 				break;

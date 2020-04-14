@@ -16,9 +16,10 @@ import java.util.Map;
  *
  */
 public class App {
+	@SuppressWarnings({ "unchecked" })
 	public static void main(String[] args) {
-		List exportData = new ArrayList<Map>();  
-	    Map row1 = new LinkedHashMap<String, String>();  
+		List<Map<String, String>> exportData = new ArrayList<Map<String, String>>();  
+	    Map<String, String> row1 = new LinkedHashMap<String, String>();  
 	    row1.put("1", "\'11342432432432423");  
 	    row1.put("2", "124324324324234324324\t");  
 	    row1.put("3", "13432432432423423\t");  
@@ -30,7 +31,7 @@ public class App {
 	    row1.put("3", "23");  
 	    row1.put("4", "24");  
 	    exportData.add(row1);  
-	    LinkedHashMap map = new LinkedHashMap();  
+	    LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();  
 
 	    //设置列名
 	    map.put("1", "第一列名称");  
@@ -47,7 +48,7 @@ public class App {
 	    System.out.println("文件名称：" + fileName2);  
 	}
 
-	public static File createCSVFile(List exportData, LinkedHashMap map, String outPutPath, String fileName) {
+	public static File createCSVFile(List exportData, LinkedHashMap<String, String> map, String outPutPath, String fileName) {
 		File csvFile = null;
 		BufferedWriter csvFileOutputStream = null;
 		try {
