@@ -115,3 +115,4 @@ class factor {
 ### 提交
 
 ![PATA1059提交](image\PATA1059提交.png)
+
