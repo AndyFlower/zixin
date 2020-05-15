@@ -1,0 +1,179 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard
+END
+SendCardInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/SendCardInfo.java
+END
+WeixinCardUserUpdate.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeixinCardUserUpdate.java
+END
+WeiXinUpdateCard.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinUpdateCard.java
+END
+WeiXinBonusRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinBonusRule.java
+END
+WeiXinCardBaseInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCardBaseInfo.java
+END
+Pay_info.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/Pay_info.java
+END
+AddToWeixinResultBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/AddToWeixinResultBean.java
+END
+CardCodeInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/CardCodeInfoBean.java
+END
+UpdateCardCode.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/UpdateCardCode.java
+END
+WeiXinCardDateInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCardDateInfo.java
+END
+WeixinCardUserInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeixinCardUserInfo.java
+END
+WXCardExt.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WXCardExt.java
+END
+LandingPage.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/LandingPage.java
+END
+WeiXinCardInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCardInfo.java
+END
+WeiXinGroupon.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinGroupon.java
+END
+WeixinCardExt.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeixinCardExt.java
+END
+WeiXinCardMemberCard.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCardMemberCard.java
+END
+Swipe_card.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/Swipe_card.java
+END
+WeiXinCardSku.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCardSku.java
+END
+CardListItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/CardListItem.java
+END
+WeixinJsConfig.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeixinJsConfig.java
+END
+WXCard.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WXCard.java
+END
+CommonFieldList.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/CommonFieldList.java
+END
+WeiXinCardCustomCell.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCardCustomCell.java
+END
+UserInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/UserInfo.java
+END
+WeiXinCardCodeType.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCardCodeType.java
+END
+WeiXinCardCustomField.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCardCustomField.java
+END
+WeiXinCard.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/WeiXinCard.java
+END
+ActivateMemberCardInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/weixincard/ActivateMemberCardInfo.java
+END

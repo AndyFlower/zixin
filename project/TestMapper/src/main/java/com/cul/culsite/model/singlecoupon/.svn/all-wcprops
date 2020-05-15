@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon
+END
+ConsumeBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/ConsumeBean.java
+END
+CouponLogsInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CouponLogsInfo.java
+END
+CategoryCouponMerRuleRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CategoryCouponMerRuleRequest.java
+END
+ConsumeProductInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/ConsumeProductInfo.java
+END
+ConsumeResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/ConsumeResponse.java
+END
+CategoryCouponMerRuleInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CategoryCouponMerRuleInfo.java
+END
+CategoryCouponOrderInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CategoryCouponOrderInfo.java
+END
+SingleCouponConsumeData.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/SingleCouponConsumeData.java
+END
+CategoryCouponRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CategoryCouponRequest.java
+END
+CategoryGoodsRuleRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CategoryGoodsRuleRequest.java
+END
+SingleCouponConsumeInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/SingleCouponConsumeInfo.java
+END
+CategoryCouponInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CategoryCouponInfo.java
+END
+CategoryGoodsRuleInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CategoryGoodsRuleInfo.java
+END
+CategoryConponConsumeData.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/vpaytxn/!svn/ver/705/trunk/vpaytxn/src/com/cul/culsite/model/singlecoupon/CategoryConponConsumeData.java
+END

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cul.culsite.dao.expand.MemberMapper" >
+  
+  <select id="addTransactionByMemberId" resultMap="com.cul.culsite.dao.MMemberDTOMapper.ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="com.cul.culsite.dao.MMemberDTOMapper.Base_Column_List" />
+    ,
+    <include refid="com.cul.culsite.dao.MMemberDTOMapper.Blob_Column_List" />
+    from M_MEMBER
+    where MEMBER_ID = #{memberId,jdbcType=VARCHAR} for update
+  </select>
+
+  <select id="selectByExample" resultMap="com.cul.culsite.dao.MMemberDTOMapper.BaseResultMap" parameterType="com.cul.culsite.dto.MMemberDTOCriteria" >
+    select
+    <include refid="com.cul.culsite.dao.MMemberDTOMapper.Base_Column_List" />
+    from M_MEMBER
+    <if test="_parameter != null" >
+      <include refid="com.cul.culsite.dao.MMemberDTOMapper.Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+
+</mapper>

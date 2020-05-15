@@ -1,0 +1,116 @@
+package com.cul.culsite.model.uid;
+
+
+import java.io.UnsupportedEncodingException;
+
+
+/**
+ * Created by rd on 2015/3/11.
+ */
+public class UserBean {
+    // 登录id（手机、邮箱、第三方uid、银商uid, openId等）
+    protected String loginId;
+
+    // 解释loginId字段的类型，简单起见在Constants复用和定义常量
+    // 手机:Constants.MOBILE, 邮箱：Constants.EMAIL, 商户uid：Constants.UID3RD,
+    // 银商uid：Constants.UID, openId：Constants.OPEN_ID, 用户名:Constants.USER_NAME
+    protected String loginIdType;
+
+    // 商户issuerId，用于标识是哪个商户的用户
+    protected String issuerId;
+
+    // 商户渠道，在一个商户issuerId下，如果商户需要区分渠道，则填充此字段
+    protected String channel;
+
+    // 表示商户用户id所在哪个第三方系统
+    protected String thirdPartyType;
+
+    public UserBean() {
+		super();
+	}
+
+	
+
+    // UserData会调用此构造函数
+    protected UserBean(UserBean bean) {
+        this(bean.loginId, bean.loginIdType, bean.issuerId, bean.channel, bean.thirdPartyType);
+    }
+
+    public UserBean(String loginId, String loginIdType, String issuerId) {
+        this(loginId, loginIdType, issuerId, null);
+    }
+
+    public UserBean(String loginId, String loginIdType, String issuerId, String channel) {
+        this(loginId, loginIdType, issuerId, channel, null);
+    }
+
+    public UserBean(String loginId, String loginIdType, String issuerId, String channel, String thirdPartyType) {
+        if (loginId == null) {
+            throw new NullPointerException("loginId must not be null.");
+        }
+        if (loginIdType == null) {
+            throw new NullPointerException("loginIdType must not be null.");
+        }
+        if (issuerId == null) {
+            throw new NullPointerException("issuerId must not be null.");
+        }
+
+        this.loginId = loginId;
+        this.loginIdType = loginIdType;
+        this.issuerId = issuerId;
+        this.channel = channel;
+        this.thirdPartyType = thirdPartyType;
+    }
+
+   
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "loginId='" + loginId + '\'' +
+                ", loginIdType='" + loginIdType + '\'' +
+                ", issuerId='" + issuerId + '\'' +
+                ", channel='" + channel + '\'' +
+                ", thirdPartyType='" + thirdPartyType + '\'' +
+                '}';
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getLoginIdType() {
+        return loginIdType;
+    }
+
+    public void setLoginIdType(String loginIdType) {
+        this.loginIdType = loginIdType;
+    }
+
+    public String getIssuerId() {
+        return issuerId;
+    }
+
+    public void setIssuerId(String issuerId) {
+        this.issuerId = issuerId;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
+    public String getThirdPartyType() {
+        return thirdPartyType;
+    }
+
+    public void setThirdPartyType(String thirdPartyType) {
+        this.thirdPartyType = thirdPartyType;
+    }
+}

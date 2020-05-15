@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cul.culsite.dao.expand.MCardCategoryDTOExpandMapper">
+	<resultMap id="detailInfoResult" type="com.cul.culsite.dto.MproductCategory" >
+	<result column="product_id" property="productId" jdbcType="VARCHAR" />
+	<result column="category_no" property="categoryNo" jdbcType="VARCHAR" />
+	<result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+	<result column="category_clz" property="categoryClz" jdbcType="VARCHAR" />
+	<result column="face_value" property="faceValue" jdbcType="DOUBLE" />
+	<result column="display_position" property="displayPosition" jdbcType="DOUBLE" />
+	<result column="sell_price" property="sellPrice" jdbcType="DOUBLE" />
+	<result column="validity_date" property="validityDate" jdbcType="VARCHAR" />
+	<result column="expire_start_date" property="expireStartDate" jdbcType="VARCHAR" />
+	<result column="expire_end_date" property="expireEndDate" jdbcType="VARCHAR" />
+	<result column="serial_id" property="serialId" jdbcType="NUMERIC" />
+	<result column="sell_start_date" property="sellStartDate" jdbcType="VARCHAR" />
+	<result column="sell_end_date" property="sellEndDate" jdbcType="VARCHAR" />
+	<result column="grounding" property="grounding" jdbcType="VARCHAR" />
+	<result column="logo_path" property="logoPath" jdbcType="VARCHAR" />
+	<result column="card_path" property="cardPath" jdbcType="VARCHAR" />
+	<result column="card_name_style" property="cardNameStyle" jdbcType="VARCHAR" />
+	<result column="ORDER_AMOUNT_LIMIT" property="orderAmountLimit" jdbcType="DOUBLE" />
+	<result column="ORDER_RATE" property="orderRate" jdbcType="DOUBLE" />
+	<result column="SALE_LIMIT_NUM" property="saleLimitNum" jdbcType="NUMERIC" />
+	<result column="CONSUME_LIMIT_NUM" property="consumeLimitNum" jdbcType="NUMERIC" />
+	<result column="Card_No" property="cardNo" jdbcType="VARCHAR" />
+	<result column="times" property="times" jdbcType="VARCHAR" />
+	<result column="COUPONS_RATE" property="couponsRate" jdbcType="VARCHAR" />
+	<result column="USING_MULTIPLE_COUPONS" property="usingMultipleCoupons" jdbcType="VARCHAR" />
+	<result column="FULL_USE" property="fullUse" jdbcType="VARCHAR" />
+	<result column="DESCRIBE" property="describe" jdbcType="VARCHAR" />
+	<result column="DEFAULT_USE_COUNT" property="defaultUseCount" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <!-- 查询二级商品提货券信息 -->
+   <select id="queryCardCategoryDetailInfo" resultMap="detailInfoResult"> 
+		select t.product_id,
+	       t.category_no,
+	       t.category_name,
+	       t.category_clz,
+	       t.face_value,
+	       mcce.display_position,
+	       mcce.sell_price,
+	       mcce.validity_date,
+	       mcce.expire_start_date,
+	       mcce.expire_end_date,
+	       mcce.serial_id,
+	       mcce.sell_start_date,
+	       mcce.sell_end_date,
+	       mcce.grounding,
+	       a.logo_path,
+	       a.card_path,
+	       a.card_name_style,
+	       mcce.ORDER_AMOUNT_LIMIT,
+	       mcce.ORDER_RATE,
+	       mcce.SALE_LIMIT_NUM,
+	       mcce.CONSUME_LIMIT_NUM,
+	       t.DEFAULT_USE_COUNT,
+	       mcce.COUPONS_RATE,
+           mcce.USING_MULTIPLE_COUPONS,
+           mcce.FULL_USE,
+           mcce.DESCRIBE
+       from m_card_category t, m_card_category_style a ,m_card_category_ext mcce
+       where t.Category_No = mcce.Category_No
+       and t.issuer_id = #{0} 
+       and t.status = 'Y' and mcce.grounding = 'Y' 
+<!--        and mcce.display_position = 'online'  -->
+       and a.category_id = t.category_no and a.issuer_id = t.issuer_id 
+       and mcce.sell_start_date &lt;= TO_CHAR(SYSDATE,'YYYY-MM-DD hh24:mi:ss') 
+       and mcce.sell_end_date &gt;=  TO_CHAR(SYSDATE,'YYYY-MM-DD hh24:mi:ss')
+       and mcce.expire_start_date &lt;= TO_CHAR(SYSDATE,'YYYY-MM-DD hh24:mi:ss') 
+       and mcce.expire_end_date &gt;=  TO_CHAR(SYSDATE,'YYYY-MM-DD hh24:mi:ss') 
+       order by mcce.serial_id
+  </select> 
+  
+    <!-- 查询二级商品提货券信息 -->
+   <select id="queryCardCategoryDetailByCustSeq" resultMap="detailInfoResult" parameterType="Map"> 
+		select t.product_id,
+	       t.category_no,
+	       t.category_name,
+	       t.category_clz,
+	       t.face_value,
+	       mcce.display_position,
+	       mcce.sell_price,
+	       mcce.validity_date,
+	       mcp.Mcp_Start_Date as expire_start_date,
+	       mcp.Mcp_End_Date as expire_end_date,
+	       mcce.serial_id,
+	       mcce.sell_start_date,
+	       mcce.sell_end_date,
+	       mcce.grounding,
+	       a.logo_path,
+	       a.card_path,
+	       a.card_name_style,
+	       mcce.ORDER_AMOUNT_LIMIT,
+	       mcce.ORDER_RATE,
+	       mcce.SALE_LIMIT_NUM,
+	       mcce.CONSUME_LIMIT_NUM,
+	       mcp.no,
+           mcp.Times,
+           t.DEFAULT_USE_COUNT,
+           mcce.COUPONS_RATE,
+           mcce.USING_MULTIPLE_COUPONS,
+           mcce.FULL_USE,
+           mcce.DESCRIBE
+	  from m_card_category       t,
+	       m_card_category_ext   mcce,
+	       m_card_category_style a,
+	       M_CARD_INFO_EXT       mcie,
+	       m_cust_purse          mcp
+	 where t.Category_No = mcce.Category_No
+	   and t.Category_No = a.Category_Id
+	   and mcp.No = mcie.Card_No
+	   and mcie.Category_Id = t.Category_No
+	   and t.status = 'Y'
+	   and mcce.grounding = 'Y'
+	   and mcp.Times &lt; t.Default_Use_Count
+<!-- 	   and mcce.display_position = 'mall' -->
+ 	   and mcp.Type='EVOUCHER' 
+	   <if test="custSeq !=null" >
+	   	and mcp.cust_seq = #{ custSeq}
+	   </if>
+	   <if test="expired eq 'Y'.toString()" >
+	   	and mcp.MCP_START_DATE &lt;= TO_CHAR(SYSDATE,'YYYY-MM-DD hh24:mi:ss') 
+	   </if>
+	   <if test="expired eq 'N'.toString()" >
+	   	and mcp.Mcp_End_Date &gt; TO_CHAR(SYSDATE,'YYYY-MM-DD hh24:mi:ss') 
+	   </if>
+	   <if test="timesDir eq 'UP'.toString()" >
+       	and mcp.Times &gt;= #{times}
+       </if>
+       <if test="timesDir eq 'DOWN'.toString()" >
+       	and mcp.Times &lt; #{times}
+       </if>
+       <if test="isUsed eq 'Y'.toString()" >
+       	mcp.Times &gt;= t.Default_Use_Count
+       </if>
+       <if test="isUsed eq 'N'.toString()" >
+       	mcp.Times &lt; t.Default_Use_Count
+       </if>
+       <if test="nos != null" >
+        and mcp.no in 
+       	 <foreach collection="nos" item="no" open="(" close=")" separator="," >
+           #{no}
+         </foreach>
+      </if>
+	order by mcce.serial_id
+  </select> 
+  
+   <select id="qryCategoryByProduct" resultMap="detailInfoResult"  parameterType="Map">
+       	   
+    select B.productNo, mcie.Card_No, mcc.*, mcce.*
+  		from (select A.productNo, A.Mgc_Id, A.Mgc_Type
+          from (select connect_by_root mgc.Mgc_Code productNo,
+                       mgc.Mgc_Id,
+                       mgc.Mgc_Parent_No,
+                       mgc.Mgc_Type
+                  from M_GOODS_CAT mgc
+                 start with mgc.Mgc_Code in
+	             <foreach collection="productNos" index="index" item="item" open="(" separator="," close=")">
+	                #{item}       
+	       		 </foreach>  
+                connect by prior mgc.Mgc_Parent_No = mgc.Mgc_id) A
+        ) B,
+	       M_CATEGORY_GOODS_RULE mcgr,
+	       m_card_info_ext mcie,
+	       m_Card_Category mcc,
+	       m_Card_Category_ext mcce,
+       	   m_cust_purse mcp
+	 where ((mcgr.Goods_Id &lt;&gt; '*' and mcgr.Goods_Id=B.Mgc_Id)
+	       or (mcgr.Goods_Id='*' and mcgr.Type_Id=B.Mgc_Id))
+	       and mcie.Category_Id=mcgr.Category_No
+	       and mcie.Card_No in 
+	       <foreach collection="cardNos" index="index" item="item" open="(" separator="," close=")">
+                #{item}       
+       	   </foreach>
+	       and mcc.Category_No=mcgr.Category_No
+	       and mcc.Category_No=mcce.Category_No
+	       and mcp.No = mcie.Card_No
+	       and mcp.Status = 'Y'
+	       and mcgr.Status = 'Y'
+       	   and mcp.Times &lt; mcc.Default_Use_Count
+       
+  </select>
+  
+  <select id="qryCategoryByNo" resultMap="detailInfoResult" parameterType="java.util.List">
+       	   
+    select mcc.*, mcce.*
+	  from m_Card_Category mcc, m_Card_Category_Ext mcce
+	 where mcc.Category_No = mcce.Category_No
+	   and mcc.Category_No in 
+     <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+        #{item}       
+	 </foreach>  
+       
+  </select>
+  
+  <select id="qryCategoryByVoucher" resultMap="detailInfoResult"  parameterType="java.util.List">
+   select mcie.Card_No, mcc.*, mcce.*
+	  from m_card_info_ext mcie, 
+	       m_Card_Category mcc, 
+	       m_Card_Category_ext mcce,
+	       m_cust_purse mcp
+	 where mcie.Card_No in
+	   <foreach collection="cardNos" index="index" item="item" open="(" separator="," close=")">
+           #{item}       
+       </foreach>
+	   and mcc.Category_No = mcie.Category_Id
+	   and mcc.Category_No = mcce.Category_No
+	   and mcp.No=mcie.Card_No
+	   <if test="isCheckStatus neq 'N'.toString()" >
+	    and mcp.status = 'Y'
+	   </if>
+	   <if test="isValid == 'TRUE'.toString()" >
+	   	and mcp.Times &lt; mcc.Default_Use_Count
+	   </if>
+  </select>
+</mapper>

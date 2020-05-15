@@ -1,0 +1,139 @@
+package com.cul.culsite.model.uid;
+
+import com.cul.culsite.common.Constants;
+import com.cul.culsite.dto.MMemberDTO;
+import com.cul.culsite.dto.MThirdPartyUserDTO;
+import com.cul.culsite.dto.MUserDTO;
+import com.cul.culsite.model.MemberInfo;
+
+import org.apache.commons.lang.StringUtils;
+
+/**
+ * Created by rd on 2015/3/11.
+ * 之所以继承UserBean目前是为了通过loginIdType根据策略返回不同表中的手机号字段。
+ */
+public class UserData extends UserBean {
+    private MMemberDTO member;
+    private MUserDTO user;
+    private MThirdPartyUserDTO user3rd;
+
+    public UserData() {
+		super();
+	}    
+    public UserData(UserBean userBean) {
+        super(userBean);
+    }
+
+    /*
+        1、如果是通过商户id查询用户信息，首选第三方用户表中的手机号，
+        其次使用MMember兼容表中的手机号，最后使用MUser新用户表手机号字段
+        2、否则优先查询MMember表中的手机号，其次查询MUser表中的手机号。
+        其他getXXX方法可以类似编写
+     */
+    public String getMobile() {
+        String mobile;
+
+        if (Constants.UID3RD.equals(loginIdType)) {
+            mobile = getMobileInUser3rd();
+            if (StringUtils.isEmpty(mobile)) {
+                mobile = getMobileInMMember();
+            }
+            if (StringUtils.isEmpty(mobile)) {
+                mobile = getMobileInMUser();
+            }
+
+        } else {
+            mobile = getMobileInMMember();
+            if (StringUtils.isEmpty(mobile)) {
+                mobile = getMobileInMUser();
+            }
+        }
+
+        return mobile;
+    }
+
+    public String getCustSeq() {
+        String custSeq = null;
+        if (member != null) {
+            custSeq = member.getCustSeq();
+        }
+
+        if (StringUtils.isEmpty(custSeq)) {
+            if (user != null) {
+                custSeq = user.getUserId();
+            }
+        }
+        return custSeq;
+    }
+
+    public String getUname() {
+        String uname = null;
+        if (member != null) {
+            uname = member.getUname();
+        }
+        return uname;
+    }
+
+    public boolean userNotExist() {
+    	return member == null;
+    }
+    
+    public MemberInfo getMemberInfo(){
+    	if(userNotExist()){
+    		return null;
+    	}
+    	MemberInfo memberInfo = new MemberInfo();
+		memberInfo.setUid(member.getCustSeq());
+		memberInfo.setMobliePhone(member.getMobile());
+		memberInfo.setOpenId(member.getOpenId());
+		memberInfo.setUName(member.getUname());
+		memberInfo.setEmail(member.getEmail());
+		memberInfo.setMerchantId(member.getMerchantId());
+		return memberInfo;
+    }
+    
+    private String getMobileInUser3rd() {
+        return user3rd == null ? "" : user3rd.getMobile();
+    }
+
+    private String getMobileInMMember() {
+        return member == null ? "" : member.getMobile();
+    }
+
+    private String getMobileInMUser() {
+        return user == null ? "" : user.getMobile();
+    }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "member=" + member +
+                ", user=" + user +
+                ", user3rd=" + user3rd +
+                "} " + super.toString();
+    }
+
+    public MMemberDTO getMember() {
+        return member;
+    }
+
+    public void setMember(MMemberDTO member) {
+        this.member = member;
+    }
+
+    public MUserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(MUserDTO user) {
+        this.user = user;
+    }
+
+    public MThirdPartyUserDTO getUser3rd() {
+        return user3rd;
+    }
+
+    public void setUser3rd(MThirdPartyUserDTO user3rd) {
+        this.user3rd = user3rd;
+    }
+}

@@ -1,0 +1,501 @@
+package com.cul.culsite.common;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+public final class Constants {
+
+    public static final String NOTIFY_URL = "http://wechat.66card.com:8788/culsite/culapp/alipayNotify";
+	public static String[] BLOCKING_CHARACTERS = { "'", "\\", "<" };
+	public static String PREPAY_MEMBER_CUST_SEQ = "9999999999";//预付卡
+	public static String MCMS_MEMBER_CUST_SEQ = "9999999998";//会员卡
+	public static String PREPAY_MCMS_MEMBER_CUST_SEQ = "9999999997";//预付和会员卡
+
+	public static String MEMBER_FACE_PIC_STORE_FILE_DIR ="member_face";
+
+    // m_default_card_infomation表示会员卡M还是预付卡P
+    public static final String SYS_TYPE_PREPAY = "P";
+    public static final String SYS_TYPE_MEMBER = "M";
+
+    // on/off status definition
+    public static final String ON = "Y";
+    public static final String OFF = "N";
+
+    // return code definition
+    public static final String OK = "00";                // 成功，OK
+    public static final String RELOGIN = "A0";          // 登录失效，请重新登录
+
+    // return msg definition
+    public static final String SUCCESS = "success";          // 成功
+    public static final String FALSE = "false";
+
+    // return alipay code definition
+    public static final String ALIPAY_OK = "0000";      // 成功
+    public static final String ISV_ILLEGAL_ARGUMENT = "isv.illegal-argument";      // 非法参数
+    public static final String ISV_BIZCARD_NOT_EXIST = "isv.biz-card-no-not-exist";      // 爱生活卡号不存在
+    public static final String ISP_UNKNOW_ERROR = "isp.unknow-error";      // 系统未知异常
+    public static final String MSG_ALIPAY_OK = "成功";      // 成功
+    public static final String MSG_ILLEGAL_ARGUMENT = "非法参数";      // 非法参数
+    public static final String MSG_BIZCARD_NOT_EXIST = "爱生活卡号不存在";      // 爱生活卡号不存在
+    public static final String MSG_UNKNOW_ERROR = "系统未知异常";      // 系统未知异常
+
+    // return alipay code definition for cardCheck
+    public static final String ISP_SYSTEM_ERROR = "isp.system-error";      // 系统错误
+    public static final String ISP_PARAM_ERROR = "isp.param-format-no-match";      // 参数格式不匹配
+    public static final String ISP_USER_INFO_LACK = "isp.user-info-lack";      // 用户基本信息缺失
+    public static final String ISP_ELECCARD_NOT_EXIST = "isp.elec-card-not-exist";      // 电子卡号不存在
+    public static final String MSG_SYSTEM_ERROR = "系统错误";      // 系统错误
+    public static final String MSG_PARAM_ERROR = "参数格式不匹配";      // 参数格式不匹配
+    public static final String MSG_USER_INFO_LACK = "用户基本信息缺失";      // 用户基本信息缺失
+    public static final String MSG_ELECCARD_NOT_EXIST = "电子卡号不存在";      // 电子卡号不存在
+
+    // return alipay code definition for cardDeposit
+    public static final String ISV_DEPOSIT_FAIL = "isv.deposit-fail";      // 充值失败
+    public static final String MSG_DEPOSIT_FAIL = "充值失败";      // 充值失败
+
+    // return alipay code definition for cardReturn
+    public static final String ISV_RETURNCARD_FAIL = "isv.returncard-fail";      // 销卡失败
+    public static final String MSG_RETURNCARD_FAIL = "销卡失败";      // 销卡失败
+
+
+    // expires definition
+    public static final long API_EXPIRES = 600;        // api调用的超时时间，定义为600秒, 即系统只相应10分钟内的请求。
+    public static final int ACCESS_TOKEN_USER_EXPIRES = 3000;    // 用户accessToken默认不超时，3000天
+    public static final int ACCESS_TOKEN_CASHER_EXPIRES = 1; // 收银员accessToken默认超时，1天
+
+    // push info definition
+    public static final String PUSH_BROADCAST = "0";  // 0/广播推送
+    public static final String PUSH_MULTICAST = "1";  // 1/多播推送(包含对指定商户推送和对指定标签推送)
+    public static final String PUSH_UNICAST = "2";    // 2/单播推送
+    public static final int TYPE_MESSAGE = 0;         // 0/推送消息
+    public static final int TYPE_NOTIFICATION = 1;   // 1/推送提醒
+
+    // push device definition      // 1/web 2/pc 3/android 4/ios 5/wp
+    public static final String DEVICE_IOS = "4";
+    public static final String DEVICE_ANDROID = "3";
+
+    // recharge channels
+    public static final String RECHARGE_ALIPAY = "1";    // 支付宝充值
+    public static final String RECHARGE_COUNTER = "2";   // 柜台充值
+
+    // login channel definition
+    public static final String CHANNEL_CULAPP = "culapp";
+    public static final String CHANNEL_APP = "app";
+    public static final String CHANNEL_WEB = "web";
+    public static final String CHANNEL_WECHAT = "WeChat";
+    public static final String CHANNEL_ALIPAY_WEB = "VPY";
+    public static final String THIS_API_KEY = "12000002";
+    public static String ALIPAY = "ALIPAY";
+    public static String C4P_ISSUER_ID = "C000";
+
+    // login user type
+    public static final String LOGIN_TYPE_USER = "1";
+    public static final String LOGIN_TYPE_CASHIER = "2";
+    public static final String LOGIN_CHECK_USER = "3";  //only check user name and password, do not gen accessToken.
+
+    public static final String VERIFIED_API_KEY = "verifiedApiKey"; // for test api.
+    public static final String VERIFIED_METHOD = "verifiedMethod"; // for test api.
+    public static final String API_METHOD = "apiMethod"; // for test api.
+    public static final String API_DOMAIN = "apiDomain"; // for test api.
+    public static final String SECRET_KEY = "secretKey"; // for test api.
+    public static final String SECRET_KEY_WALM = "WALM123"; // for test api.
+    public static final String URL = "url"; // for test api.
+    public static final String API_BASE_PACKAGE = "com.cul.culsite.model.request"; // for test api.
+    public static final String API_DEFAULT_DOMAIN = "culapp"; // for test api.
+    public static final String ROOT = "SYSTEM";          // root user
+
+    /** annotation params key */
+    public static final String API_KEY = "apikey";
+    public static final String MAC = "mac";
+    public static final String TIMESTAMP = "timestamp";
+    public static final String EXPIRES = "expires";
+    public static final String VERSION = "v";
+    public static final String SIGN_TYPE = "signType";
+    public static final String RETURN_TYPE = "returnType";
+    public static final String ACCESS_TOKEN = "accessToken";
+    public static final String HID = "hid";
+    public static final String UID = "uid";
+    public static final String UID3RD = "uid3rd";
+    public static final String CARD_UID = "cardUid";
+    public static final String MOBILE = "mobile";
+    public static final String LOGIN_ID = "loginId";
+    public static final String LOGIN_ID_TYPE = "loginIdType";
+    public static final String LOGIN_PWD = "loginPwd";
+    public static final String LOGIN_TYPE = "loginType";
+    public static final String USER_INFO = "userInfo";
+    public static final String PAYMENT_PWD = "paymentPwd";
+    public static final String EMAIL = "email";
+    public static final String CAPTCHA = "captcha";
+    public static final String OLD_PWD = "oldPwd";
+    public static final String NEW_PWD = "newPwd";
+    public static final String CARD_NO = "cardNo";
+    public static final String CARD_NO1 ="cardNo1";
+    public static final String CARD_FROM = "cardFrom";
+    public static final String CARD_TO = "cardTo";
+    public static final String CARD_PWD = "cardPwd";
+    public static final String CARD_PWD_TYPE = "cardPwdType";
+    public static final String CARD_TYPE = "cardType";
+    public static final String CHECK_CARD_PWD = "checkCardPwd";
+    public static final String IS_VERIFY_CARDPASSWORD ="isVerifyCardPassword";
+    public static final String CARDNOPASSWORD = "cardNoPassword";
+    public static final String IS_PAGER = "isPager";
+    public static final String PAGE = "page";
+    public static final String PAGE_SIZE = "pageSize";
+    public static final String PAGE_NO = "pageNo";
+    public static final String QUERY_TYPE = "queryType";
+    public static final String GEN_TYPE = "genType";
+    public static final String QR_TYPE = "qrType";
+    public static final String QR_INFO = "qrInfo";
+    public static final String WIDTH = "width";
+    public static final String HEIGHT = "height";
+    public static final String AMOUNT = "amount";
+    public static final String TRANSACTIONAMOUNT ="transactionAmount";
+    public static final String PURCHASELIST = "purchaseList";
+    public static final String CHANNEL = "channel";
+    public static final String CHANNELID = "channelId";
+    public static final String BIND_TYPE = "bindType";
+    public static final String PAY_REQUEST = "payRequest";
+    public static final String RECHARGE_REQUEST = "rechargeRequest";
+    public static final String GIVE_WHO = "giveWho";
+    public static final String FROM_WHO = "fromWho";
+    public static final String CONTENT = "content";
+    public static final String SERVICE_ID = "serviceId";
+    public static final String OPPOTXN_ID = "oppoTxnId";
+    public static final String CLUB = "club";
+    public static final String CIFID = "cifId";
+    public static final String SUB_TYPE = "subType";
+    public static final String TRADEAMOUNT = "tradeAmount";
+    public static final String MESSAGE = "message";
+    public static final String ISSUER_ID = "issuerId";
+    public static final String PUSH_TYPE = "pushType";
+    public static final String TITLE = "title";
+    public static final String DEVICE_TYPE = "deviceType";
+    public static final String TXN_ID = "txnId";
+    public static final String ORDER_ID = "orderId";
+    public static final String ORDER_INFO = "orderInfo";
+    public static final String DATE_FROM = "dateFrom";
+    public static final String DATE_TO = "dateTo";
+    public static final String PRESENT_TYPE = "presentType";
+    public static final String STATUS = "status";
+    public static final String ORDER = "order";
+    public static final String AREA_CODE = "areaCode";
+    public static final String DISTANCE = "distance";
+    public static final String POSITION = "position";
+    public static final String TAGS = "tags";
+    public static final String GROUP_ID = "groupId";
+    public static final String CHECK_OWNERSHIP = "checkOwnership";
+    public static final String MERCHANT_NO = "merchantNo";
+    public static final String TERMINAL_NO = "terminalNo";
+    public static final String TOTAL_AMOUNT = "totalAmount";
+    public static final String PAY_AMOUNT = "payAmount";
+    public static final String CARD_LIST = "cardList";
+    public static final String EXTRA_INFO = "extraInfo";
+    public static final String BIZ_INFO = "bizInfo";
+    public static final String ORG_TXN_ID = "orgTxnId";
+    public static final String USER_ID = "userId";
+    public static final String SETTLELIST = "settleList";
+    public static final String TERMINAL = "terminal";
+    public static final String TXN_DATE = "txnDate";
+    public static final String TXN_TIME = "txnTime";
+    public static final String CURRENCY_CODE = "currencyCode";
+    public static final String DELIVERMODE = "deliveryMode";
+    public static final String IS_VERIFY_PASSWORD = "isVerifyPassword";
+    public static final String IS_CUSTOM_PAY_RULE = "isCustomPayRule";
+    // begin for UCS(user certification service) extra keys
+    public static final String USER_NAME = "userName";
+    public static final String NICK_NAME = "nickName";
+    public static final String REAL_NAME = "realName";
+    public static final String SEX = "sex";
+    public static final String BIRTHDAY = "birthday";
+    public static final String ADDRESS = "address";
+    public static final String ZIP = "zip";
+    public static final String TEL = "tel";
+    public static final String QQ = "qq";
+    public static final String FACE = "face";
+    public static final String REMARKS = "remarks";
+    public static final String THIRD_PART_ID = "thirdPartId";
+    public static final String HARSH_ID = "harshId";
+    public static final String THIRD_PART_TYPE = "thirdPartType";
+    public static final String ID_TYPE = "idType";
+    public static final String ID_NO = "idNo";
+    public static final String ID = "id";
+    public static final String CONFIRM_PWD = "confirmPwd";
+    public static final String TYPE = "type";
+    public static final String CUSTOMER_NAME = "customerName";
+    public static final String CHECK_STATUS = "checkStatus";
+    public static final String FOLLOW_STATUS = "followStatus";
+    public static final String RESET_PW_URL = "resetPwUrl";
+    public static final String OPEN_ID = "openId";
+    public static final String CAPTCHA_EXPIRES = "captchaExpires";
+
+    public static final String CARD_NOS = "cardNos";
+    public static final String RE_CHANNEL = "reChannel";
+    
+    //卡券接受方
+    public static final String REC_LOGIN_ID = "recloginId";
+    public static final String REC_LOGIN_ID_TYPE = "recloginIdType";
+    public static final String REC_NAME = "recName";
+    
+    // 分别定义所有权限、组权限、子权限
+    public static final String AUTH_ALL = "";
+    public static final String AUTH_PARENT = "1";
+    public static final String AUTH_CHILD = "2";
+    // end for UCS(user certification service) extra keys
+
+    // begin for cif
+    public static final String CIF = "CIF";
+    public static final String PARAM_LIST = "paramList";
+    public static final String CUST_ID = "custId";
+    public static final String BUSINESS_STATUS = "businessStatus";
+    public static final String BUSINESS_ID = "businessId";
+    public static final String QRY_BUS_ID = "qryBusId";
+    public static final String CARD_STATUS = "cardStatus";
+    public static final String MOBILE_PHONE = "mobilePhone";
+    public static final String OLD_MOBILE_PHONE = "oldMobilePhone";
+    public static final String NEW_MOBILE_PHONE = "newMobilePhone";
+    public static final String SMS_CODE = "smsCode";
+    public static final String OLD_PASS = "oldPass";
+    public static final String NEW_PASS1 = "newPass1";
+    public static final String NEW_PASS2 = "newPass2";
+    public static final String COMPANY_ID = "companyId";
+    public static final String SUB_BRANCH_ID = "subbranchId";
+    public static final String TRADE_TYPE = "tradeType";
+    public static final String DATE_RANGE_TYPE = "dateRangeType";
+    public static final String CURRENT_DATE = "currentDate";
+    public static final String START_DATE = "startDate";
+    public static final String END_DATE = "endDate";
+    public static final String ACCOUNT_NO = "accountNo";
+    public static final String CLUB_ID = "clubId";
+    public static final String BUSINESS_CODE = "busiCode";
+    public static final String BATCH_NO = "batchNo";
+    public static final String WITHDRAWAL_AMOUNT = "withdrawalAmount";
+    public static final String MER_ID = "merId";
+    public static final String PURCHASE_AMOUNT = "purchaseAmount"; //购买金额
+    public static final String PAY_TYPE = "payType";              //支付类型
+    public static final String PAY_CARDNO = "payCardNo";           //支付卡号
+    public static final String PAY_AMOUNTNO = "payAmountNo";        //支付卡账号
+    public static final String PAY_CARDPASS = "payCardPass";      //支付卡密码
+    public static final String CARD_PASS = "cardPass";            //理财卡密码
+    public static final String CUST_NAME = "custName";             //客户名称
+    public static final String BIND_BUSID = "bindBusId";           //绑定业务系统ID
+    public static final String BIND_CARDNO = "bindCardNo";          //绑定的卡号
+    public static final String DEF_SHOWFLAG = "defShowFlag";         //是否默认显示
+    public static final String SHOW_FLAG ="showFlag";
+    public static final String CHECK_CARD_PASS ="checkCardPass";
+    public static final String MODIFY_ALL_PWD ="A";
+    
+    
+    
+
+    public static final String BIZ_CODE_PAY = "6";              // 普通预付理财账户
+    public static final String BIZ_CODE_REWARD = "7";          // 返利理财账户
+    public static final String BIZ_CODE_FIXED = "8";           // 定期理财账户
+    public static final String BIZ_CODE_FREE = "9";            // 活期理财账户
+    public static final String BIZ_CODE_PRE_ORDER = "10";     // 预约理财账户
+    public static final String BIZ_CODE_DEPOSIT = "11";       // 整存年金账户
+    public static final String BIZ_CODE_SHOPPINGTREASUREPROFIT = "12"; //购物宝
+    // end for cif
+
+    // begin for suncard
+    public static final String BANK_ORG_ID = "bankOrgId";
+    public static final String CUSTOMER_ID = "customerId";
+    public static final String ACCOUNT_TYPE = "accountType";
+    public static final String ACCOUNT_ID = "accountId";
+    public static final String MIN_PAY_IND = "minPayInd";
+    public static final String ACCT_BANK_NAME = "acctBankName";
+    public static final String ACCT_BANK_BRANCH = "acctBankBranch";
+    public static final String BANK_ACCT_NO = "bankAcctNo";
+    public static final String BANK_ACCT_NAME = "bankAcctName";
+    public static final String AUTO_PAY_TYPE = "autoPayInd";
+    public static final String REG_DEQ = "regDeq";
+    public static final String REG_STATUS = "regStatus";
+    public static final String STATE_DATE = "stateDate";
+    public static final String OPTION_TYPE = "optionType";
+    public static final String PASSWD_TYPE = "passwdType";
+    public static final String PASSWORD = "password";
+    public static final String OLD_PASSWD = "oldPasswd";
+    public static final String NEW_PASSWD = "newPasswd";
+    public static final String PASSWD = "passwd";
+    public static final String RANGE_TYPE = "rangeType";
+    public static final String CURR_DATE = "currDate";
+    public static final String OPERATE_TYPE = "operateType";
+    // end for suncard
+
+    public static final int WAIT_SECONDS = 5;
+    // 退货渠道
+    public static final String IPRF_CHANNEL = "VPY";
+    
+ 
+    public static final String HTTP_CLIENT_POST = "POST";
+    public static final String HTTP_CLIENT_GET = "GET";
+
+    // 1/查询赠送记录, 2/查询领卡记录
+    public static final int TYPE_GIVE = 1;
+    public static final int TYPE_ACCEPT = 2;
+    
+    // 交易参考号 
+    public static final String RRN = "rrn";//终端交易参考号
+    public static final String ACTIVE_CODE = "activeCode";//零售卡激活码32位
+    public static final String RETAIL_CARD_NO = "retailCardNo";
+    public static final String TRANS_TYPE = "transType";//交易类型
+    public static final String BILL_NO = "billNo"; //订单号
+    public static final String CHECK_TRACK2 = "checkTrack2"; //是否校验二磁
+    public static final String TRACK2_DATA = "track2Data"; //二磁
+    
+    public static final String PWD_CHANNEL = "pwdChannel"; //密码渠道 ONLINE OFFLINE 线上线下
+    public static final String IS_PWD_ENCRYPTED = "isPwdEncrypted"; //密码是明文或密文
+    public static final String SALE_AMOUNT = "saleAmount"; //售卖金额
+    public static final String ORIG_ORDER_ID= "origOrderId";//原订单号
+    
+    public static final String DISCOUNT_AMOUNT="discountAmount";// 折扣金额
+    public static final String VPAY = "VPAY";
+    public static final String TRAN_ID = "tranId";// 条码
+    
+    // 部分转赠业务
+    public static final String PRODUCT_ID = "productId"; // 商品号
+    public static final String IS_PARTIAL = "isPartial"; //是否部分转赠，Y是，N全部转赠
+    
+    //add wanghh 
+    // 没有在数据库配规则默认用这两个作为条码超时间隔时间
+    public static final int DATE_VALID = 60 * 1000;   //用于超时判断 条码类型卡片 单位：毫秒 
+    
+    public static final int RE_DATE_VALID = 30 * 60 * 1000;     //用于超时判断 条码类型红包 单位：毫秒
+    
+    public static final int MAX_PWD_TRY_TIMES = 5; // 会员密码校验失败最大次数
+    public static final int UNLOCK_PWD_TRY_DURATION = 10 * 60 * 1000;  //会员校验密码失败达到最大次数后 再次尝试的间隔时间
+    
+    public static final List<String> MAIKALA_CONTROL_ISSUERS = new ArrayList<String>(Arrays.asList("WALM"));
+    
+    public static final String MAIKALA_ISSUER_ID = "MKLV";
+    public static List<String> mcmsConsumeTxnCodes = new ArrayList<String>();
+    {
+    	mcmsConsumeTxnCodes.add("CRD");
+    	mcmsConsumeTxnCodes.add("CR1");
+    	mcmsConsumeTxnCodes.add("CR2");
+    	mcmsConsumeTxnCodes.add("MRD");
+    }
+	/**
+	 * 得到文件存储根目录
+	 * @param request
+	 * @return
+	 */
+	public static String getFileStoreRootPath(HttpServletRequest request){
+		return request.getSession().getServletContext().getRealPath(File.separator + MEMBER_FACE_PIC_STORE_FILE_DIR + File.separator)+ File.separator;
+	}
+	
+    // GAP 9折扣券的cardbin  还有其他折
+    public static final String V_CARDBIN_N = "23965607799";
+    // GAP 7折扣券的cardbin  还有其他折  亲友券和七折券用了同一卡bin，为了打单，暂时将七折的卡bin23965607777 改成23965677777
+    public static final String V_CARDBIN_S = "23965677777";
+    // GAP 5元券的cardbin
+    public static final String V_CARDBIN_F = "23965607705";
+    // GAP 15元券的cardbin
+    public static final String V_CARDBIN_OF = "23965607715";
+    // GAP 30元券的cardbin  23965607730
+    public static final String V_CARDBIN_TO = "23965607830";
+    // GAP 50元券的cardbin
+    public static final String V_CARDBIN_FO = "23965607750";
+    // GAP 100元券的cardbin
+    public static final String V_CARDBIN_HO = "23965607711";
+    // GAP 满减券
+    public static final String V_CARDBIN_M = "23965607733";
+    // GAP 亲友券
+    public static final String V_CARDBIN_Q = "23965607777";
+    
+    // GAP 8折券 23361122702  23965607788
+    public static final String V_CARDBIN_E = "23965607788";
+    // 用户注册渠道
+    // 微信用户注册渠道
+    public static final String WECHAT_CHANNEL = "WeChat";
+    // 支付宝用户注册渠道
+    public static final String ALIPAY_CHANNEL = "ALIPAY";
+    // APP用户注册渠道
+    public static final String APP_CHANNEL = "App";
+    
+    /** 编号—名称中文横扛分隔符*/
+	public static final String SPLITSTR = "—";
+	
+	// 合肥百大优惠日期 YYYYMMDD 0612 - 0630
+	
+	public static String  HFBD_startDate = "20150715";
+
+	public static String  HFBD_endDate = "20150810";   
+	
+	public static String boolean2String(boolean b){
+		if(b)
+			return Constants.ON;
+		else 
+			return Constants.OFF;
+	}
+	
+  /**------------------  开始中小商户用的常用   ---------------------------**/
+	/**
+	 * 微信--银行代码 
+	 */
+	public static final String WEIXIN_BANK_CODE="WEIXIN";
+	/**
+	 * BANK-银行，WEIXIN-微信
+	 */
+	public static final String WEIXINBANK_TYPE="WEIXIN";
+	
+	/**
+	 * 微信支付回调的地址 return_url
+	 */
+	public static final String WEIXIN_RETURN_URL="https://vpay.upcard.com.cn/vcweixin/newzxsh/payResult";
+   /**
+    * 微信的notify_url	拼接 issuerid
+    */
+	public static final String WEIXIN_NOTIFY_URL="https://vpay.upcard.com.cn/culsite/wappay/acceptWeixinResultForZxsh/";
+  /**
+   * 微信的网关
+   */
+	public static final String WEIXIN_GATEWAY="";
+ /**
+  * 字符集编码
+  */
+	public static final String INPUT_CHARSET="UTF-8";
+	/**
+	 * 操作中断返回的地址merchant_url
+	 */
+	public static final String MERCHANT_URL="";
+	
+	/**
+	 * 京东--银行代码
+	 */
+	public static final String JD_BANK_CODE="JD";
+	/**
+	 * BANK-银行，JD-京东
+	 */
+	public static final String JD_BANK_TYPE="JD";
+	/**
+	 * 京东支付回调的地址 return_url
+	 */
+	//public static final String JD_RETURN_URL="http://wechat.66card.com/vcweixin/wcul/payResult";
+	
+	  /**
+	    * 京东的notify_url	
+	    */
+		//public static final String JD_NOTIFY_URL="http://192.168.1.105:8080/culsite_swalm/wappay/instantUpmpResult/WALM";
+		/**
+		 * 京东的网关
+		 */
+	//public static final String JD_GATEWAY="http://wappaygw.alipay.com/service/rest.htm?";
+	
+	 /**------------------  结束中小商户用的常用   ---------------------------**/
+	/**-----------------------------家乐福短信中配置的公众号url-------------------------------------**/
+	public static  String C000_WEIXIN_URL="http://wechat.66card.com/vcweixin/demo/toc4p.jsp";
+	
+	public static final Integer SETTLE_DATE_EXPIRE = 1500;
+	
+    //微众小程序
+    public static String WEBANK_WECHATAPPLET = "WEBANK_WECHATAPPLET";
+    //非码小程序
+    public static String FREEMUD_WECHATAPPLET ="FREEMUD_WECHATAPPLET";
+    
+    public static final String NJZS_ISSUER_ID="ZS01";
+    public static final String GB2312="GB2312";
+}

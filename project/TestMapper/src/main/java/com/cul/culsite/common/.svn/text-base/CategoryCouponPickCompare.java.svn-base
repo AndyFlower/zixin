@@ -1,0 +1,46 @@
+package com.cul.culsite.common;
+
+import java.math.BigDecimal;
+import java.util.Comparator;
+
+import com.cul.culsite.model.singlecoupon.CategoryCouponInfo;
+import com.cul.culsite.util.DateUtil;
+
+public class CategoryCouponPickCompare implements Comparator<Object>{
+	// 品类提货券排序 先单次后多次 有效期先近后远 先余额小后余额大
+	public int compare(Object o0, Object o1) {
+		CategoryCouponInfo c0 = (CategoryCouponInfo) o0;
+		CategoryCouponInfo c1 = (CategoryCouponInfo) o1;
+		// 排序使用次数 S-单次在前 M-多次在后
+		if(!c0.getMultiUse().equals(c1.getMultiUse())){
+			if("S".equals(c0.getMultiUse()) && "M".equals(c1.getMultiUse())){
+				return -1;
+			}else{
+				return 1;
+			}
+		}else {
+			// 校验有效期
+			try{
+				if(DateUtil.compareTo(c0.getValidEnd(), c1.getValidEnd(),"yyyyMMdd") < 0){
+					return -1;
+				}
+				if(DateUtil.compareTo(c0.getValidEnd(), c1.getValidEnd(),"yyyyMMdd") > 0){
+					return 1;
+				}
+				if(DateUtil.compareTo(c0.getValidEnd(), c1.getValidEnd(),"yyyyMMdd") == 0){
+					// 比较余额
+					if (new BigDecimal(c0.getCouponDefaultUseCount()).compareTo(new BigDecimal(c1.getCouponDefaultUseCount())) < 0) {
+						return -1;
+					}
+					if (new BigDecimal(c0.getCouponDefaultUseCount()).compareTo(new BigDecimal(c1.getCouponDefaultUseCount())) > 0) {
+						return 1;
+					}
+						
+				}
+			}catch(Exception e){
+				return 0; 
+			}
+			return 0; 
+		}
+	}
+}

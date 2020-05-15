@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/request/pursevoucher
+END
+CouponProcessRequestBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/request/pursevoucher/CouponProcessRequestBean.java
+END
+TxnRecoveryRevocationBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/request/pursevoucher/TxnRecoveryRevocationBean.java
+END
+TxnRecoveryRevocationRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/request/pursevoucher/TxnRecoveryRevocationRequest.java
+END
+TxnRevocateRequest.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/request/pursevoucher/TxnRevocateRequest.java
+END
+FlyCouponRequestBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/request/pursevoucher/FlyCouponRequestBean.java
+END

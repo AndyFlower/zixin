@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/transation/refund
+END
+CardRefundBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/transation/refund/CardRefundBean.java
+END
+RefundType.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/transation/refund/RefundType.java
+END
+CardRefundDetailBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/transation/refund/CardRefundDetailBean.java
+END

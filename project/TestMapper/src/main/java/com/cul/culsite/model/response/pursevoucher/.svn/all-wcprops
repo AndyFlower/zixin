@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/response/pursevoucher
+END
+TxnRevocateResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/response/pursevoucher/TxnRevocateResponse.java
+END
+CouponProcessResponseBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/response/pursevoucher/CouponProcessResponseBean.java
+END
+TxnRecoveryRevocationData.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/vpaytxn/!svn/ver/13/trunk/vpaytxn/src/com/cul/culsite/model/response/pursevoucher/TxnRecoveryRevocationData.java
+END

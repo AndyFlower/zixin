@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/vpaytxn/!svn/ver/582/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint
+END
+VoucherConsumeData.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/vpaytxn/!svn/ver/582/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/VoucherConsumeData.java
+END
+PointsConsumeData.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PointsConsumeData.java
+END
+PointsTransInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PointsTransInfo.java
+END
+VoucherDiscountInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/VoucherDiscountInfo.java
+END
+PointsRecordBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PointsRecordBean.java
+END
+PointsMember.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/vpaytxn/!svn/ver/551/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PointsMember.java
+END
+PublicBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PublicBean.java
+END
+MerchantBusinessData.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/MerchantBusinessData.java
+END
+ValidPointsRecordInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/ValidPointsRecordInfo.java
+END
+MerchantBusinessBenefitsInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/MerchantBusinessBenefitsInfo.java
+END
+PointsTransBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PointsTransBean.java
+END
+BenefitsPkgInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/BenefitsPkgInfo.java
+END
+PointsPurseTxnData.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PointsPurseTxnData.java
+END
+PointsManageData.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PointsManageData.java
+END
+MemberPointsInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/551/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/MemberPointsInfo.java
+END
+ConsumeMemberResponse.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/vpaytxn/!svn/ver/582/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/ConsumeMemberResponse.java
+END
+CardsConsumeData.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/CardsConsumeData.java
+END
+PointsPurseTxn.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PointsPurseTxn.java
+END
+ConsumeMemberBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/vpaytxn/!svn/ver/582/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/ConsumeMemberBean.java
+END
+EmemberInfo.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/EmemberInfo.java
+END
+PromotionInfoBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/PromotionInfoBean.java
+END
+EmemberCardConsumeData.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/vpaytxn/!svn/ver/582/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/EmemberCardConsumeData.java
+END
+QryBindCardData.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/vpaytxn/!svn/ver/536/trunk/vpaytxn/src/com/cul/culsite/model/memberpoint/QryBindCardData.java
+END
