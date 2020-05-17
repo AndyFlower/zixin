@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 public class AutoTestMapper {
 	 private static final Map<String, Class<?>> primitiveClazz; // 基本类型的class
 	    private static String PACK_PATH = "";
@@ -78,8 +79,8 @@ public class AutoTestMapper {
 	        String mapperContent = getFileContent(path);
 	        String[] pathArr = matchMethod(PATH_PATTERN, mapperContent).split(";");
 	        for (int i = 0; i < pathArr.length; i++) {
+	        	System.out.println("--"+pathArr[i]);
 	            pathArr[i] = pathArr[i].replaceAll(IMPORT_REGEX, "");
-	            System.out.println("==="+pathArr[i]);
 	            Class cls = Class.forName(pathArr[i]);
 	            if (!cls.isInterface()) {
 	                //把实体类放入类型集合中
@@ -100,18 +101,20 @@ public class AutoTestMapper {
 	        List<String> invokeSuccess = (List<String>) new ArrayList<String>();
 	        List<String> invokeFail = (List<String>) new ArrayList<String>();
 	        for (String fileName : FILE_NAME) {
-	        	System.out.println("-------"+PACK_PATH + "." + fileName);
-	            Class cls = Class.forName(PACK_PATH + "." + fileName);
-	            //添加Mapper
-	            if (!sqlSessionFactory.getConfiguration().hasMapper(cls)) {
-	                sqlSessionFactory.getConfiguration().addMapper(cls);
-	            }
-	            //获得Mapper
-	            Object mapper = sqlSessionFactory.openSession().getMapper(cls);
-	            //反射执行Mapper的方法
-	            Map<String, List<String>> resultMap = autoTestInvoke(cls, mapper);
-	            invokeSuccess.addAll(resultMap.get(SUCCESS_FLG));
-	            invokeFail.addAll(resultMap.get(FAIL_FLG));
+	        	
+		            Class cls = Class.forName(PACK_PATH + "." + fileName);
+		            //添加Mapper
+		            if (!sqlSessionFactory.getConfiguration().hasMapper(cls)) {
+		                sqlSessionFactory.getConfiguration().addMapper(cls);
+		            }
+		            //获得Mapper
+		            Object mapper = sqlSessionFactory.openSession().getMapper(cls);
+		            //反射执行Mapper的方法
+		            Map<String, List<String>> resultMap = autoTestInvoke(cls, mapper);
+		            invokeSuccess.addAll(resultMap.get(SUCCESS_FLG));
+		            invokeFail.addAll(resultMap.get(FAIL_FLG));
+	        	
+	        	
 	        }
 	        
 	        for(int i=0;i<invokeSuccess.size();i++){
@@ -152,6 +155,7 @@ public class AutoTestMapper {
 	                method.invoke(o, list.toArray());
 	                invokeSuccess.add("Success: " + fileName + "." + method.getName());
 	            } catch (Exception e) {
+	            	e.printStackTrace();
 	                if (e.getCause() != null) {
 	                    String errorInf = e.getCause().getMessage();
 	                    if (errorInf.contains("MySQLSyntaxErrorException")) {

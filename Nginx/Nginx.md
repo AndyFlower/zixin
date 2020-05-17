@@ -312,10 +312,276 @@ nginx配置文件中做如下修改
 
 
 
+#### 反向代理，例二
+
+##### 1.实现效果
+
+使用nginx反向代理，根据访问的路径跳转到不同的端口服务中去，‘
+
+nginx监听端口为9001
+
+访问http://127.0.0.1:9001/edu/直接跳转到127.0.0.1:8080
+
+访问http://127.0.0.1:9001/vod/直接跳转到127.0.0.1:8081
+
+##### 2.准备工作
+
+准备两个tomcat服务器
+
+创建文件夹和测试文件
+
+##### 3.具体配置
+
+```
+server{
+	listen  9001;
+	server_name 192.168.181.200;
+	location ~ /edu/{
+		proxy_pass http://127.0.0.1:8080;
+	}
+	location ~ /vod/{
+		proxy_pass http://127.0.0.1:8081;
+	}
+}
+```
+
+> 记得开放端口号
+
+
+
 ### 四.Nginx配置实例-负载均衡
+
+#### 1.实现效果
+
+浏览器输入http://192.168.181.200/edu/a.html负载均衡，平均到8080和8081端口中
+
+#### 2.准备工作
+
+准备2台tomcat  修改端口
+
+在webapps目录下创建名称为edu文件夹，在edu文件夹中国创建页面用于测试。
+
+#### 3.配置
+
+```
+upstream  myserver{
+	server 192.168.181.200:8080;
+	server 192.168.181.200:8081;
+}
+
+server{
+	listen 80;
+	server_name 192.168.181.200;
+	location /{
+		proxy_pass http://myserver;
+		root html;
+		index index.html index.htm;
+	}
+}
+```
+
+#### 4.常用分配方式（策略）
+
+1. 轮询（默认）
+
+   每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除
+
+2. weight
+
+   weight代表权重，默认值是1，权重越高被分配的客户端越多
+
+   ```
+   upstream  myserver{
+   	server 192.168.181.200:8080 weight=5;
+   	server 192.168.181.200:8081 weight=10;
+   }
+   ```
+
+   
+
+3. ip_hash
+
+   每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题
+
+   ```
+   upstream  myserver{
+   	ip_hash;
+   	server 192.168.181.200:8080 ;
+   	server 192.168.181.200:8081 ;
+   }
+   ```
+
+4. fair
+
+   按后端服务器的响应时间来分配，响应时间短的优先分配
+
+   ```
+   upstream  myserver{
+   	server 192.168.181.200:8080 ;
+   	server 192.168.181.200:8081 ;
+   	fair
+   }
+   ```
 
 ### 五. Nginx配置实例-动静分离
 
+#### 1.什么是动静分离
+
+将动态请求和静态请求分开，Nginx处理静态资源，tomcat处理动态资源。
+
+一种方案是：纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前主流推荐的方案。
+
+另一种方案是：动态和静态文件混合在一起发布，通过Nginx来分开。
+
+#### 2.准备工作
+
+准备一些静态资源用于访问
+
+#### 3.配置
+
+```
+location /www/{
+	root /data/;
+	index index.html index.htm;
+}
+location /image/{
+	root /data/;
+	autoindex on;  # 加上autoindex  会自动列出来内容
+}
+```
+
+
+
 ### 六.Nginx配置高可用集群
 
+#### 1.什么是高可用
+
+![18-主从  高可用](..\images\Nginx\18-主从  高可用.png)
+
+#### 2.准备工作
+
+需要两台nginx服务器 192.168.181.200  192.168.181 201
+
+需要keepalived 
+
+> yum install keepalived -y 
+>
+> rpm -q -a keepalived 查看keepalived是否已经安装
+>
+> 安装位置在/etc/keepalived/
+>
+> keepalived.conf为配置文件
+
+需要虚拟ip
+
+#### 3.完成配置
+
+修改/etc/keepalived/keepalived.conf 
+
+```
+global_defs {
+	notification_email{
+		acassen@firewall.loc
+		failover@firewall.loc
+		sysadmin@firewall.loc
+	}
+	notification_email_from Alexandre.Cassen@firewall.loc
+	smtp_server 192.168.181.200
+	smtp_connect_timeout 30
+	# 访问到主机 配置在hosts中 127.0.0.1 LVS_DEVEL
+	router_id LVS_DEVEL  
+}
+
+vrrp_script chk_http_port{
+	script "/usr/local/src/mginx_check.sh"
+	interval 2  # 检测脚本执行的间隔
+ 	weight 2    # 当前服务器权重
+}
+vrrp_instance VI_1 {  # 虚拟ip 
+	state BACKUP  # 表示是主还是从  备份服务器上将MASTER改为BACKUP
+	interface ens33  # 网卡名称
+	virtual_router_id 51  # 主备机相同
+	priority 100  # 不同的优先级
+	advert_int 1
+	authentication {   # 校验方式  这里是采用密码
+		auth_type PASS
+		auth_pass 1111
+	}
+	virtual_ipaddress{
+		192.168.181.202 //vrrp H 虚拟地址
+	}
+}
+	
+```
+
+增加检测脚本
+
+```
+
+#!/bin/bash
+A=`ps -C nginx -no-header|wc -l`
+if [ $A -eq 0 ] ;then
+	/usr/local/nginx/sbin/nginx
+	sleep 2
+	if [ `ps -C nginx --no-header |wc -l ` -eq 0 ] ;then
+		killall keepalived
+	fi
+fi		
+```
+
+把两台服务器的nginx和keepalived启动
+
+```
+systemctl start keepalived.service
+ps -ef|grep keepalived
+```
+
+
+
 ### 七.Nginx原理
+
+![19-nginx原理](..\images\Nginx\19-nginx原理.png)
+
+
+
+master-worker的机制好处
+
+首先，对于每个worker来说，独立的进程，不需要加锁，所以省掉了锁带来的开销，同时在编程一级问题查找时，会方便很多，其次，采用独立的进程，可以让互相之间不会影响，一个进程退出后，其它工作还在进行，服务不会中断，master进程会启动新的worker进行，当然，worker进程的异常退出，肯定是程序有bug了，异常退出，会导致当前worker上的所有请求失败，不过不会影响到所有请求，所以降低了风险。
+
+需要设置多少个worker:
+
+nginx通redis类似都采用了io多路复用机制，每个worker都是一个独立的进程，但每个进程里只有一个主线程。
+
+worker数和cpu核数相同，少了会浪费cpu 多了会造成cpu频繁切换
+
+连接数worker_connection
+
+> 发送请求，占用worker的几个连接数?
+>
+> 2或者4个
+
+>nginx有一个master 4个worker 每个worker支持最大的并发数
+>
+>普通静态资源最大并发数worker_connection*worker_process/2 而如果是http作为反向代理来说，最大并发数应该是worker_connections*worker_process/4
+
+### 八.命令说明
+
+#### 1.location指令说明
+
+该指令用于匹配URL
+
+语法如下：
+
+```
+location [= | ~ | ~* |^~] uri{
+
+}
+```
+
+- = 用于不含正则表达式的uri前，要求请求字符串与url严格匹配，如果匹配成功就停止继续向下搜索并立即处理该请求。
+- ~ 用于表示uri包含正则表达式，并且区分大小写
+- ~* 用于表示uri包含正则表达式，并且不区分大小写
+- ^~ 用于不含正则表达式的uri前，要求nginx服务器找到标识uri和请求字符串匹配度最高的location后，立即使用此location处理请求，而不再使用location块中的正则uri和请求字符串做匹配
+
+> 如果uri包含正则表达式，则必须要有~ 或~*标识
+

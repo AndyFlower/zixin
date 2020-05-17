@@ -26,18 +26,27 @@ public class TestMapper {
         //生成SqlSessionFactory
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsReader);
         resourceAsReader.close();
-        AutoTestMapper autoTestMapper = new AutoTestMapper("D:/slpworkspace/github/2020/project/TestMapper/target/classes/com/cul/culsite/dao");
+        AutoTestMapper autoTestMapper = new AutoTestMapper("D:\\devtool\\workspace\\zixin\\project\\TestMapper\\src\\main\\java\\com\\cul\\culsite\\dao");
         //执行测试方法
         autoTestMapper.openSqlSession(sqlSessionFactory);
     }
 	
 	public static void main(String[] args) {
-		 File file = new File("D:/slpworkspace/github/2020/project/TestMapper/src/main/java/com/cul/culsite/dao/");
-	        File[] tempList = file.listFiles();
-	        System.out.println(tempList.length);
-	        for(int i=0;i<tempList.length;i++) {
-	        	System.out.println(tempList[i].getName());
-	        }
+		/*
+		 * File file = new File(
+		 * "D:/devtool/workspace/zixin/project/TestMapper/src/main/java/com/cul/culsite/dao/"
+		 * ); File[] tempList = file.listFiles(); System.out.println(tempList.length);
+		 * for(int i=0;i<tempList.length;i++) {
+		 * System.out.println(tempList[i].getName()); }
+		 */
+		try {
+			Class s = Class.forName("com.cul.culsite.dao.EsOrderDTOMapper");
+			System.out.println(s.getName());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("失败");
+			e.printStackTrace();
+		}
 	}
 
 }

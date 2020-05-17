@@ -1,0 +1,27 @@
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://192.168.2.204:3306/CULSITE"/>
+                <property name="username" value="root"/>
+                <property name="password" value="Root_123"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--常规做法-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/PrivilegeMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/RoleMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/RolePrivilegeMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/UserMapper.xml" />-->
+        <!--<mapper resource="tk/mybatis/simple/mapper/UserRoleMapper.xml" />-->
+        <!--第二种做法-->
+        <package name="com.cul.culsite.dao.mysqlMapping"/>
+    </mappers>
+</configuration>
