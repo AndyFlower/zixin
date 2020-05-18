@@ -79,7 +79,7 @@ public class AutoTestMapper {
 	        String mapperContent = getFileContent(path);
 	        String[] pathArr = matchMethod(PATH_PATTERN, mapperContent).split(";");
 	        for (int i = 0; i < pathArr.length; i++) {
-	        	System.out.println("--"+pathArr[i]);
+	        	
 	            pathArr[i] = pathArr[i].replaceAll(IMPORT_REGEX, "");
 	            Class cls = Class.forName(pathArr[i]);
 	            if (!cls.isInterface()) {
@@ -102,6 +102,9 @@ public class AutoTestMapper {
 	        List<String> invokeFail = (List<String>) new ArrayList<String>();
 	        for (String fileName : FILE_NAME) {
 	        	
+	        	if(fileName.endsWith("xml")) {
+	        		continue;
+	        	}
 		            Class cls = Class.forName(PACK_PATH + "." + fileName);
 		            //添加Mapper
 		            if (!sqlSessionFactory.getConfiguration().hasMapper(cls)) {
@@ -120,7 +123,6 @@ public class AutoTestMapper {
 	        for(int i=0;i<invokeSuccess.size();i++){
 	        	System.out.println(invokeSuccess.get(i));
 	        }
-	        System.out.println("-------------------");
 	        for(int i=0;i<invokeFail.size();i++){
 	        	String s = invokeFail.get(i);
 	        	if (s.contains("id bound statement")){
@@ -141,6 +143,7 @@ public class AutoTestMapper {
 	            IntrospectionException {
 	        Method[] declaredMethods = c.getDeclaredMethods();
 	        String fileName = c.getName().substring(c.getName().lastIndexOf(".")).substring(1);
+	        System.out.println(fileName);
 	        List<String> invokeSuccess = (List<String>) new ArrayList<String>();
 	        List<String> invokeFail = (List<String>) new ArrayList<String>();
 	        Map<String, List<String>> resultMap = new HashMap<String, List<String>>();
@@ -155,7 +158,7 @@ public class AutoTestMapper {
 	                method.invoke(o, list.toArray());
 	                invokeSuccess.add("Success: " + fileName + "." + method.getName());
 	            } catch (Exception e) {
-	            	e.printStackTrace();
+	            	//e.printStackTrace();
 	                if (e.getCause() != null) {
 	                    String errorInf = e.getCause().getMessage();
 	                    if (errorInf.contains("MySQLSyntaxErrorException")) {
@@ -184,7 +187,7 @@ public class AutoTestMapper {
 	        Object par = new Object();
 	        if (TYPE_ARRAY.contains(cls)) {
 	            if (cls.equals(String.class)) {
-	                par = "1";
+	                par = ""+(char)(Math.random()*26+'a');
 	            } else {
 	                try {
 	                    par = cls.newInstance();
@@ -248,8 +251,10 @@ public class AutoTestMapper {
 	                    method.setAccessible(true);
 	                    if ("uuid".equals(x.getName())) {
 	                        method.invoke(o, UUID.randomUUID().toString().substring(0, 30));
+	                    } else if("orderByClause".equals(x.getName())) {
+	                    	
 	                    } else {
-	                        method.invoke(o, "1");
+	                        method.invoke(o, ""+(char)(Math.random()*26+'a'));
 	                    }
 
 	                }

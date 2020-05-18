@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,7 +27,7 @@ public class TestMapper {
         //生成SqlSessionFactory
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsReader);
         resourceAsReader.close();
-        AutoTestMapper autoTestMapper = new AutoTestMapper("D:\\devtool\\workspace\\zixin\\project\\TestMapper\\src\\main\\java\\com\\cul\\culsite\\dao");
+        AutoTestMapper autoTestMapper = new AutoTestMapper("D:\\slpworkspace\\github\\2020\\project\\TestMapper\\src\\main\\java\\com\\cul\\culsite\\dao");
         //执行测试方法
         autoTestMapper.openSqlSession(sqlSessionFactory);
     }
