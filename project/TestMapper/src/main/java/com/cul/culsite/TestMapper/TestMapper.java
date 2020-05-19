@@ -27,7 +27,7 @@ public class TestMapper {
         //生成SqlSessionFactory
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsReader);
         resourceAsReader.close();
-        AutoTestMapper autoTestMapper = new AutoTestMapper("D:\\slpworkspace\\github\\2020\\project\\TestMapper\\src\\main\\java\\com\\cul\\culsite\\dao");
+        AutoTestMapper autoTestMapper = new AutoTestMapper("D:\\slpworkspace\\github\\2020\\project\\TestMapper\\src\\main\\java\\com\\cul\\culsite\\ms\\dao");
         //执行测试方法
         autoTestMapper.openSqlSession(sqlSessionFactory);
     }

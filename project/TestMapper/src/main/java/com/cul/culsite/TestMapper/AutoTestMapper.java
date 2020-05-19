@@ -206,16 +206,48 @@ public class AutoTestMapper {
 	            }
 	        } else if ("java.util.Map".equals(cls.getName())) {
 	            par = getMapData(c.getName() + "." + method.getName());
+	        }else if ("java.util.List".equals(cls.getName())) {
+	            par = getListData(c.getName() + "." + method.getName());
 	        }
 	        return par;
 	    }
 
-	    //获得xml文件中的#{}中的key值
+	    private Object getListData(String url) {
+	    	List<String> resultList = new ArrayList<String>();
+	    	List<String>  parameterList = new ArrayList<String>();
+	        BoundSql sql = null;
+	        parameterList.add("222");
+	        //productNos
+	        ;
+	        try {
+	            sql = configuration.getMappedStatement(url).getBoundSql(parameterList);
+	        } catch (Exception exception) {
+	            System.out.println(exception);
+	        }
+	        if (sql != null) {
+	            List<ParameterMapping> parameterMappings = sql.getParameterMappings();
+	            for(int i=0;i<parameterMappings.size();i++){
+	            	String key = parameterMappings.get(i).getProperty();
+	            	resultList.add("1");
+	             
+	            }
+	            
+	        }
+	        return resultList;
+		}
+
+		//获得xml文件中的#{}中的key值
 	    private Map<String, Object> getMapData(String url) {
 	        Map<String, Object> resultMap = new HashMap<String, Object>();
 	        Map<String, Object> parameterMap = new HashMap<String, Object>();
 	        BoundSql sql = null;
 	        parameterMap.put("tranSno", "111");
+	        //productNos
+	        parameterMap.put("categoryNos", new String[]{"222","333"});
+	        parameterMap.put("productNos", new String[]{"222","333"});
+	        parameterMap.put("cardNos", new String[]{"222","333"});
+	        //couponCategoryIdList
+	        parameterMap.put("couponCategoryIdList", new String[]{"222","333"});
 	        try {
 	            sql = configuration.getMappedStatement(url).getBoundSql(parameterMap);
 	        } catch (Exception exception) {

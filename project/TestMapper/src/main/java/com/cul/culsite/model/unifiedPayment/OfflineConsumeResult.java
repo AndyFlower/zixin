@@ -1,6 +1,5 @@
 package com.cul.culsite.model.unifiedPayment;
 
-import com.cul.culsite.dto.MCouponRefundTxnDTO;
 import com.cul.culsite.model.CodeMsg;
 import com.cul.culsite.model.CouponTransactionParam;
 import com.cul.culsite.model.GrdTransData;
@@ -20,7 +19,6 @@ public class OfflineConsumeResult extends CodeMsg {
 	private String rrn = null;//线下交易交易参考号
 	private String issuerId;
 	private CouponTransactionParam couponTransactionParam;
-	private MCouponRefundTxnDTO couponRefundTxn;
 	private MutiPartIprfReturnData mutiPartIprfReturnData;
 	private GrdTransData grdTransData;
 	
@@ -126,13 +124,7 @@ public class OfflineConsumeResult extends CodeMsg {
 		this.couponTransactionParam = couponTransactionParam;
 	}
 
-	public MCouponRefundTxnDTO getCouponRefundTxn() {
-		return couponRefundTxn;
-	}
-
-	public void setCouponRefundTxn(MCouponRefundTxnDTO couponRefundTxn) {
-		this.couponRefundTxn = couponRefundTxn;
-	}
+	
 
 	public MutiPartIprfReturnData getMutiPartIprfReturnData() {
 		return mutiPartIprfReturnData;

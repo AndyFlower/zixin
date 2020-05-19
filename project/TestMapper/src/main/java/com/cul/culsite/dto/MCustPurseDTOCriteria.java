@@ -1504,6 +1504,76 @@ public class MCustPurseDTOCriteria {
             addCriterion("PRODUCTID not between", value1, value2, "productid");
             return (Criteria) this;
         }
+
+        public Criteria andIssuerIdIsNull() {
+            addCriterion("ISSUER_ID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdIsNotNull() {
+            addCriterion("ISSUER_ID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdEqualTo(String value) {
+            addCriterion("ISSUER_ID =", value, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdNotEqualTo(String value) {
+            addCriterion("ISSUER_ID <>", value, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdGreaterThan(String value) {
+            addCriterion("ISSUER_ID >", value, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdGreaterThanOrEqualTo(String value) {
+            addCriterion("ISSUER_ID >=", value, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdLessThan(String value) {
+            addCriterion("ISSUER_ID <", value, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdLessThanOrEqualTo(String value) {
+            addCriterion("ISSUER_ID <=", value, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdLike(String value) {
+            addCriterion("ISSUER_ID like", value, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdNotLike(String value) {
+            addCriterion("ISSUER_ID not like", value, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdIn(List<String> values) {
+            addCriterion("ISSUER_ID in", values, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdNotIn(List<String> values) {
+            addCriterion("ISSUER_ID not in", values, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdBetween(String value1, String value2) {
+            addCriterion("ISSUER_ID between", value1, value2, "issuerId");
+            return (Criteria) this;
+        }
+
+        public Criteria andIssuerIdNotBetween(String value1, String value2) {
+            addCriterion("ISSUER_ID not between", value1, value2, "issuerId");
+            return (Criteria) this;
+        }
     }
 
     /**

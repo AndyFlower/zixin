@@ -6002,7 +6002,7 @@ public class MTxnHeaderDTOCriteria {
             addCriterion("MTH_EXTERNAL_TXNID_OWNER not between", value1, value2, "mthExternalTxnidOwner");
             return (Criteria) this;
         }
-        
+
         public Criteria andMthSettleDateIsNull() {
             addCriterion("MTH_SETTLE_DATE is null");
             return (Criteria) this;

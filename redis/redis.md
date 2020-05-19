@@ -63,7 +63,42 @@ docker pull redis
 docker run -p 6379:6379 --name redis -v /root/redis/data:/data -v /root/redis/conf/redis.conf:/usr/local/etc/redis/redis.conf -d redis redis-server /usr/local/etc/redis/redis.conf --appendonly yes --requirepass "xxx"
 ```
 
+```
+直接yum 安装的redis 不是最新版本
 
+yum install redis
+如果要安装最新的redis，需要安装Remi的软件源，官网地址：http://rpms.famillecollet.com/
+
+yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+然后可以使用下面的命令安装最新版本的redis：
+
+yum --enablerepo=remi install redis
+安装完毕后，即可使用下面的命令启动redis服务
+
+service redis start
+或者
+systemctl start redis
+redis安装完毕后，我们来查看下redis安装时创建的相关文件，如下：
+
+rpm -qa |grep redis
+
+rpm -ql redis  #查看安装位置
+
+指定配置文件启动
+redis-server /etc/redis.conf
+```
+
+> redis-benchmark  #查看服务器性能
+
+#### 杂项
+
+- 数据库的个数  16   redis.conf 中的  databases  16
+- 单线程
+- dbsize查看当前数据库的key的数量
+- flushdb:清空当前库
+- flushall清空全部库
+- 统一密码管理，16个库的密码都一样
+- 默认端口6379
 
 ### 为什么使用NOSQL
 

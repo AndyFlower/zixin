@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.cul.culsite.dto.MOrderTxnDTO;
-import com.cul.culsite.dto.ProductInfo;
 
 public class ConsumeMemberBean {
 	/** 发卡机构号 */
@@ -77,7 +76,6 @@ public class ConsumeMemberBean {
 	// 交易类型标签
 	private String at;
 	
-	private List<ProductInfo> productInfoList;
 	
 	
 
@@ -589,13 +587,6 @@ public class ConsumeMemberBean {
 		this.voucherNos = voucherNos;
 	}
 
-	public List<ProductInfo> getProductInfoList() {
-		return productInfoList;
-	}
-
-	public void setProductInfoList(List<ProductInfo> productInfoList) {
-		this.productInfoList = productInfoList;
-	}
 	
 	
 
