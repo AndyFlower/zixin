@@ -2,7 +2,6 @@ package com.cul.culsite.model.memberpoint;
 
 import java.util.List;
 
-import com.cul.culsite.dto.MPointsRecordDetailDTO;
 
 public class PointsPurseTxn {
 	 private String purseId        ;
@@ -21,7 +20,6 @@ public class PointsPurseTxn {
 	 private String status          ; 
 	 private String refundId       ; 
 	 private String dateTime;
-     private List<MPointsRecordDetailDTO> pointsRecordDetailDTOs;
     
      
 	public String getPurseId() {
@@ -114,13 +112,7 @@ public class PointsPurseTxn {
 	public void setRefundId(String refundId) {
 		this.refundId = refundId;
 	}
-	public List<MPointsRecordDetailDTO> getPointsRecordDetailDTOs() {
-		return pointsRecordDetailDTOs;
-	}
-	public void setPointsRecordDetailDTOs(
-			List<MPointsRecordDetailDTO> pointsRecordDetailDTOs) {
-		this.pointsRecordDetailDTOs = pointsRecordDetailDTOs;
-	}
+	
 	public String getDateTime() {
 		return dateTime;
 	}

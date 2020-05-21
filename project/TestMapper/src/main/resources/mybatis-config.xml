@@ -6,7 +6,6 @@
         <environment id="dev">
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
-                <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <property name="url" value="jdbc:mysql://192.168.2.204:3306/CULSITE"/>
                 <property name="username" value="root"/>
                 <property name="password" value="Root_123"/>
@@ -22,6 +21,50 @@
         <!--<mapper resource="tk/mybatis/simple/mapper/UserMapper.xml" />-->
         <!--<mapper resource="tk/mybatis/simple/mapper/UserRoleMapper.xml" />-->
         <!--第二种做法-->
-        <package name="com.cul.culsite.dao.mysqlMapping"/>
-    </mappers>
+				<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MCategoryProcessDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MCategoryVoucherDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MCategoryVoucherSeqDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MEmailTemplateDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MIssuerParaExpandDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MPrewarnAppenderTxnDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MPrewarnAppenderTxnMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MPrewarnChannelDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MPrewarnInfoAuditDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MPrewarnInfoDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MPrewarnOpeTxnDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MPrewarnUserDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MProductEarlywarnDetailDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MProductStoreEarlywarnDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MRefundCardApplyDetailDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MRefundCardApplyDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MStoreBatchInfoDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MTxnOrderGroupDetailDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MTxnOrderGroupMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MVoucherOpeTxnMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MWarnInfoReceiverDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MWarnInfoSendDetailDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MweixinGiftcardCardCodeDtoMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MweixinGiftcardCardDtoMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MweixinGiftcardMiniProgramDtoMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MweixinGiftcardPageDtoMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/MweixinShelfDtoMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmAuthInfomationDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmBuyCardCorporateMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmDepositImportFileMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmDepositImportRecordMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmGroupDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmGroupOpesDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmInvoiceDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmIssuerOpesDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmMerchantDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmOpesDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmOrderInvoiceDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmPrepayIssuerRelDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmRightDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VMSystemParaDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VMTemplateParaDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmUserDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmWechatMessageArticleDTOMapper.xml"/>
+		<mapper resource="com/cul/culsite/ms/dao/mysqlMapping/VmWechatMessageDTOMapper.xml"/>
+</mappers>
 </configuration>

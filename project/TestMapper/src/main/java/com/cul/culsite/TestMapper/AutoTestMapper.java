@@ -79,7 +79,7 @@ public class AutoTestMapper {
 	        String mapperContent = getFileContent(path);
 	        String[] pathArr = matchMethod(PATH_PATTERN, mapperContent).split(";");
 	        for (int i = 0; i < pathArr.length; i++) {
-	        	System.out.println("--"+pathArr[i]);
+	        	
 	            pathArr[i] = pathArr[i].replaceAll(IMPORT_REGEX, "");
 	            Class cls = Class.forName(pathArr[i]);
 	            if (!cls.isInterface()) {
@@ -102,6 +102,9 @@ public class AutoTestMapper {
 	        List<String> invokeFail = (List<String>) new ArrayList<String>();
 	        for (String fileName : FILE_NAME) {
 	        	
+	        	if(fileName.endsWith("xml")) {
+	        		continue;
+	        	}
 		            Class cls = Class.forName(PACK_PATH + "." + fileName);
 		            //添加Mapper
 		            if (!sqlSessionFactory.getConfiguration().hasMapper(cls)) {
@@ -120,7 +123,6 @@ public class AutoTestMapper {
 	        for(int i=0;i<invokeSuccess.size();i++){
 	        	System.out.println(invokeSuccess.get(i));
 	        }
-	        System.out.println("-------------------");
 	        for(int i=0;i<invokeFail.size();i++){
 	        	String s = invokeFail.get(i);
 	        	if (s.contains("id bound statement")){
@@ -141,6 +143,7 @@ public class AutoTestMapper {
 	            IntrospectionException {
 	        Method[] declaredMethods = c.getDeclaredMethods();
 	        String fileName = c.getName().substring(c.getName().lastIndexOf(".")).substring(1);
+	        System.out.println(fileName);
 	        List<String> invokeSuccess = (List<String>) new ArrayList<String>();
 	        List<String> invokeFail = (List<String>) new ArrayList<String>();
 	        Map<String, List<String>> resultMap = new HashMap<String, List<String>>();
@@ -155,7 +158,7 @@ public class AutoTestMapper {
 	                method.invoke(o, list.toArray());
 	                invokeSuccess.add("Success: " + fileName + "." + method.getName());
 	            } catch (Exception e) {
-	            	e.printStackTrace();
+	            	//e.printStackTrace();
 	                if (e.getCause() != null) {
 	                    String errorInf = e.getCause().getMessage();
 	                    if (errorInf.contains("MySQLSyntaxErrorException")) {
@@ -184,7 +187,7 @@ public class AutoTestMapper {
 	        Object par = new Object();
 	        if (TYPE_ARRAY.contains(cls)) {
 	            if (cls.equals(String.class)) {
-	                par = "1";
+	                par = ""+(char)(Math.random()*26+'a');
 	            } else {
 	                try {
 	                    par = cls.newInstance();
@@ -203,16 +206,48 @@ public class AutoTestMapper {
 	            }
 	        } else if ("java.util.Map".equals(cls.getName())) {
 	            par = getMapData(c.getName() + "." + method.getName());
+	        }else if ("java.util.List".equals(cls.getName())) {
+	            par = getListData(c.getName() + "." + method.getName());
 	        }
 	        return par;
 	    }
 
-	    //获得xml文件中的#{}中的key值
+	    private Object getListData(String url) {
+	    	List<String> resultList = new ArrayList<String>();
+	    	List<String>  parameterList = new ArrayList<String>();
+	        BoundSql sql = null;
+	        parameterList.add("222");
+	        //productNos
+	        ;
+	        try {
+	            sql = configuration.getMappedStatement(url).getBoundSql(parameterList);
+	        } catch (Exception exception) {
+	            System.out.println(exception);
+	        }
+	        if (sql != null) {
+	            List<ParameterMapping> parameterMappings = sql.getParameterMappings();
+	            for(int i=0;i<parameterMappings.size();i++){
+	            	String key = parameterMappings.get(i).getProperty();
+	            	resultList.add("1");
+	             
+	            }
+	            
+	        }
+	        return resultList;
+		}
+
+		//获得xml文件中的#{}中的key值
 	    private Map<String, Object> getMapData(String url) {
 	        Map<String, Object> resultMap = new HashMap<String, Object>();
 	        Map<String, Object> parameterMap = new HashMap<String, Object>();
 	        BoundSql sql = null;
 	        parameterMap.put("tranSno", "111");
+	        //productNos
+	        parameterMap.put("categoryNos", new String[]{"222","333"});
+	        parameterMap.put("productNos", new String[]{"222","333"});
+	        parameterMap.put("cardNos", new String[]{"222","333"});
+	        //couponCategoryIdList
+	        parameterMap.put("couponCategoryIdList", new String[]{"222","333"});
 	        try {
 	            sql = configuration.getMappedStatement(url).getBoundSql(parameterMap);
 	        } catch (Exception exception) {
@@ -248,8 +283,10 @@ public class AutoTestMapper {
 	                    method.setAccessible(true);
 	                    if ("uuid".equals(x.getName())) {
 	                        method.invoke(o, UUID.randomUUID().toString().substring(0, 30));
+	                    } else if("orderByClause".equals(x.getName())) {
+	                    	
 	                    } else {
-	                        method.invoke(o, "1");
+	                        method.invoke(o, ""+(char)(Math.random()*26+'a'));
 	                    }
 
 	                }

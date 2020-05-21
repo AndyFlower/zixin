@@ -761,6 +761,7 @@ public class MProductCardRealCriteria {
             addCriterion("STATUS not between", value1, value2, "status");
             return (Criteria) this;
         }
+
         public Criteria andActivateCodeIsNull() {
             addCriterion("ACTIVATE_CODE is null");
             return (Criteria) this;

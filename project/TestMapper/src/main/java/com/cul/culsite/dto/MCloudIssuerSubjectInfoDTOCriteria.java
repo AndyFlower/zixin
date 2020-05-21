@@ -3851,6 +3851,76 @@ public class MCloudIssuerSubjectInfoDTOCriteria {
             addCriterion("PRODUCT_ID not between", value1, value2, "productId");
             return (Criteria) this;
         }
+
+        public Criteria andBusinessMerTypeIsNull() {
+            addCriterion("BUSINESS_MER_TYPE is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeIsNotNull() {
+            addCriterion("BUSINESS_MER_TYPE is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeEqualTo(String value) {
+            addCriterion("BUSINESS_MER_TYPE =", value, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeNotEqualTo(String value) {
+            addCriterion("BUSINESS_MER_TYPE <>", value, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeGreaterThan(String value) {
+            addCriterion("BUSINESS_MER_TYPE >", value, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeGreaterThanOrEqualTo(String value) {
+            addCriterion("BUSINESS_MER_TYPE >=", value, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeLessThan(String value) {
+            addCriterion("BUSINESS_MER_TYPE <", value, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeLessThanOrEqualTo(String value) {
+            addCriterion("BUSINESS_MER_TYPE <=", value, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeLike(String value) {
+            addCriterion("BUSINESS_MER_TYPE like", value, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeNotLike(String value) {
+            addCriterion("BUSINESS_MER_TYPE not like", value, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeIn(List<String> values) {
+            addCriterion("BUSINESS_MER_TYPE in", values, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeNotIn(List<String> values) {
+            addCriterion("BUSINESS_MER_TYPE not in", values, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeBetween(String value1, String value2) {
+            addCriterion("BUSINESS_MER_TYPE between", value1, value2, "businessMerType");
+            return (Criteria) this;
+        }
+
+        public Criteria andBusinessMerTypeNotBetween(String value1, String value2) {
+            addCriterion("BUSINESS_MER_TYPE not between", value1, value2, "businessMerType");
+            return (Criteria) this;
+        }
     }
 
     /**

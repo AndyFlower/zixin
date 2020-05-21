@@ -1,7 +1,6 @@
 package com.cul.culsite.model.memberpoint;
 
 import com.cul.culsite.dto.MMemberDTO;
-import com.cul.culsite.dto.MPointsRecordDTO;
 
 public class PointsManageData {
 	private String code;
@@ -76,8 +75,7 @@ public class PointsManageData {
 	// 会员积分钱包信息
 	private PointsMember pointsMember;
 
-	// 积分流水
-	private MPointsRecordDTO pointsRecord;
+
 
 	// 原积分交易流水id
 	private String orignPointsTxnId;
@@ -144,13 +142,6 @@ public class PointsManageData {
 		this.orignPointsTxnId = orignPointsTxnId;
 	}
 
-	public MPointsRecordDTO getPointsRecord() {
-		return pointsRecord;
-	}
-
-	public void setPointsRecord(MPointsRecordDTO pointsRecord) {
-		this.pointsRecord = pointsRecord;
-	}
 
 	public PointsMember getPointsMember() {
 		return pointsMember;
