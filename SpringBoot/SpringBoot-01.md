@@ -227,3 +227,202 @@ spring-boot-starter-web:
 > 可以查看所有的启动器模块
 
 Spring Boot将所有的功能场景都抽取出来，做出一个个的starter,只需要在项目里引入这些starter相关场景所需的依赖就会导入进来。
+
+#### 2.主程序类
+
+```
+package com.slp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * @SpringBootApplication 来标注一个主程序，说明这是一个springboot程序
+ */
+@SpringBootApplication
+public class HelloWorldMainApplication {
+
+    /**
+     * 启动程序
+     * @param args
+     */
+    public static void main(String[] args){
+        SpringApplication.run(HelloWorldMainApplication.class,args);
+    }
+}
+```
+
+##### 2.1 @SpringBootApplication:
+
+Spring Boot应用标注在某个类上说明这个类是SpringBoot的主配置类，SpringBoot就应该运行这个类的main方法来启动SpringBoot应用。
+
+```
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(
+    excludeFilters = {@Filter(
+    type = FilterType.CUSTOM,
+    classes = {TypeExcludeFilter.class}
+), @Filter(
+    type = FilterType.CUSTOM,
+    classes = {AutoConfigurationExcludeFilter.class}
+)}
+)
+public @interface SpringBootApplication {
+```
+
+
+
+##### 2.2 @SpringBootConfiguration:Spring Boot的配置类：
+
+​	标注在某个类上表示这是一个Spring Boot的配置类
+
+   - Configuration:配置类上来标注这个注解
+     - 配置类-----配置文件：配置类也是容器中的一个组件：@Component
+
+##### 2.3  @EnableAutoConfiguration:开启自动配置功能
+
+以前我们需要配置的东西，SpringBoot帮我们自动配置；@EnableAutoConfiguration告诉SpringBoot开启自动配置功能；这样自动配置才能生效；
+
+```
+@Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Inherited
+@AutoConfigurationPackage
+@Import({AutoConfigurationImportSelector.class})
+public @interface EnableAutoConfiguration {
+```
+
+- @AutoConfigurationPackage:自动配置包
+
+  ```
+  @Target({ElementType.TYPE})
+  @Retention(RetentionPolicy.RUNTIME)
+  @Documented
+  @Inherited
+  @Import({Registrar.class})
+  public @interface AutoConfigurationPackage {
+  }
+  ```
+
+  
+
+  - @Import({Registrar.class})
+
+    - Spring的底层注解@Import,给容器中导入一个组件；导入的组件由Registrar；
+
+      ```
+       public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
+                  AutoConfigurationPackages.register(registry, (new AutoConfigurationPackages.PackageImport(metadata)).getPackageName());
+              }
+      ```
+
+      ```
+        public static void register(BeanDefinitionRegistry registry, String... packageNames) {
+              if (registry.containsBeanDefinition(BEAN)) {
+                  BeanDefinition beanDefinition = registry.getBeanDefinition(BEAN);
+                  ConstructorArgumentValues constructorArguments = beanDefinition.getConstructorArgumentValues();
+                  constructorArguments.addIndexedArgumentValue(0, addBasePackages(constructorArguments, packageNames));
+              } else {
+                  GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+                  beanDefinition.setBeanClass(AutoConfigurationPackages.BasePackages.class);
+                  beanDefinition.getConstructorArgumentValues().addIndexedArgumentValue(0, packageNames);
+                  beanDefinition.setRole(2);
+                  registry.registerBeanDefinition(BEAN, beanDefinition);
+              }
+      
+          }
+      ```
+
+      将主配置类的所在包及下面所有子包里面的所有组件扫描到Spring容器
+
+- @Import({AutoConfigurationImportSelector.class})
+
+  给容器中导入组件
+
+  AutoConfigurationImportSelector：需要导入哪些组件的选择器，
+
+  将所有需要导入的组件以全类名的方式返回；这些组件就会被添加到容器中
+
+  ```
+  public String[] selectImports(AnnotationMetadata annotationMetadata) {
+          if (!this.isEnabled(annotationMetadata)) {
+              return NO_IMPORTS;
+          } else {
+              AutoConfigurationMetadata autoConfigurationMetadata = AutoConfigurationMetadataLoader.loadMetadata(this.beanClassLoader);
+              AutoConfigurationImportSelector.AutoConfigurationEntry autoConfigurationEntry = this.getAutoConfigurationEntry(autoConfigurationMetadata, annotationMetadata);
+              return StringUtils.toStringArray(autoConfigurationEntry.getConfigurations());
+          }
+      }
+  ```
+
+  会给容器导入非常多的自动配置类；就是给容器中导入这个场景需要的所有组件
+
+  ![SpringBoot-03自动配置类](images\SpringBoot-03自动配置类.png)
+
+  有了自动配置类，免去了我们手动编写配置注入功能等的工作。
+
+  ```
+  private static Map<String, List<String>> loadSpringFactories(@Nullable ClassLoader classLoader) {
+          MultiValueMap<String, String> result = (MultiValueMap)cache.get(classLoader);
+          if (result != null) {
+              return result;
+          } else {
+              try {
+                  Enumeration<URL> urls = classLoader != null ? classLoader.getResources("META-INF/spring.factories") : ClassLoader.getSystemResources("META-INF/spring.factories");
+                  LinkedMultiValueMap result = new LinkedMultiValueMap();
+  
+                  while(urls.hasMoreElements()) {
+                      URL url = (URL)urls.nextElement();
+                      UrlResource resource = new UrlResource(url);
+                      Properties properties = PropertiesLoaderUtils.loadProperties(resource);
+                      Iterator var6 = properties.entrySet().iterator();
+  
+                      while(var6.hasNext()) {
+                          Entry<?, ?> entry = (Entry)var6.next();
+                          String factoryTypeName = ((String)entry.getKey()).trim();
+                          String[] var9 = StringUtils.commaDelimitedListToStringArray((String)entry.getValue());
+                          int var10 = var9.length;
+  
+                          for(int var11 = 0; var11 < var10; ++var11) {
+                              String factoryImplementationName = var9[var11];
+                              result.add(factoryTypeName, factoryImplementationName.trim());
+                          }
+                      }
+                  }
+  
+                  cache.put(classLoader, result);
+                  return result;
+              } catch (IOException var13) {
+                  throw new IllegalArgumentException("Unable to load factories from location [META-INF/spring.factories]", var13);
+              }
+          }
+      }
+  ```
+
+  从类路径下的META-INF/spring.factories中获取EnableAutoConfiguration指定的值，将这些值作为自动配置类导入到容器中，自动配置类就生效，帮我们进行自动配置工作；以前需要我们自己配置的东西，自动配置类帮我们做了。
+
+  ![SpringBoot-04自动配置类文件路径](images\SpringBoot-04自动配置类文件路径.png)
+
+  J2EE的整体整合和配置都在autoconfig包下面。
+
+### 七、使用Spring Initializer快速创建Spring Boot项目
+
+IDE都支持使用Spring的项目创建向导快速创建一个SpringBoot项目
+
+![SpringBoot-05快速创建项目](images\SpringBoot-05快速创建项目.png)
+
+选择我们需要的模块；向导会联网创建Spring Boot项目
+
+默认生成的Spring Boot项目；
+
+- 主程序已经生成好了
+- resources文件夹中目录结构
+  - static:保存静态资源：js  css images
+  - templates:保存所有的模板页面（SpringBoot默认jar包使用嵌入式的Tomcat,默认不支持JSP），可以使用模板引擎（freemarker  thymeleaf）
+- application.properties:Spring Boot应用的配置文件

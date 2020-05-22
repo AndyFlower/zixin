@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC">
+            </transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://192.168.2.211:8066/CULSITE_WRITE?useUnicode=true&amp;characterEncoding=utf-8&amp;autoReconnect=true&amp;failOverReadOnly=false"/>
+                <property name="username" value="culsite_write"/>
+                <property name="password" value="loyalty"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="MIssuerParaDTOMapper.xml"/>
+    </mappers>
+
+</configuration>
