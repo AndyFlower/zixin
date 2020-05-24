@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--定义日志的根目录-->
+    <property name="LOG_HOME" value="c:/log" />
+    <!--定义日志文件名称-->
+    <property name="appName" value="spring-boot"></property>
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <springProfile name="dev">
+                <pattern>%d{HH:mm:ss.SSS}--> [%thread] %-5level %logger{50} - %msg%n
+                </pattern>
+            </springProfile>
+            <springProfile name="!dev">
+                <pattern>%d{HH:mm:ss.SSS}=== [%thread] %-5level %logger{50} - %msg%n
+                </pattern>
+            </springProfile>
+        </layout>
+    </appender>
+
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/myApp.log.%d{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

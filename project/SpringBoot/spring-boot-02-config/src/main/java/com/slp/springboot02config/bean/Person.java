@@ -13,6 +13,7 @@ import java.util.Map;
  * prefis = "person":配置文件中哪个下面的所有属性一一映射
  *
  * 只有这个组价是容器中的组件，才能使用容器提供的@ConfigurationProperties功能
+ * @ConfigurationProperties 从全局配置文件中取值
  * @Author zixin
  * @Date 2020/5/22 17:42
  * @Version 1.0
@@ -27,4 +28,63 @@ public class Person {
     private Map<String,Object> maps;
     private Dog dog;
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Boolean getBoss() {
+        return boss;
+    }
+
+    public void setBoss(Boolean boss) {
+        this.boss = boss;
+    }
+
+    public List<Object> getLists() {
+        return lists;
+    }
+
+    public void setLists(List<Object> lists) {
+        this.lists = lists;
+    }
+
+    public Map<String, Object> getMaps() {
+        return maps;
+    }
+
+    public void setMaps(Map<String, Object> maps) {
+        this.maps = maps;
+    }
+
+    public Dog getDog() {
+        return dog;
+    }
+
+    public void setDog(Dog dog) {
+        this.dog = dog;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "lastName='" + lastName + '\'' +
+                ", age=" + age +
+                ", boss=" + boss +
+                ", lists=" + lists +
+                ", maps=" + maps +
+                ", dog=" + dog +
+                '}';
+    }
 }

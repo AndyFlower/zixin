@@ -8,11 +8,10 @@
         <version>2.3.0.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
     <groupId>com.slp</groupId>
-    <artifactId>spring-boot-02-config</artifactId>
+    <artifactId>spring-boot-04-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>spring-boot-02-config</name>
+    <name>spring-boot-04-web</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -25,10 +24,16 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--jsr3参数校验器-->
+        <!--thymeleaf模板引擎-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!--引入jquery-webjar 访问的时候只需要写webjars下面资源的名称即可-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.5.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,24 +45,6 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>2.3.0.RELEASE</version>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
         </dependency>
     </dependencies>
 
