@@ -1,0 +1,11 @@
+解决办法1.
+
+```
+FILE_OBJECT= open('order.log','r', encoding='UTF-8')
+```
+
+解决办法2.
+
+```
+FILE_OBJECT= open('order.log','rb')
+```

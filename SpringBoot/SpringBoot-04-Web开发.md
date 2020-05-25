@@ -174,36 +174,284 @@ public class ThymeleafProperties {
    - 表达式
 
      - Simple expressions:（表达式语法）  
-       - Variable Expressions: `${...}`
-       - Selection Variable Expressions: `*{...}`
-       - Message Expressions: `#{...}`
-       - Link URL Expressions: `@{...}`
-       - Fragment Expressions: `~{...}`
-     - Literals
+       - Variable Expressions: `${...}`  获取表达式 OGNL
+       
+         - 获取对象的属性、调用方法
+         - 使用内置的基本对象
+         - `#ctx`: the context object.
+         - `#vars:` the context variables.
+         - `#locale`: the context locale.
+         - `#request`: (only in Web Contexts) the `HttpServletRequest` object.
+         - `#response`: (only in Web Contexts) the `HttpServletResponse` object.
+         - `#session`: (only in Web Contexts) the `HttpSession` object. ${session.foo}   
+         - `#servletContext`: (only in Web Contexts) the `ServletContext` object.
+         - 内置的工具对象
+         - `#execInfo`: information about the template being processed.
+         - `#messages`: methods for obtaining externalized messages inside variables expressions, in the same way as they would be obtained using #{…} syntax.
+         - `#uris`: methods for escaping parts of URLs/URIs
+         - `#conversions`: methods for executing the configured *conversion service* (if any).
+         - `#dates`: methods for `java.util.Date` objects: formatting, component extraction, etc.
+         - `#calendars`: analogous to `#dates`, but for `java.util.Calendar` objects.
+         - `#numbers`: methods for formatting numeric objects.
+         - `#strings`: methods for `String` objects: contains, startsWith, prepending/appending, etc.
+         - `#objects`: methods for objects in general.
+         - `#bools`: methods for boolean evaluation.
+         - `#arrays`: methods for arrays.
+         - `#lists`: methods for lists.
+         - `#sets`: methods for sets.
+         - `#maps`: methods for maps.
+         - `#aggregates`: methods for creating aggregates on arrays or collections.
+         - `#ids`: methods for dealing with id attributes that might be repeated (for example, as a result of an iteration).
+       
+       - Selection Variable Expressions: `*{...}` 选择表达式 与#相同 
+       
+         - 补充：配合th:object="${session.user}使用
+       
+           - ```html
+             <div th:object="${session.user}">
+                 <p>Name: <span th:text="*{firstName}">Sebastian</span>.</p>
+                 <p>Surname: <span th:text="*{lastName}">Pepper</span>.</p>
+                 <p>Nationality: <span th:text="*{nationality}">Saturn</span>.</p>
+               </div>
+             ```
+       
+       - Message Expressions: `#{...}`  国际化
+       
+       - Link URL Expressions: `@{...}`  定义URL链接 **@{/order/process(execId=${execId},execType='FAST')}**
+       
+       - Fragment Expressions: `~{...}` 片段引用表达式 <div th:insert="~{commons :: main}">...</div>
+     - Literals  字面量
        - Text literals: `'one text'`, `'Another one!'`,…
        - Number literals: `0`, `34`, `3.0`, `12.3`,…
        - Boolean literals: `true`, `false`
        - Null literal: `null`
        - Literal tokens: `one`, `sometext`, `main`,…
-     - Text operations:
+     - Text operations:  文本操作
        - String concatenation: `+`
        - Literal substitutions: `|The name is ${name}|`
-     - Arithmetic operations:
+     - Arithmetic operations:  数学运算
        - Binary operators: `+`, `-`, `*`, `/`, `%`
        - Minus sign (unary operator): `-`
-     - Boolean operations:
+     - Boolean operations:  boolean运算
        - Binary operators: `and`, `or`
        - Boolean negation (unary operator): `!`, `not`
-     - Comparisons and equality:
+     - Comparisons and equality: 比较运算
        - Comparators: `>`, `<`, `>=`, `<=` (`gt`, `lt`, `ge`, `le`)
        - Equality operators: `==`, `!=` (`eq`, `ne`)
-     - Conditional operators:
+     - Conditional operators: 条件运算（三元运算符）
        - If-then: `(if) ? (then)`
        - If-then-else: `(if) ? (then) : (else)`
        - Default: `(value) ?: (defaultvalue)`
-     - Special tokens:
+     - Special tokens:  特殊操作
+       
        - No-Operation: `_`
 
-   - 
+### 四、SpringBoot 自动配置
 
-4. 
+[SpringBoot官方文档章节](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/spring-boot-features.html#boot-features-developing-web-applications)
+
+#### 1.Spring MVC Auto-configuration
+
+Spring Boot 自动配置好了SpringMVC.
+
+以下是SpringBppt对SpringMVC的默认配置:
+
+- Inclusion of `ContentNegotiatingViewResolver` and `BeanNameViewResolver` beans.
+
+  - 自动配置了视图解析器ViewResolver(视图解析器：根据方法的返回值得到视图对象View,视图对象决定如何渲染)
+  - ContentNegotiatingViewResolver：组合所有的视图解析器
+  - 如何定制：我们可以自己给容器中添加一个视图解析器，自动的将其组合起来
+
+- Support for serving static resources, including support for WebJars (covered [later in this document](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-static-content))).  静态资源文件夹和webjars
+
+- 自动注册了 `Converter`, `GenericConverter`, and `Formatter` beans.
+
+  - `Converter`转换器：public String hello(Use user):类型转换使用Convert
+
+  - `Formatter` :格式化器 2017-12-17->date
+
+    自己添加格式化转换器，放在容器中即可
+
+- Support for `HttpMessageConverters` (covered [later in this document](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-message-converters)).
+
+  - `HttpMessageConverters`：SpringMVC用来转换Http请求和响应的 User->json
+  - `HttpMessageConverters`：是从容器中确定的 ，获取所有的HttpMessageConverters
+  - 定制化：自己添加转换器，放在容器中即可
+
+- Automatic registration of `MessageCodesResolver` (covered [later in this document](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-message-codes)).
+
+  - 定义错误代码生成规则
+
+- Static `index.html` support.  静态首页
+
+- Custom `Favicon` support (covered [later in this document](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-favicon)).
+
+- Automatic use of a `ConfigurableWebBindingInitializer` bean (covered [later in this document](https://docs.spring.io/spring-boot/docs/2.3.0.RELEASE/reference/html/spring-boot-features.html#boot-features-spring-mvc-web-binding-initializer)).
+
+  - 可以自定义一个来替换默认的（添加到容器）
+
+  - > 初始化WebDataBinder
+    >
+    > 请求数据->JavaBean
+
+  - ```java
+    return (ConfigurableWebBindingInitializer)this.beanFactory.getBean(ConfigurableWebBindingInitializer.class);
+    ```
+
+`org.springframework.boot.autoconfigure.web`:web的所有自动配置场景
+
+If you want to keep those Spring Boot MVC customizations and make more [MVC customizations](https://docs.spring.io/spring/docs/5.2.6.RELEASE/spring-framework-reference/web.html#mvc) (interceptors, formatters, view controllers, and other features), you can add your own `@Configuration` class of type `WebMvcConfigurer` but **without** `@EnableWebMvc`.
+
+#### 2.扩展SpringMVC
+
+```xml
+<mvc:view-controller path="/hello" view-name="success"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/hello"/>
+            <bean></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+```
+
+编写一个配置类（@Configuration）是WebMvcConfigurer类型。不能标注`@EnableWebMvc`.
+
+既保留率所有的自动配置，也能用我们扩展的配置
+
+```java
+package com.slp.springboot04web.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/**
+ * @ClassName MyMvcConfig
+ * @Description 使用WebMvcConfigurer可以扩展SpringMvc的功能
+ * @Author slp
+ * @Date 2020/5/25 9:33
+ * @Version 1.0
+ **/
+
+@Configuration
+public class MyMvcConfig  implements WebMvcConfigurer {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        //浏览器发送hello请求也来到success页面
+        registry.addViewController("/slp").setViewName("success");
+    }
+}
+```
+
+原理：
+
+1. WebMvcAutoConfiguration是SpringMVC的自动配置类
+
+2. 在做其他自动配置时会导入@Import({WebMvcAutoConfiguration.EnableWebMvcConfiguration.class})
+
+   ```java
+    public static class EnableWebMvcConfiguration extends DelegatingWebMvcConfiguration implements ResourceLoaderAware
+   ```
+
+   ```java
+   public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
+       private final WebMvcConfigurerComposite configurers = new WebMvcConfigurerComposite();
+   
+       public DelegatingWebMvcConfiguration() {
+       }
+       //从容器中获取所有的WebMvcConfigurer，
+       @Autowired(
+           required = false
+       )
+       public void setConfigurers(List<WebMvcConfigurer> configurers) {
+           if (!CollectionUtils.isEmpty(configurers)) {
+               this.configurers.addWebMvcConfigurers(configurers);
+               //一个参考实现:将所有的WebMvcConfiguraer相关配置都来一起调用
+               // protected void addViewControllers(ViewControllerRegistry registry) {
+          		//	 this.configurers.addViewControllers(registry);
+      			 //}
+           }
+   
+       }
+   ```
+
+3. 容器中所有的WebMvcConfigurer都会一起起作用
+
+4. 我们的配置类也会被调用 
+
+   SpringMVC的自动配置和我们的配置一起起作用
+
+#### 3.全面接管SpringMVC
+
+   SpringBoot对SpringMVC的自动配置不需要了，所有的都是我们自己配；
+
+我们需要在配置类中添加@EnableWebMvc
+
+```java
+package com.slp.springboot04web.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/**
+ * @ClassName MyMvcConfig
+ * @Description 使用WebMvcConfigurer可以扩展SpringMvc的功能
+ * @Author slp
+ * @Date 2020/5/25 9:33
+ * @Version 1.0
+ **/
+@EnableWebMvc
+@Configuration
+public class MyMvcConfig  implements WebMvcConfigurer {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        //浏览器发送hello请求也来到success页面
+        registry.addViewController("/slp").setViewName("success");
+    }
+}
+```
+
+原理：
+
+为什么@EnableWebMmc自动配置就失效了
+
+1. EnableWebMvc的核心
+
+   ```java
+   @Retention(RetentionPolicy.RUNTIME)
+   @Target({ElementType.TYPE})
+   @Documented
+   @Import({DelegatingWebMvcConfiguration.class})
+   public @interface EnableWebMvc {
+   }
+   ```
+
+2. WebMvcConfigurationSupport
+
+   ```java
+   @Configuration(
+       proxyBeanMethods = false
+   )
+   public class DelegatingWebMvcConfiguration extends WebMvcConfigurationSupport {
+   ```
+
+3. WebMvcAutoConfiguration
+
+   ```java
+   @ConditionalOnClass({Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class})
+   //容器中没有这个组件的时候，这个自动配置类才生效
+   @ConditionalOnMissingBean({WebMvcConfigurationSupport.class})
+   @AutoConfigureOrder(-2147483638)
+   @AutoConfigureAfter({DispatcherServletAutoConfiguration.class, TaskExecutionAutoConfiguration.class, ValidationAutoConfiguration.class})
+   public class WebMvcAutoConfiguration {
+   ```
+
+4. @EnableWebMvc将WebMvcConfigurationSupport组件导入进来
+
+5. 导入的WebMvcConfigurationSupport只是SpringMVC最基本的功能
+
+模式：
+
+1. SpringBoot在自动配置很多组件的时候，先看容器中有没有用户自己配置的（@bean  @Component）如果有就用用户自己配置的，如果没有才自动配置；如果有些组件可以有多个（ViewResolver）将用户配置的和自己默认的组合起来
+2. 在SpringBoot中会有很多的xxxConfigurer帮助我们进行扩展配置
