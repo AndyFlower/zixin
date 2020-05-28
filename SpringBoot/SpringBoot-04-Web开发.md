@@ -455,3 +455,282 @@ public class MyMvcConfig  implements WebMvcConfigurer {
 
 1. SpringBoot在自动配置很多组件的时候，先看容器中有没有用户自己配置的（@bean  @Component）如果有就用用户自己配置的，如果没有才自动配置；如果有些组件可以有多个（ViewResolver）将用户配置的和自己默认的组合起来
 2. 在SpringBoot中会有很多的xxxConfigurer帮助我们进行扩展配置
+
+### 五、如何修改SpringBoot的默认配置
+
+### 六、RestfulCRUD
+
+#### 1、默认访问首页
+
+#### 2、国际化
+
+- 编写国际化配置文件
+
+  
+
+- 使用ResourceBundleMessageSource管理国际化资源文件
+
+- 在页面使用fmt:message取出国际化
+
+步骤
+
+1. 编写文件
+
+     ![SpringBoot-12-国际化](D:\slpworkspace\github\2020\SpringBoot\images\SpringBoot-12-国际化.png)
+
+2. SpringBoot自动配置好了管理国际化资源文件的组件
+
+     ```java
+     //MessageSourceAutoConfiguration
+     prefix = "spring.messages" //我们的配置文件可以直接放在类路径下角messages.properties
+     @Bean
+         public MessageSource messageSource(MessageSourceProperties properties) {
+             ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+             if (StringUtils.hasText(properties.getBasename())) {
+       //设置国际化资源文件的基础名（去掉语言国家名）     
+                 messageSource.setBasenames(StringUtils.commaDelimitedListToStringArray(StringUtils.trimAllWhitespace(properties.getBasename())));
+             }
+     
+             if (properties.getEncoding() != null) {
+                 messageSource.setDefaultEncoding(properties.getEncoding().name());
+             }
+     
+             messageSource.setFallbackToSystemLocale(properties.isFallbackToSystemLocale());
+             Duration cacheDuration = properties.getCacheDuration();
+             if (cacheDuration != null) {
+                 messageSource.setCacheMillis(cacheDuration.toMillis());
+             }
+     
+             messageSource.setAlwaysUseMessageFormat(properties.isAlwaysUseMessageFormat());
+             messageSource.setUseCodeAsDefaultMessage(properties.isUseCodeAsDefaultMessage());
+             return messageSource;
+         }
+     ```
+
+     ```pro
+     spring.messages.basename=i18n.login
+     ```
+
+     
+
+3. 页面获取国际化
+
+  ```html
+  <h1 class="" th:text="#{login.tip}">Please sign in</h1>
+          <label class="sr-only" th:text="#{login.username}" th:placeholder="#{login.username}" required="">UserName</label>
+  
+  ```
+
+  原理：
+
+国际化Locale（区域信息对象）LocaleResolver(获取区域信息对象)
+
+```java
+   @Bean
+        @ConditionalOnMissingBean
+        @ConditionalOnProperty(
+            prefix = "spring.mvc",
+            name = {"locale"}
+        )
+        public LocaleResolver localeResolver() {
+            if (this.mvcProperties.getLocaleResolver() == org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties.LocaleResolver.FIXED) {
+                return new FixedLocaleResolver(this.mvcProperties.getLocale());
+            } else {
+                AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+                localeResolver.setDefaultLocale(this.mvcProperties.getLocale());
+                return localeResolver;
+            }
+        }
+//默认的就是请求头带来的区域信息获取Locale来获取国际化
+```
+
+
+
+点击切换国际化
+
+```java
+package com.slp.springboot04web.componenet;
+
+import org.springframework.web.servlet.LocaleResolver;
+import org.thymeleaf.util.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Locale;
+
+/**
+ * @ClassName MyLocaleResolver
+ * @Description TODO
+ * @Author zixin
+ * @Date 2020/5/26 12:30
+ * @Version 1.0
+ **/
+public class MyLocaleResolver implements LocaleResolver {
+    @Override
+    public Locale resolveLocale(HttpServletRequest httpServletRequest) {
+        String  l =httpServletRequest.getParameter("l");
+        Locale locale = Locale.getDefault();//系統默認的
+        if(!StringUtils.isEmpty(l)){
+            String[] split = l.split("_");
+            locale = new Locale(split[0],split[1]);
+
+        }
+        return locale;
+    }
+
+    @Override
+    public void setLocale(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale locale) {
+
+    }
+}
+
+```
+
+```java
+//MyMvcConfig
+@Bean
+    public LocaleResolver localeResolver(){
+        return new MyLocaleResolver();
+    }
+```
+
+模板修改后实时生效
+
+```prop
+spring.thymeleaf.cache=false
+```
+
+页面修改完成以后ctrl+f9：重新编译；
+
+#### 3、拦截器
+
+```java
+package com.slp.springboot04web.componenet;
+
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * @ClassName LoginHandlerInterceptor
+ * @Description TODO
+ * @Author zixin
+ * @Date 2020/5/27 8:20
+ * @Version 1.0
+ **/
+
+public class LoginHandlerInterceptor implements HandlerInterceptor {
+    /**
+     *
+     * @param request
+     * @param response
+     * @param handler
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        Object  user = request.getSession().getAttribute("loginUser");
+        if(user == null){
+            request.setAttribute("msg","请先登录");
+
+            request.getRequestDispatcher("/INDEX.HTML").forward(request,response
+            );
+            return false;
+
+
+        }
+        return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+    }
+}
+
+```
+
+```java
+package com.slp.springboot04web.config;
+
+import com.slp.springboot04web.componenet.LoginHandlerInterceptor;
+import com.slp.springboot04web.componenet.MyLocaleResolver;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/**
+ * @ClassName MyMvcConfig
+ * @Description 使用WebMvcConfigurer可以扩展SpringMvc的功能
+ * @Author slp
+ * @Date 2020/5/25 9:33
+ * @Version 1.0
+ **/
+
+//@EnableWebMvc
+@Configuration
+public class MyMvcConfig  implements WebMvcConfigurer {
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        //浏览器发送hello请求也来到success页面
+        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/index.html").setViewName("index");
+        registry.addViewController("main").setViewName("dashboard");
+    }
+
+    @Bean
+    public LocaleResolver localeResolver(){
+        return new MyLocaleResolver();
+    }
+
+    /**
+     * 注册拦截器
+     * SpringBoot做好了静态资源映射 不需要处理
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns("/index.html","/","/user/login");
+    }
+}
+
+```
+
+#### 4、CRUD-员工列表
+
+实验要求： 
+
+##### 1、RestfulCRUD：CRUD满足Rest风格； 
+
+URI： /资源名称/资源标识 HTTP请求方式区分对资源CRUD操作 
+
+##### 2、thymeleaf抽取公共片段
+
+```
+1、抽取公共片段 
+<div th:fragment="copy"> 
+&copy; 2011 The Good Thymes Virtual Grocery 
+</div> 
+2、引入公共片段 
+<div th:insert="~{footer :: copy}">
+</div> ~{templatename::selector}：模板名::选择器
+~{templatename::fragmentname}:模板名::片段名 
+3、默认效果： 
+insert的公共片段在div标签中 
+如果使用th:insert等属性进行引入，可以不用写~{}： 
+行内写法可以加上：[[~{}]];[(~{})]；
+```
+

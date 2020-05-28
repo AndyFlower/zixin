@@ -26,4 +26,9 @@ public class HelloWorld {
         map.put("users", Arrays.asList("zang","wang"));
         return "success";
     }
+    //返回首页
+    @RequestMapping({"/","index.html"})
+    public String index(){
+        return "hello";
+    }
 }
