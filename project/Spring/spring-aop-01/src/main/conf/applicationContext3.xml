@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--基于配置的aop-->
+    <bean id="myCalculator" class="com.slp.version3.inter.impl.MyCalculator"/>
+    <bean id="logUtils" class="com.slp.version3.utils.LogUtils"/>
+    <bean id="validationAspect" class="com.slp.version3.utils.ValidationAspect"/>
+    <!--aop名称空间-->
+    <aop:config>
+        <!--全局能用-->
+        <aop:pointcut id="globalPoint" expression="execution( * com.slp.version3.inter.impl.*.*(..))"/>
+        <!--普通前置  目标方法 （环绕执行后置/返回）  普通后置  （环绕后置）-->
+        <!--指定切面  order可以指定执行顺序-->
+        <aop:aspect ref="logUtils" order="2">
+            <!--只有当前切面能用-->
+            <aop:pointcut id="myPoint" expression="execution( * com.slp.version3.inter.impl.*.*(..))"/>
+            <aop:before method="logStart" pointcut="execution( * com.slp.version3.inter.impl.*.*(..))"/>
+            <aop:after method="logEnd" pointcut-ref="myPoint"/>
+        </aop:aspect>
+        <aop:aspect ref="validationAspect">
+            <aop:before method="logStart" pointcut="execution( * com.slp.version3.inter.impl.*.*(..))"/>
+            <aop:after method="logEnd" pointcut-ref="globalPoint"/>
+
+        </aop:aspect>
+        <!--配置切面执行时间-->
+
+    </aop:config>
+    <!--注解优点：快速 方便
+        配置：功能完善 重要的用配置 不重要的用注解 -->
+</beans>
