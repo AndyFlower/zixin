@@ -298,3 +298,87 @@ TransactionManager
    ```
 
    
+
+### 事务的隔离级别
+
+#### 数据库事务并发问题
+
+假设现在有两个事务:Transaction01和Transaction02并发执行。
+
+##### 1.脏读
+
+1. Transaction01将某条记录的age值从20修改为30
+2. Transaction02读取了Transaction01更新后的值30
+3. Transaction01回滚，age恢复到了20
+4. Transaction02读取到的300是一个无效的值
+
+##### 2.不可重复读
+
+1. Transaction01读取了AGE的值为20
+2. Transaction02将AGE的值修改为30
+3. Transaction01再次读取AGE值为30，和第一次读取不一致
+
+##### 3.幻读
+
+1. Transaction01读取了STUDENT表中的一部分数据
+2. Transaction01向Student表中插入了新的行
+3. Transaction01读取了STUDENT表时，多出了一些行
+
+#### 隔离级别
+
+数据库系统必须具有隔离并发运行各个事务的能力，使他们不会相互影响，避免各种并发问题。一个事务与其他事务隔离的程度称为隔离级别。SQL标准中规定了各种事务隔离级别，不同隔离级别对应不同的干扰程度，隔离级别越高，数据一致性就约好，但并发性越弱。
+
+#####  1.读未提交：READ UNCOMMITED
+
+允许Transaction01读取Transaction01未提交的修改
+
+> 会出现脏读
+
+##### 2.读已提交：READ COMMITED
+
+要求Transaction01只能读取Transaction02已提交的修改
+
+> 可以避免脏读 
+
+##### 3.可重复读：REPEATABLE READ
+
+确保Transaction01可以多次从一个字段中读取相同的值，即Transaction01执行期间禁止其他事务对这个字段进行更新
+
+##### 4.串行化：SERIALIZABLE
+
+确保Transaction01可以多次从一个表中读取到相同的行，由Transaction01执行期间，禁止其他事务对这个表进行添加、更新、删除操作。可以避免任何并发问题，但性能十分低下。
+
+|                  | 脏读 | 不可重复读 | 幻读 |
+| ---------------- | ---- | ---------- | ---- |
+| READ UNCOMMITTED | 有   | 有         | 有   |
+| READ COMMITTED   | 无   | 有         | 有   |
+| REPEATABLE READ  | 无   | 无         | 有   |
+| SERIALIZABLE     | 无   | 无         | 无   |
+
+各种数据库产品对事务隔离级别的支持程度
+
+|                  | Oracle | Mysql |
+| ---------------- | ------ | ----- |
+| READ UNCOMMITTED | ×      | √     |
+| READ COMMITTED   | √      | √     |
+| REPEATABLE READ  | ×      | √     |
+| SERIALIZABLE     | √      | √     |
+
+#### 在Spring中指定事务隔离基本
+
+> ```
+> @Transactional(isolation = Isolation.REPEATABLE_READ)
+> ```
+
+#### 事务的传播行为
+
+| 传播属性      | 描述                                                         |
+| ------------- | ------------------------------------------------------------ |
+| REQUIRED      | 如果有事在运行，当前的方法就在这个事务内运行，否陈，就启动一个新的事务，并在自己的事务内运行 |
+| REQUIRED_NEW  | 当前的方法必须启动新事务，并在他自己的事务内运行，如果有事务正在运行，应该将它挂起 |
+| SUPPORTS      | 如果有事务在运行，当前的方法就在这个事务内运行，否则他可以不运行在事务中 |
+| NOT_SUPPORTED | 当前的事务不应该运行在事务中，如果有运行的事务，将它挂起     |
+| MANDATORY     | 当前的方法必须运行在事务内部，如果没有正在运行的事务，就抛出异常 |
+| NEVER         | 当前的方法不应该运行在事务中，如果有运行的事务，将抛出异常   |
+| NESTED        | 如果有事务再运行，当前的方法就应该在这个事务的嵌套事务内运行，否则，就启动一个新的事务，并在他自己的事务内运行 |
+

@@ -469,7 +469,7 @@ public class LogUtils {
            myCalculator.add(1,2);
            //细节1com.slp.version2.inter.impl.MyCalculator@1190200a
            //class com.sun.proxy.$Proxy15
-           //AOP的底层就是动态代理  容器中国保存的组件是他的代理对象，$Proxy15 当然不是奔本类的类型 所以不能用本类获取
+           //AOP的底层就是动态代理  容器中国保存的组件是他的代理对象，$Proxy15 当然不是本类的类型 所以不能用本类获取
            System.out.println(myCalculator);//com.slp.version2.inter.impl.MyCalculator@1190200a
            System.out.println(myCalculator.getClass());//class com.sun.proxy.$Proxy15
        }

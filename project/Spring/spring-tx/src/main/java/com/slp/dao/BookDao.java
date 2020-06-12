@@ -38,4 +38,13 @@ public class BookDao {
         String sql = "update book_stock set stock = stock-1 where book_id=?";
         jdbcTemplate.update(sql,bookId);
     }
+
+    /**
+     * 修改图书价格
+     * @param bookId
+     */
+    public void  updatePrice(String bookId,int price ){
+        String sql = "update book set price = ? where book_id=?";
+        jdbcTemplate.update(sql,bookId,price);
+    }
 }
