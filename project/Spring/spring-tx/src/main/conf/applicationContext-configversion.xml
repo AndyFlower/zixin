@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <context:component-scan base-package="com.slp"/>
+    <!--引入外部配置文件-->
+    <context:property-placeholder location="db.properties"/>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="user" value="${jdbc.user}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+        <property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
+        <property name="driverClass" value="${jdbc.classDriver}"></property>
+     </bean>
+    <!--具名参数的jdbctemplate-->
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <!--使用构造器方式注入一股数据元-->
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--配置jdbctemplate-->
+    <bean class="org.springframework.jdbc.core.JdbcTemplate" id="jdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--事务控制-->
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--控制数据源-->
+        <property name="dataSource" ref="dataSource"/>
+
+    </bean>
+   <!--基于xml的配置-->
+    <bean id = "bookService" class="com.slp.service.BookService"></bean>
+
+    <aop:config>
+        <aop:pointcut id="txPoint" expression="execution(* com.slp.service.*.*(..))"/>
+        <!--事务增强 -->
+        <aop:advisor advice-ref="myAdvice" pointcut-ref="txPoint"/>
+    </aop:config>
+    <!--配置事务管理器
+        指定是配置哪个事务管理器
+    -->
+    <tx:advice id="myAdvice" transaction-manager="transactionManager">
+        <!--事务属性-->
+        <tx:attributes>
+            <!--指明哪个方法是事务方法 切入点表达式只是说要切的方法 并不一定要加事务-->
+            <tx:method name="*"/>
+            <tx:method name="checkout" propagation="REQUIRED" timeout="-1"/>
+            <tx:method name="get" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+</beans>
