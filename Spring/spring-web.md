@@ -10,7 +10,6 @@ SpringMVC思想是有一个前端控制器拦截所有请求，，并智能派�
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
         <!--指定springmvc的配置文件位置-->
-    <param-name>contextConfigLocation</param-name>
         <param-value>classpath:springmvc.xml</param-value>
     </init-param>
 </servlet>
@@ -80,3 +79,245 @@ Rest推荐:/资源名、资源标识符
 > book     POST 添加
 
 简介的方式提交请求，以请求方式区分操作
+
+问题：页面上只能发起两种请求GET POST
+
+-------------------------------
+
+Springmvc中有一个Filter,可以将普通的请求转换为特地的请求方式
+
+```xml
+<filter>
+	<filter-name>HiddenHttpathodFilter</filter-name>
+    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>HiddenHttpMethodFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+```
+
+
+
+如何发起DELETE/PUT请求？
+
+1. 创建一个post类型的表单
+
+2. 表单项中带_method的参数
+
+   ```jsp
+   <form  method="post">
+       <input name="_method" value="delete"/>
+   </form>
+   ```
+
+   
+
+### 入参处理
+
+- 默认方式获取请求参数
+
+  直接给方法入参写一个和请求参数名相同的变量，这个变量就来接收请求参数
+
+- @RequestParam:获取请求参数,参数是必须带的
+
+  @RequestParam("user")String userName
+
+  该注解包含3个属性
+
+  1. value：指定获取参数的key
+  2. required：指定是否必须携带参数
+  3. defaultValue：默认值
+
+- @RequestHeader:
+
+  获取请求头中某个key的值
+
+  `request.getHeader("User-Agent")`
+
+  `@RequestHeader("User-Agent")String userAgent`
+
+  如果请求头中没有所取的值会报错，可以通过required来指定是否携带，通过defaultValue来指定默认值
+
+- @CookieValue:获取某个cookie的值
+
+  以前的操作获取某个cookie
+
+  Cookie [] cookies =request.getCookies();遍历来获得自己需要的值
+
+  `@CookieValue("JSESSIONID") String jid`
+
+  通过required指定是否必须携带
+
+  通过defaultValue指定默认值
+
+>页面上传一个参数 直接在方法参数中添加相同名字的即可获取
+>
+>eg: 页面上要传一个参数
+>
+>public String handle(String userName){
+>
+>}
+>
+>相当于request.getParameter(userName)
+
+如果我们的请求参数是一个POJO：
+
+SpringMVC会自动的为这个POJO赋值
+
+1. 将POJO中的每一个属性，从request参数中尝试获取出来，并封装
+
+   ```java
+   public String handle(Book book)
+   ```
+
+2. 还可以级联
+
+   ```jsp
+   <input type="text" name="bookName"/>
+   <input type="text" name="address.city"/>
+   ```
+
+   
+
+SppringMVC可以直接在参数上写原生API
+
+- HttpServletRequest
+- HttpSession
+- HttpServletResponse
+- Locale
+- InputStream:request.getInputStream()
+- OutputStream:response.getOutputStream()
+- Reader：request.getReader()
+- Writer:response.getWriter()
+- java.security.Principal
+
+### 乱码
+
+请求乱码：
+
+- GET请求：改server.xml   在8080端口处添加URIEncoding="UTF-8"
+
+- POST请求：在第一次获取请求参数之前，设置request.setCharacterEncoding("UTF-8")
+
+  SpringMVC有这个Filter，配置在web.xml
+
+  ```xml
+  <filter>
+  	<filter-name>CharacterEncodingFilter</filter-name>
+      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+      <init-param>
+          <!--解决post请求乱码-->
+      	<param-name>encoding</param-name>
+          <param-value>UTF-8</param-value>
+      </init-param>
+       <init-param>
+           <!--解决响应乱码-->
+      	<param-name>forceEncoding</param-name>
+          <param-value>UTF-8</param-value>
+      </init-param>
+  </filter>
+  <filter-mapping>
+  	<filter-name>CharacterEncodingFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  ```
+
+  
+
+  使用SpringMVC前端控制器写完就直接写字符编码过滤器
+
+  tomcat装上就在server.xml中添加字符处理
+
+### SpringMVC如何将数据带到页面
+
+SpringMVC除过在方法上传入原生的request和sesson之外如何传递参数？
+
+1. 可以在方法处传入Map或者ModelMap,给这些参数里面保存的所有数据都会放在Map中，可以在页面获取
+
+   ```java
+   public String handle(Map<String,String> map){}
+   ```
+
+   ```java
+   public String handle(Model model)
+   ```
+
+   ```java
+   public String handle(ModelMap modelMap)
+   ```
+
+   Map Model MapModel最终都是BindingAwareModelMap在工作，相当于给BindingAwareModelMap中保存的东西都会放在请求域中
+
+   
+
+2. 既包含师徒信息，也包含模型数据。
+
+   数据放在请求域中。
+
+   request  session application
+
+3. SpringMVC提供了一种可以临时给Session域中保存数据的方式
+
+   使用一个注解@SessionAttributes 只能标在类上
+
+   `@SessionAttributes(value="msg")`
+
+   给BindingAwareModelMap中保存的数据，同时给session中保存一份。
+
+   value指定保存数据时要给session中放的数据的key
+
+   `type={String.class}`:只要保存的是这种类型的数据，给sesion放一份
+
+   `value={"msg"}`:保存这种key的数据的时候，给session中放一份
+
+   @SessionAttributes可能会引发异常，不推荐使用。
+
+### @ModelAttribute注解
+
+使用场景：
+
+页面端：显示修改信息的所有字段
+
+servlet端：收到请求做修改
+
+实际上：并不是所有的属性都修改，只会修改一些信息，
+
+- 不修改的页面可显示但不能修改
+- 为了简单，Controller直接在参数位置来写book对象
+- Springmvc为我们自动封装book,(没有的值是null)
+- 如果调用了全字段更新的dao操作，会将其他的字段更新未null
+
+对象是如何封装的？
+
+- springmvc创建一个Book对象，每个属性有默认值，string的默认就是null
+
+  让SpringMVC不创建book对象，直接从数据库中取
+
+- 请求中所有属性一一进行设置
+
+  使用取出的对象进行封装
+
+- 调用更新
+
+@ModelAttribute可以标在方法和参数上
+
+- 参数：
+
+- 方法：先于目标方法运行。可以提前查出数据库中的信息，将这个信息保存起来（方便下一个方法使用）
+
+  ```java
+  @ModelAttribute()
+  public String handle(Map<> map){
+      map.put("book".book)
+      
+  }
+  /**
+  *这个就是从上一个设置进去的值内取出来的
+  */
+  public String handle(@ModelAttribute("book") Book book){
+      
+  }
+  ```
+
+  
