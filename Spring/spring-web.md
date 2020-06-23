@@ -319,5 +319,231 @@ servlet端：收到请求做修改
       
   }
   ```
+### 源码
+```java
+protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpServletRequest processedRequest = request;
+		HandlerExecutionChain mappedHandler = null;
+		boolean multipartRequestParsed = false;
+            //异步管理器
+		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
 
-  
+		try {
+			ModelAndView mv = null;
+			Exception dispatchException = null;
+
+			try {
+    			//1、检查是否上传文件请求
+				processedRequest = checkMultipart(request);
+				multipartRequestParsed = (processedRequest != request);
+
+				// Determine handler for the current request.
+				    //2、根据当前的请求地址找到那个类能处理
+				mappedHandler = getHandler(processedRequest);
+				//3、如果没有找到哪个处理器(控制器)能处理请求，就404或者 抛异常
+				if (mappedHandler == null) {
+					noHandlerFound(processedRequest, response);
+					return;
+				}
+
+				// Determine handler adapter for the current request.
+				    //拿到能执行这个类的所有方法的适配器  AnnotationMethodAdapterHandler
+				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
+
+				// Process last-modified header, if supported by the handler.
+				String method = request.getMethod();
+				boolean isGet = "GET".equals(method);
+				if (isGet || "HEAD".equals(method)) {
+					long lastModified = ha.getLastModified(request, mappedHandler.getHandler());
+					if (new ServletWebRequest(request, response).checkNotModified(lastModified) && isGet) {
+						return;
+					}
+				}
+
+				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+					return;
+				}
+
+				// Actually invoke the handler.
+				    //5、适配器来执行目标方法:将目标方法执行完成后的返回值作为视图名，设置保存到ModelAndView中，目标方法无论怎么写，最终适配器执行完成后都会将执行的信息封装成ModelAndView
+				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+
+				if (asyncManager.isConcurrentHandlingStarted()) {
+					return;
+				}
+            // 如果没有返回值则设置一个默认的视图名        
+				applyDefaultViewName(processedRequest, mv);
+				mappedHandler.applyPostHandle(processedRequest, response, mv);
+			}
+			catch (Exception ex) {
+				dispatchException = ex;
+			}
+			catch (Throwable err) {
+				// As of 4.3, we're processing Errors thrown from handler methods as well,
+				// making them available for @ExceptionHandler methods and other scenarios.
+				dispatchException = new NestedServletException("Handler dispatch failed", err);
+			}
+			//6、根据方法最终执行完成后封装的ModelAndView转发到对应页面，而且ModelAndView中的数据可以从请求域中获取
+			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
+		}
+		catch (Exception ex) {
+			triggerAfterCompletion(processedRequest, response, mappedHandler, ex);
+		}
+		catch (Throwable err) {
+			triggerAfterCompletion(processedRequest, response, mappedHandler,
+					new NestedServletException("Handler processing failed", err));
+		}
+		finally {
+			if (asyncManager.isConcurrentHandlingStarted()) {
+				// Instead of postHandle and afterCompletion
+				if (mappedHandler != null) {
+					mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
+				}
+			}
+			else {
+				// Clean up any resources used by a multipart request.
+				if (multipartRequestParsed) {
+					cleanupMultipart(processedRequest);
+				}
+			}
+		}
+	}
+```
+1. 所有请求过来DispatcherServlet收到请求
+2. 调用doDispatcher()方法进行处理
+    - getHandler():根据当前请求地址找到这个请求的目标处理器类    根据当前请求在HandlerMapping中找到这个请求的映射信息，获取到目标处理器类
+    - getHandlerAdapter():根据当前处理器类获取到能执行这个处理器方法的适配器    根据当前处理器类，找到当前类的适配器
+    - 使用钢材获取到的适配器，执行目标方法
+    - 目标方法执行后会返回ModelAndView对象
+    - 根据ModelAndView的信息转发到具体的页面，并可以在请求域中取出ModelAndView中的模型数据
+- - - - -----------
+#### getHandler()细节:如何根据当前的请求找到处理器
+getHandler()会返回目标处理器类的执行链
+HandlerMapping:处理器映射，保存了每个处理器能处理哪些请求
+- BeanNameUrlHandlerMapping
+- DefaultAnnotationHandlerMapping
+handlerMap:容器自动创建Controller的时候每个处理器都能处理什么请求，保存在HandlerMapping的handlerMap属性中
+```java
+@Nullable
+	protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+		if (this.handlerMappings != null) {
+			for (HandlerMapping mapping : this.handlerMappings) {
+				HandlerExecutionChain handler = mapping.getHandler(request);
+				if (handler != null) {
+					return handler;
+				}
+			}
+		}
+		return null;
+	}
+```
+- - - - ------
+#### getHandlerAdapter()如何找到目标处理器类的适配器
+拿适配器才去执行目标方法
+- HttpRequestHandlerAdapter
+- SimpleControllerHandlerAdapter
+- AnnotationMethodHandlerAdapter
+处理器类中只要有标注了注解的方法，就能用AnnotationMethodHandlerAdapter
+```java
+protected HandlerAdapter getHandlerAdapter(Object handler) throws ServletException {
+		if (this.handlerAdapters != null) {
+			for (HandlerAdapter adapter : this.handlerAdapters) {
+				if (adapter.supports(handler)) {
+					return adapter;
+				}
+			}
+		}
+		throw new ServletException("No adapter for handler [" + handler +
+				"]: The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler");
+	}
+```
+- - - - -----------
+DispatcherServlet中有几个引用类型的属性:SpringMVC的9大组件
+共同点:九大组件全部都是接口，
+```java
+/** 文件上传解析器 */
+	@Nullable
+	private MultipartResolver multipartResolver;
+
+	/** 区域信息解析器:国际化. */
+	@Nullable
+	private LocaleResolver localeResolver;
+
+	/** 主题解析器:主题效果更换 */
+	@Nullable
+	private ThemeResolver themeResolver;
+
+	/** Handler映射信息. */
+	@Nullable
+	private List<HandlerMapping> handlerMappings;
+
+	/** Handler适配器 */
+	@Nullable
+	private List<HandlerAdapter> handlerAdapters;
+
+	/**SpringMVC支持强大的异常解析功能. */
+	@Nullable
+	private List<HandlerExceptionResolver> handlerExceptionResolvers;
+
+	/**. */
+	@Nullable
+	private RequestToViewNameTranslator viewNameTranslator;
+
+	/**SpringMVC允许重定向携带数据. */
+	@Nullable
+	private FlashMapManager flashMapManager;
+
+	/** 视图解析器 */
+	@Nullable
+	private List<ViewResolver> viewResolvers;
+
+```
+- - - - -------
+初始化九大组件
+```java
+ protected void initStrategies(ApplicationContext context) {
+        this.initMultipartResolver(context);
+        this.initLocaleResolver(context);
+        this.initThemeResolver(context);
+        this.initHandlerMappings(context);
+        this.initHandlerAdapters(context);
+        this.initHandlerExceptionResolvers(context);
+        this.initRequestToViewNameTranslator(context);
+        this.initViewResolvers(context);
+        this.initFlashMapManager(context);
+    }
+
+```
+初始化HandlerMapping:
+```java
+private void initHandlerMappings(ApplicationContext context) {
+        this.handlerMappings = null;
+        if (this.detectAllHandlerMappings) {
+            Map<String, HandlerMapping> matchingBeans = BeanFactoryUtils.beansOfTypeIncludingAncestors(context, HandlerMapping.class, true, false);
+            if (!matchingBeans.isEmpty()) {
+                this.handlerMappings = new ArrayList(matchingBeans.values());
+                AnnotationAwareOrderComparator.sort(this.handlerMappings);
+            }
+        } else {
+            try {
+                HandlerMapping hm = (HandlerMapping)context.getBean("handlerMapping", HandlerMapping.class);
+                this.handlerMappings = Collections.singletonList(hm);
+            } catch (NoSuchBeanDefinitionException var3) {
+            }
+        }
+
+        if (this.handlerMappings == null) {
+            this.handlerMappings = this.getDefaultStrategies(context, HandlerMapping.class);
+            if (this.logger.isTraceEnabled()) {
+                this.logger.trace("No HandlerMappings declared for servlet '" + this.getServletName() + "': using default strategies from DispatcherServlet.properties");
+            }
+        }
+
+    }
+```
+组件的初始化:
+有些组件在容器中是使用类型找的，有些组件是使用id找的
+去容器中找这个组件，如果没有找到就用默认的配置；
+- - - - --------
+执行目标方法的解释:
+` mv = ha.handle(processedRequest, response, mappedHandler.getHandler());`
