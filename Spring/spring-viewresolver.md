@@ -67,3 +67,43 @@ view-name:指定页面
 <mvc:view-controller path=""/  view-name="">
 
 需要开启`<mvc:annotation-driven/>`否则配置了上面之后其余的将不好用
+
+---
+
+自定义视图解析器的步骤：
+
+1. 编写自定义的视图解析器
+2. 视图解析器要放在ioc容器中容器中
+3. Springmvc自己的视图解析器的优先级是最低的，可以通过设置order属性的值来改变顺序。
+
+---
+
+Springmvc的表单标签：
+
+<%@tablib prefix="" uri=""/>
+
+通过Sprinmgmvc的表单标签可以实现将模型数据中的属性和html表单元素相关联
+
+```html
+
+<form:form action="">
+lastName:<form:input path="lastName"/>
+    gender:男<form:radiobutton path="" value="1"/>
+    女<form:radiobutton path="" value="2"/>
+    <!--items指定要遍历的集合-->
+    dept:<form:select path="department.id" items="depts" itemLabel="departmentName" itemsValue="id"></form:select>
+</form:form>
+```
+
+```xml
+<!--告诉Springmvc,自己映射的请求就自己处理，不能处理的就交给tomcat-->
+<mvc:default-servlet-handler/>
+```
+
+```xml
+<!--保证动态资源访问-->
+<mvc:annotation-driven></mvc:annotation-driven>
+```
+
+
+
