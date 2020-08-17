@@ -9,7 +9,7 @@ package com.slp.pattern.factory.v3;
  **/
 public class Test {
     public static void main(String[] args) {
-        BJOrderPizza bjOrderPizza = new BJOrderPizza();
-        bjOrderPizza.createPizza("cheese");
+        new BJOrderPizza();
+
     }
 }
