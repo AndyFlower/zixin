@@ -1,5 +1,6 @@
 package com.slp;
 
+import com.slp.dao.AccountDao;
 import com.slp.service.BookService;
 import com.slp.service.MultService;
 import org.junit.Test;
@@ -71,5 +72,13 @@ public class TxTest {
          *    }
          *
          */
+    }
+
+
+    @Test
+    public void testGetBean(){
+        AccountDao accountDao = (AccountDao)context.getBean("accountDao");
+
+
     }
 }

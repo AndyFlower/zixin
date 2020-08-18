@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
     <context:component-scan base-package="com.slp"/>
     <!--引入外部配置文件-->
     <context:property-placeholder location="db.properties"/>
@@ -28,8 +29,25 @@
         <property name="dataSource" ref="dataSource"/>
 
     </bean>
-    <!--开启基于注解的事务控制模式-->
-    <tx:annotation-driven transaction-manager="transactionManager" />
-    <!-- 给事务方法加注解-->
-    <bean id="accountDao" class="com.slp.dao.AccountDao" scope="prototype"/>
+   <!--基于xml的配置-->
+    <bean id = "bookService" class="com.slp.service.BookService"></bean>
+
+    <aop:config>
+        <aop:pointcut id="txPoint" expression="execution(* com.slp.service.*.*(..))"/>
+        <!--事务增强 -->
+        <aop:advisor advice-ref="myAdvice" pointcut-ref="txPoint"/>
+    </aop:config>
+    <!--配置事务管理器
+        指定是配置哪个事务管理器
+    -->
+    <tx:advice id="myAdvice" transaction-manager="transactionManager">
+        <!--事务属性-->
+        <tx:attributes>
+            <!--指明哪个方法是事务方法 切入点表达式只是说要切的方法 并不一定要加事务-->
+            <tx:method name="*"/>
+            <tx:method name="checkout" propagation="REQUIRED" timeout="-1"/>
+            <tx:method name="get" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
 </beans>
