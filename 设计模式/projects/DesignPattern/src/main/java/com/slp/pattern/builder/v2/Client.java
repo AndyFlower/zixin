@@ -22,6 +22,5 @@ public class Client {
         houseDirector.setHouseBuilder(highBuilding);
         //完成盖房子
         houseDirector.constructHouse();
-        StringBuilder
     }
 }
