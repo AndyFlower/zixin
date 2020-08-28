@@ -1,5 +1,7 @@
 package com.slp.pattern.command;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 /**
  * @ClassName Client
  * @Description  客户端
@@ -27,6 +29,6 @@ public class Client {
         remoteController.onButtonWasPushed(0);
         remoteController.offButtonWasPushed(0);
         remoteController.undoButtonWasPushed();
-
+        //JdbcTemplate
     }
 }
