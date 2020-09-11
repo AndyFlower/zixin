@@ -71,6 +71,11 @@
       <artifactId>spring-jdbc</artifactId>
       <version>5.2.8.RELEASE</version>
     </dependency>
+    <dependency>
+      <groupId>org.openjdk.jol</groupId>
+      <artifactId>jol-core</artifactId>
+      <version>0.13</version>
+    </dependency>
   </dependencies>
 
   <build>
