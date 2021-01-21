@@ -5,7 +5,7 @@ from django.db import models
 class employee(models.Model):
     name = models.CharField(max_length=32,verbose_name='姓名')
     email = models.EmailField(verbose_name='邮箱')
-    dep =models.ForeignKey(to='department',on_delete=models.CASCADE)
+    dep =models.ForeignKey(to='department',to_field='id',related_name='dep_related',on_delete=models.CASCADE)
     group =models.ManyToManyField(to='group')
     salary = models.DecimalField(max_digits=8,decimal_places=2)
     info = models.OneToOneField(to='employeeinfo',on_delete=models.CASCADE,null=True)
