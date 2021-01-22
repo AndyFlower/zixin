@@ -29,10 +29,10 @@ def del_dep_old(request,dep_id):
 
 def edit_dep_old(request,dep_id):
     if request.method=='POST':
-        id = request.POST.get('id');
+        id = request.POST.get('id')
         dep_name=request.POST.get('dep_name')
         dep_script=request.POST.get('dep_script')
-        dep_object =department.objects.get(id=id);
+        dep_object =department.objects.get(id=id)
         dep_object.dep_name=dep_name
         dep_object.dep_script=dep_script
         dep_object.save()
