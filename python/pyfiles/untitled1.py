@@ -122,3 +122,19 @@ while True:
 print('员工数{0}'.format(empNum))
 print('录入薪资',salarys)
 print('平均薪资{0}'.format(salarySum/empNum))
+
+
+[print(x) for x in range(1,5)]
+[print(x*2) for x in range(1,5)]
+[print(x*2) for x in range(1,20) if x%5==0]
+cells = [(row,col) for row in range(1,10) for col in range(1,10)]
+print(cells)
+
+
+my_text = 'i love you i love s i love t'
+char_count={c:my_text.count(c) for c in my_text}
+print(char_count)
+
+{x for x in range(1,100) if x%9==0}
+
+(x for x in range(1,100))
