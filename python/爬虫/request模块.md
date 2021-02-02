@@ -51,7 +51,13 @@ print('爬取数据完毕！！！')
 
 https://book.apeland.cn/details/68/
 
+- （1）r.text是服务器响应的内容，会自动根据响应头部的字符编码进行解码。
 
+- （2）r.encoding是服务器内容使用的文本编码。
+
+- （3）r.status_code用于检测响应的状态码，如果返回200，就表示请求成功了；如果返回的是4xx，就表示客户端错误；返回5xx则表示服务器错误响应。我们可以用r.status_code来检测请求是否正确响应。
+
+- （4）r.content是字节方式的响应体，会自动解码gzip和deflate编码的响应数据。（5）r.json()是Requests中内置的JSON解码器。
 
 ## **基于requests模块经典案例实战**
 
@@ -240,6 +246,76 @@ https://book.apeland.cn/details/68/
       fp.write(str(all_data_list))
   
   
+  ```
+
+- 爬取豆瓣前250的电影信息
+
+  ```python
+  import requests
+  from bs4 import BeautifulSoup
+  
+  def get_movies():
+      headers = {
+      'user-agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36',
+      'Host': 'movie.douban.com'
+      }
+      movie_list = []
+      for i in range(0,10):
+          link = 'https://movie.douban.com/top250?start=' + str(i * 25)
+          r = requests.get(link, headers=headers, timeout= 10)
+          
+          soup = BeautifulSoup(r.text, "lxml")
+          div_list = soup.find_all('div', class_='info')
+          for each in div_list:
+              title = each.find('div', class_='hd').a.span.text.strip()
+              info = each.find('div', class_='bd').p.text.strip()
+              info = info.replace("\n", " ").replace("\xa0", " ")
+              info =  ' '.join(info.split())
+              rating = each.find('span', class_='rating_num').text.strip()
+              num_rating = each.find('div', class_='star').contents[7].text.strip()
+              try:
+                  quote = each.find('span', class_='inq').text.strip()
+              except:
+                  quote = ""
+              movie_list.append([title, info, rating, num_rating, quote])
+      return movie_list
+          
+  movies = get_movies()
+  print (movie_list)
+  ```
+
+  解析前的html内容：
+
+  ```html
+  <div class="info">
+                      <div class="hd">
+                          <a href="https://movie.douban.com/subject/1292052/" class="">
+                              <span class="title">肖申克的救赎</span>
+                                      <span class="title">&nbsp;/&nbsp;The Shawshank Redemption</span>
+                                  <span class="other">&nbsp;/&nbsp;月黑高飞(港)  /  刺激1995(台)</span>
+                          </a>
+  
+  
+                              <span class="playable">[可播放]</span>
+                      </div>
+                      <div class="bd">
+                          <p class="">
+                              导演: 弗兰克·德拉邦特 Frank Darabont&nbsp;&nbsp;&nbsp;主演: 蒂姆·罗宾斯 Tim Robbins /...<br>
+                              1994&nbsp;/&nbsp;美国&nbsp;/&nbsp;犯罪 剧情
+                          </p>
+  
+                          
+                          <div class="star">
+                                  <span class="rating5-t"></span>
+                                  <span class="rating_num" property="v:average">9.7</span>
+                                  <span property="v:best" content="10.0"></span>
+                                  <span>2260444人评价</span>
+                          </div>
+  
+                              <p class="quote">
+                                  <span class="inq">希望让人自由。</span>
+                              </p>
+                      </div>
   ```
 
   
