@@ -6,8 +6,20 @@ from blogSpider.items import  BlogspiderItem
 class SantotangSpider(scrapy.Spider):
     name = 'csdn'
     allowed_domains = ['blog.csdn.net']
-    start_urls = ['https://blog.csdn.net/weixin_51656605/category_10621310.html']
-
+    start_urls = ['https://blog.csdn.net/weixin_51656605/category_10621310.html',
+                  'https://blog.csdn.net/weixin_51656605/category_10795198.html',
+                  'https://blog.csdn.net/weixin_51656605/category_10700169.html',
+                  'https://blog.csdn.net/weixin_51656605/category_10755656.html',
+                  'https://blog.csdn.net/weixin_51656605/category_10690950.html',
+                  'https://blog.csdn.net/weixin_51656605/category_10673253.html'
+                  ]
+    #start_urls = ['https://blog.csdn.net/weixin_51656605/category_10690950.html']
+    def start_requests(self):
+        for i in range(len(self.start_urls)):
+            url = self.start_urls[i]
+            print('当前页面是'+url)
+            # 对新闻列表也发起请求
+            yield scrapy.Request(url=url,callback=self.parse)
     def parse(self, response):
         #print(response.text)
         #with open('index.html','w',encoding='utf-8') as f:

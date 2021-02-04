@@ -323,4 +323,145 @@ ITEM_PIPELINES = {
 - scrapy genspider csdn blog.csdn.net 创建需要爬虫的模板 csdn为名字 blog.csdn.net为网址
 - 修改items.py定义类型字段
 - 编写请求和解析内容
-- 如果需要保存则修改settings.py中的注释内容
+- 如果需要保存则修改pipelinex.py和settings.py中的注释内容
+
+## 爬取财经新闻
+
+> http://finance.eastmoney.com/news/cywjh.html
+
+1. 创建项目
+
+   scrapy startproject financeSpider
+
+2. 创建模板
+
+   scrapy genspider finance finance.eastmoney.com
+
+3. 定义items.py
+
+   ```python
+   # -*- coding: utf-8 -*-
+   
+   # Define here the models for your scraped items
+   #
+   # See documentation in:
+   # https://doc.scrapy.org/en/latest/topics/items.html
+   
+   import scrapy
+   
+   
+   class FinancespiderItem(scrapy.Item):
+       # define the fields for your item here like:
+       # name = scrapy.Field()
+       title = scrapy.Field()
+       link = scrapy.Field()
+       content = scrapy.Field()
+       date = scrapy.Field()
+       source = scrapy.Field()
+       comment = scrapy.Field()
+       involve = scrapy.Field()
+   
+   
+   ```
+
+   
+
+4. 编写请求和解析内容
+
+   ```python
+   # -*- coding: utf-8 -*-
+   import scrapy
+   from bs4 import BeautifulSoup
+   from financeSpider.items import FinancespiderItem
+   
+   class FinanceSpider(scrapy.Spider):
+       name = 'finance'
+       allowed_domains = ['finance.eastmoney.com']
+       start_urls = ['http://finance.eastmoney.com/news/cywjh_1.html']
+       url_head = 'http://finance.eastmoney.com/news/cywjh_'
+       url_end = '.html'
+       # scrapy自带功能，从start_request开始发送请求
+       #start_requests这个方法是Scrapy自带功能，目的是能够使用一个循环来获取新闻列表的前三页
+       def start_requests(self):
+           for i in range(1,4):
+               url = self.url_head+str(i)+self.url_end
+               print('当前页面是'+url)
+               # 对新闻列表也发起请求
+               yield scrapy.Request(url=url,callback=self.parse)
+       def parse(self, response):
+           soup  = BeautifulSoup(response.text,'lxml')
+           title_list = soup.find_all('p',class_='title')
+           for i in range(len(title_list)):
+               item = FinancespiderItem()
+               title = title_list[i].a.text.strip()
+               link = title_list[i].a['href']
+               item['title']=title
+               item['link']=link
+               # 根据文章链接，发送request请，并传递item参数
+               yield scrapy.Request(url = link,meta={'item':item},callback=self.parse2)
+   
+   
+       def parse2(self,response):
+           # 接收传递的item
+           item = response.meta['item']
+           #解析文章内容
+           soup = BeautifulSoup(response.text,'lxml')
+           date = soup.find('div',class_='time').text.strip()
+           source = soup.find('div' ,class_='data-source')['data-source']
+           content = soup.find('div',id='ContentBody').text.strip()
+           content = content.replace('\n',' ')
+           comment = soup.find('span',class_='cNumShow num').text.strip()
+           involve = soup.find('span',class_='num ml5').text.strip()
+           item['content']=content
+           item['date'] = date
+           item['source'] = source
+           item['comment'] = comment
+           item['involve']= involve
+           # 返回item交给item pipeline
+           yield item
+   
+   
+   ```
+
+   
+
+5. pipeline.py内容修改存储内容
+
+   ```python
+   # -*- coding: utf-8 -*-
+   
+   # Define your item pipelines here
+   #
+   # Don't forget to add your pipeline to the ITEM_PIPELINES setting
+   # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+   
+   
+   class FinancespiderPipeline(object):
+       file_path = 'finance.txt'
+       def __init__(self):
+           self.article = open(self.file_path,'a+',encoding='utf-8')
+       def process_item(self, item, spider):
+           title = item['title']
+           link = item['link']
+           content = item['content']
+           date = item['date']
+           source = item['source']
+           comment = item['comment']
+           involve = item['involve']
+           output = title +'\t' + link +'\t' +date+ '\t'+source+'\t'+comment+'\t'+involve + '\t' +content +'\t'
+           self.article.write(output)
+           return item
+   
+   ```
+
+   
+
+6. settings.py
+
+   ```python
+   ITEM_PIPELINES = {
+       'financeSpider.pipelines.FinancespiderPipeline': 300,
+   }
+   ```
+
+   
